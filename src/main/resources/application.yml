@@ -4,7 +4,7 @@ spring:
     application:
         name: com.minimal.eshop.app
     profiles:
-        active: test
+        active: prod
     session:
         store-type: none
 
