@@ -1,5 +1,6 @@
 package com.minimal.eshop.security;
 
+@SuppressWarnings("serial")
 public class UserNotAllowedException extends RuntimeException {
 
   private String path;

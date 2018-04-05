@@ -50,6 +50,7 @@ public class TokenAuthenticationService {
     return email;
   }
 
+  @SuppressWarnings("unchecked")
   public List<GrantedAuthority> getAuthenticatedUserRoles(HttpServletRequest request) throws UserNotFoundException {
     List<GrantedAuthority> roles = new LinkedList<GrantedAuthority>();
     String token = request.getHeader(HEADER_STRING);
