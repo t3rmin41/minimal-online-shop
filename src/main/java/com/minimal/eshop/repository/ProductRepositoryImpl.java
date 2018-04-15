@@ -1,8 +1,10 @@
 package com.minimal.eshop.repository;
 
 import java.util.List;
+import org.springframework.stereotype.Repository;
 import com.minimal.eshop.jpa.Product;
 
+@Repository
 public class ProductRepositoryImpl implements ProductRepository {
 
   @Override

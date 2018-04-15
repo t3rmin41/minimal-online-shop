@@ -1,10 +1,15 @@
 package com.minimal.eshop.mapper;
 
+import java.io.Serializable;
 import java.util.List;
+import org.springframework.stereotype.Service;
 import com.minimal.eshop.bean.ProductBean;
+import com.minimal.eshop.errorhandling.ErrorField;
+import com.minimal.eshop.errorhandling.WrongBeanFormatException;
 import com.minimal.eshop.jpa.Product;
 
-public class ProductMapperImpl implements ProductMapper {
+@Service
+public class ProductMapperImpl implements ProductMapper, BeanValidator {
 
   @Override
   public ProductBean getProductBeanByProduct(Product jpa) {
@@ -46,6 +51,12 @@ public class ProductMapperImpl implements ProductMapper {
   public boolean deleteProductById(Long id) {
     // TODO Auto-generated method stub
     return false;
+  }
+
+  @Override
+  public List<ErrorField> validateBean(Serializable bean) throws WrongBeanFormatException {
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }

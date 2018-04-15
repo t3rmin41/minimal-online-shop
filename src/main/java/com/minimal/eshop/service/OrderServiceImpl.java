@@ -1,8 +1,10 @@
 package com.minimal.eshop.service;
 
 import java.util.List;
+import org.springframework.stereotype.Service;
 import com.minimal.eshop.bean.OrderBean;
 
+@Service
 public class OrderServiceImpl implements OrderService {
 
   @Override

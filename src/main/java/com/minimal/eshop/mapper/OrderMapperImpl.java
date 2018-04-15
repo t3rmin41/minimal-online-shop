@@ -1,9 +1,14 @@
 package com.minimal.eshop.mapper;
 
+import java.io.Serializable;
 import java.util.List;
+import org.springframework.stereotype.Service;
 import com.minimal.eshop.bean.OrderBean;
+import com.minimal.eshop.errorhandling.ErrorField;
+import com.minimal.eshop.errorhandling.WrongBeanFormatException;
 
-public class OrderMapperImpl implements OrderMapper {
+@Service
+public class OrderMapperImpl implements OrderMapper, BeanValidator {
 
   @Override
   public List<OrderBean> getAllOrders() {
@@ -43,6 +48,12 @@ public class OrderMapperImpl implements OrderMapper {
 
   @Override
   public List<OrderBean> getUserOrdersByUsername(String email) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public List<ErrorField> validateBean(Serializable bean) throws WrongBeanFormatException {
     // TODO Auto-generated method stub
     return null;
   }

@@ -3,8 +3,10 @@ package com.minimal.eshop.service;
 import java.util.List;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Service;
 import com.minimal.eshop.security.UserNotAllowedException;
 
+@Service
 public class RequestValidatorImpl implements RequestValidator {
 
   @Override
