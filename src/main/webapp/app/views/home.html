@@ -2,7 +2,7 @@
     <div data-ng-controller="HomeController" class="row">
       <div class="row">
         <div class="col-md-12">
-            <h3>Servicedesk wallscreen application</h3>
+            <h3>Minimal online eshop</h3>
         </div>
       </div>
       <div class="row">
@@ -20,14 +20,6 @@
                 </ul>
             </li>
           </ul>
-        </div>
-        <div class="col-xs-2" class="form-control">
-        <label for="txtName">Chosen screen:</label>
-        <select class="form-control"
-                ng-model="chosenScreen"
-                ng-change="updateChosenScreen()"
-                ng-options="screen.id as screen.title for screen in screens" >
-        </select>
         </div>
       </div>
     </div>
