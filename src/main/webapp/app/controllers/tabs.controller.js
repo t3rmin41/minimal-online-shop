@@ -5,9 +5,9 @@
         .module('app')
         .controller('TabsController', TabsController);
 
-    TabsController.$inject = ['$rootScope', '$scope',  '$cookies', '$filter', '$location', '$sce', 'ScreenService'];
+    TabsController.$inject = ['$rootScope', '$scope',  '$cookies', '$filter', '$location', '$sce'];
 
-    function TabsController($rootScope, $scope, $cookies, $filter, $location, $sce, ScreenService) {
+    function TabsController($rootScope, $scope, $cookies, $filter, $location, $sce) {
 
       var ctrl = this;
 
@@ -15,23 +15,14 @@
       var hasManager = $cookies.getObject('user').roles.filter(function(role){ return role.code == "MANAGER"}).length > 0;
 
       $scope.tabs = [
-                      { id: '0', title: 'Announcements', path: 'app/views/announcement.html', ctrl : 'AnnouncementController', reloadEvent: 'AnnouncementReload' }
+                      { id: '0', title: 'Products', path: 'app/views/product.html', ctrl : 'ProductController', reloadEvent: 'ProductReload' },
+                      { id: '1', title: 'Orders', path: 'app/views/order.html', ctrl : 'OrderController', reloadEvent: 'OrderReload' },
                     ];
-      
-      var managerTabs = [ { id: '1', title: 'Screens', path: 'app/views/screen.html', ctrl : 'ScreenController', reloadEvent: 'ScreenReload' },
-                          { id: '2', title: 'Ambasadors', path:  'app/views/ambasador.html', ctrl : 'AmbasadorController', reloadEvent: 'AmbasadorReload' },
-                          { id: '3', title: 'Clocks', path: 'app/views/clock.html', ctrl : 'ClockController', reloadEvent: 'ClockReload' },
-                          { id: '4', title: 'Clients',  path: 'app/views/client.html', ctrl : 'ClientController', reloadEvent: 'ClientReload' },
-                          { id: '5', title: 'Skills', path: 'app/views/skill.html', ctrl : 'SkillController', reloadEvent: 'SkillReload' }
-                        ];
-      
+
       var adminTabs = [
-                        { id: '6', title: 'Users', path: 'app/views/user.html', ctrl : 'UserController', reloadEvent: 'UserReload' }
+                        { id: '2', title: 'Users', path: 'app/views/user.html', ctrl : 'UserController', reloadEvent: 'UserReload' }
                       ];
-      
-      if (hasManager || hasAdmin) {
-        $scope.tabs = $scope.tabs.concat(managerTabs);
-      }
+
       if (hasAdmin) {
         $scope.tabs = $scope.tabs.concat(adminTabs);
       }

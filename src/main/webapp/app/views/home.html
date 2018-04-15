@@ -21,14 +21,6 @@
             </li>
           </ul>
         </div>
-        <div class="col-xs-2" class="form-control">
-        <label for="txtName">Chosen screen:</label>
-        <select class="form-control"
-                ng-model="chosenScreen"
-                ng-change="updateChosenScreen()"
-                ng-options="screen.id as screen.title for screen in screens" >
-        </select>
-        </div>
       </div>
     </div>
     <div ng-controller="TabsController" class="row">
