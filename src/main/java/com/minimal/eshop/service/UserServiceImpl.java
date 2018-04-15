@@ -2,62 +2,55 @@ package com.minimal.eshop.service;
 
 import java.util.List;
 import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import com.minimal.eshop.bean.UserBean;
+import com.minimal.eshop.mapper.UserMapper;
 
+@Service
 public class UserServiceImpl implements UserService {
 
+  @Autowired
+  private UserMapper userMapper;
+
   @Override
-  public UserBean getUserByUsernamAndPassword(String userName, String password) {
-    // TODO Auto-generated method stub
-    return null;
+  public UserBean getUserByEmailAndPassword(String email, String password) {
+    return userMapper.getUserBeanByEmailAndPassword(email, password);
   }
 
   @Override
-  public UserBean getUserByUsername(String username) {
-    // TODO Auto-generated method stub
-    return null;
+  public UserBean getUserByEmail(String email) {
+    return userMapper.getUserBeanByEmail(email);
   }
 
   @Override
   public UserBean getUserById(Long id) {
-    // TODO Auto-generated method stub
-    return null;
+    return userMapper.convertUserToBeanByUserId(id);
   }
 
   @Override
-  public UserBean createUser(UserBean bean) {
-    // TODO Auto-generated method stub
-    return null;
+  public UserBean saveUser(UserBean bean) {
+    return userMapper.saveUser(bean);
   }
 
   @Override
   public List<UserBean> getAllUsers() {
-    // TODO Auto-generated method stub
-    return null;
+    return userMapper.getAllUsers();
   }
 
   @Override
   public boolean deleteUserById(Long id) {
-    // TODO Auto-generated method stub
-    return false;
+    return userMapper.deleteUserById(id);
   }
 
   @Override
   public UserBean updateUser(UserBean bean) {
-    // TODO Auto-generated method stub
-    return null;
+    return userMapper.updateUser(bean);
   }
 
   @Override
-  public Set<String> getNewRolesDifference(Set<String> oldRoles, Set<String> newRoles) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public Set<String> getOldRolesDifference(Set<String> oldRoles, Set<String> newRoles) {
-    // TODO Auto-generated method stub
-    return null;
+  public Set<String> getRolesByEmail(String email) {
+    return userMapper.getRolesByEmail(email);
   }
 
 }

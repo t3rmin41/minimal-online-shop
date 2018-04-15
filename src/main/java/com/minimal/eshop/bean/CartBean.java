@@ -1,5 +1,7 @@
 package com.minimal.eshop.bean;
 
-public class CartBean {
+import java.io.Serializable;
+
+public class CartBean implements Serializable {
 
 }

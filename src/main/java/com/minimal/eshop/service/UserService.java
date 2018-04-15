@@ -6,22 +6,20 @@ import com.minimal.eshop.bean.UserBean;
 
 public interface UserService {
 
-  UserBean getUserByUsernamAndPassword(String userName, String password);
+  UserBean getUserByEmailAndPassword(String email, String password);
   
-  UserBean getUserByUsername(String username);
+  UserBean getUserByEmail(String email);
   
   UserBean getUserById(Long id);
   
-  UserBean createUser(UserBean bean);
+  UserBean saveUser(UserBean bean);
   
   List<UserBean> getAllUsers();
   
   boolean deleteUserById(Long id);
   
   UserBean updateUser(UserBean bean);
-  
-  Set<String> getNewRolesDifference(Set<String> oldRoles, Set<String> newRoles);
-  
-  Set<String> getOldRolesDifference(Set<String> oldRoles, Set<String> newRoles);
+
+  Set<String> getRolesByEmail(String email);
   
 }

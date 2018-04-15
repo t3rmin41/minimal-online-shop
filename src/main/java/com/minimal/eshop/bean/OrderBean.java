@@ -1,5 +1,7 @@
 package com.minimal.eshop.bean;
 
-public class OrderBean {
+import java.io.Serializable;
+
+public class OrderBean implements Serializable {
 
 }
