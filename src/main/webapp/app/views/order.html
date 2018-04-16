@@ -5,15 +5,15 @@
   <table class="table table-striped table-hover">
     <tbody>
       <tr>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Email</th>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Status</th>
         <th>Actions</th>
       </tr>
       <tr ng-repeat="order in orders | filter:ordersearch">
-        <td>{{user.firstName}}</td>
-        <td>{{user.lastName}}</td>
-        <td>{{user.email}}</td>
+        <td>{{order.productName}}</td>
+        <td>{{order.price}}</td>
+        <td>{{order.status}}</td>
         <td>
             <button class="btn btn-small" ng-click="editOrder(order)">Edit</button>
             <button class="btn btn-small" ng-click="deleteOrder(order)">Delete</button>
@@ -22,6 +22,6 @@
     </tbody>
   </table>
   <div class="form-group">
-    <button ng-click="addUser()" class="btn btn-primary">Add order</button>
+    <button ng-click="addOrder()" class="btn btn-primary">Add order</button>
   </div>
 </div>
