@@ -34,7 +34,7 @@
     }
     
     var getProductsSuccessCb = function(data, status, headers) {
-      $scope.Products = data;
+      $scope.products = data;
     }
     
     var getProductsErrorCb = function(data, status, headers) {
@@ -44,7 +44,7 @@
     $scope.addProduct = function() {
       var modal = $uibModal.open({
         resolve: {
-          currentProduct: { skills : [] }
+          currentProduct: {}
         },
         templateUrl: 'app/views/product-details.html',
         controller: ProductModalController,
@@ -55,12 +55,12 @@
       }, ErrorController.httpGetErroCb);
     }
     
-    $scope.editProduct = function(Product) {
-      var ProductToEdit = Product;
-      var modalSize = Product.skills.length > 0 ? 'lg' : 'md';
+    $scope.editProduct = function(product) {
+      var productToEdit = product;
+      var modalSize = 'md';
       var modal = $uibModal.open({
         resolve: {
-          currentProduct: angular.copy(ProductToEdit)
+          currentProduct: angular.copy(productToEdit)
         },
         templateUrl: 'app/views/product-details.html',
         controller: ProductModalController,
@@ -71,12 +71,12 @@
       }, ErrorController.httpGetErroCb);
     }
     
-    $scope.deleteProduct = function(Product) {
-      $scope.currentProduct = Product;
+    $scope.deleteProduct = function(product) {
+      $scope.currentProduct = product;
       var modal = $uibModal.open({
         scope: $scope,
         template: '<div class="modal-header"><h4 class="modal-title">Confirmation</h4></div>'+
-                  '<div class="modal-body">Do you want to delete product "{{ currentProduct.ProductName }}" ?</div>'+
+                  '<div class="modal-body">Do you want to delete product "{{ currentProduct.title }}" ?</div>'+
                   '<div class="modal-footer">'+
                     '<button class="btn btn-small" ng-click="confirm(currentProduct.id)">Yes</button>'+
                     '<button class="btn btn-small" ng-click="cancel()">No</button>'+

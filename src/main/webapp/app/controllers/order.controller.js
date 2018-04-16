@@ -10,7 +10,7 @@
 
     var ctrl = this;
 
-    $scope.Orders = [];
+    $scope.orders = [];
     
     $rootScope.$on('OrderReload', function (event, message){
       ctrl.getOrders();
@@ -34,7 +34,7 @@
     }
     
     var getOrdersSuccessCb = function(data, status, headers) {
-      $scope.Orders = data;
+      $scope.orders = data;
     }
     
     var getOrdersErrorCb = function(data, status, headers) {
@@ -55,12 +55,12 @@
       }, ErrorController.httpGetErroCb);
     }
     
-    $scope.editOrder = function(Order) {
-      var OrderToEdit = Order;
+    $scope.editOrder = function(order) {
+      var orderToEdit = order;
       var modalSize = Order.skills.length > 0 ? 'lg' : 'md';
       var modal = $uibModal.open({
         resolve: {
-          currentOrder: angular.copy(OrderToEdit)
+          currentOrder: angular.copy(orderToEdit)
         },
         templateUrl: 'app/views/order-details.html',
         controller: OrderModalController,
@@ -71,12 +71,12 @@
       }, ErrorController.httpGetErroCb);
     }
     
-    $scope.deleteOrder = function(Order) {
-      $scope.currentOrder = Order;
+    $scope.deleteOrder = function(order) {
+      $scope.currentOrder = order;
       var modal = $uibModal.open({
         scope: $scope,
         template: '<div class="modal-header"><h4 class="modal-title">Confirmation</h4></div>'+
-                  '<div class="modal-body">Do you want to delete order "{{ currentOrder.orderName }}" ?</div>'+
+                  '<div class="modal-body">Do you want to delete order "{{ currentOrder.productName }}" ?</div>'+
                   '<div class="modal-footer">'+
                     '<button class="btn btn-small" ng-click="confirm(currentOrder.id)">Yes</button>'+
                     '<button class="btn btn-small" ng-click="cancel()">No</button>'+

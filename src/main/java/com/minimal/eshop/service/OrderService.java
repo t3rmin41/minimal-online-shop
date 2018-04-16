@@ -17,4 +17,5 @@ public interface OrderService {
 
   List<OrderBean> getUserOrdersByUsername(String username);
   
+  List<OrderBean> getUserOrdersById(Long id);
 }

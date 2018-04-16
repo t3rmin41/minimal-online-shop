@@ -11,6 +11,8 @@ public interface OrderRepository {
   
   List<Order> getUserOrdersByEmail(String email);
   
+  List<Order> getUserOrdersById(Long userId);
+  
   Order getOrderById(Long id);
   
   Order updateOrder(Order order);
