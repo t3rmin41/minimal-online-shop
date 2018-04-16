@@ -35,7 +35,7 @@
 
     service.saveProduct = function(product, success, error) {
       $http({
-        url: '/products/create',
+        url: '/products/save',
         method: 'POST',
         data: product,
         headers : {

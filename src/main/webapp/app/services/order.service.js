@@ -35,7 +35,7 @@
 
     service.saveOrder = function(order, success, error) {
       $http({
-        url: '/orders/create',
+        url: '/orders/save',
         method: 'POST',
         data: order,
         headers : {
