@@ -1,40 +1,40 @@
 package com.minimal.eshop.service;
 
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.minimal.eshop.bean.ProductBean;
+import com.minimal.eshop.mapper.ProductMapper;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
+  @Autowired
+  private ProductMapper productMapper;
+  
   @Override
   public List<ProductBean> getAllProducts() {
-    // TODO Auto-generated method stub
-    return null;
+    return productMapper.getAllProducts();
   }
 
   @Override
   public ProductBean getProductBeanById(Long id) {
-    // TODO Auto-generated method stub
-    return null;
+    return productMapper.getProductBeanById(id);
   }
 
   @Override
   public ProductBean saveProduct(ProductBean bean) {
-    // TODO Auto-generated method stub
-    return null;
+    return productMapper.saveProduct(bean);
   }
 
   @Override
   public ProductBean updateProduct(ProductBean bean) {
-    // TODO Auto-generated method stub
-    return null;
+    return productMapper.updateProduct(bean);
   }
 
   @Override
   public boolean deleteProductById(Long id) {
-    // TODO Auto-generated method stub
-    return false;
+    return productMapper.deleteProductById(id);
   }
 
 }

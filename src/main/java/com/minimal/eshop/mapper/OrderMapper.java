@@ -19,4 +19,5 @@ public interface OrderMapper {
   
   List<OrderBean> getUserOrdersByUsername(String email);
   
+  List<OrderBean> getUserOrdersById(Long id);
 }
