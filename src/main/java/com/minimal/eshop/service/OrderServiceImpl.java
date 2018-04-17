@@ -50,8 +50,7 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public List<OrderBean> getUserOrdersById(Long id) {
-    // TODO Auto-generated method stub
-    return null;
+    return orderMapper.getUserOrdersById(id);
   }
 
 }

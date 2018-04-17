@@ -22,6 +22,18 @@
       }).success(success).error(error);
     };
 
+    service.getUserOrders = function(userId, success, error) {
+      $http({
+        url: '/orders/user/id/'+userId,
+        method: 'GET',
+        headers : {
+          "Content-Type" : "application/json;charset=UTF-8",
+          "Accept" : "application/json;charset=UTF-8"
+        }
+      }).success(success).error(error);
+    };
+    
+    
     service.getOrderById = function(id, success, error) {
       $http({
         url: '/orders/'+id,

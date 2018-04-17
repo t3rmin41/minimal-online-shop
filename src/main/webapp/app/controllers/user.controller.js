@@ -104,8 +104,8 @@
 
   angular.module('app').controller('UserModalController', UserModalController);
 
-  UserModalController.$inject = ['$scope', '$uibModalInstance', '$cookies', '$routeParams', '$location', 'currentUser', 'UserService', 'ScreenService'];
-  function UserModalController($scope, $uibModalInstance, $cookies, $routeParams, $location, currentUser, UserService, ScreenService) {
+  UserModalController.$inject = ['$scope', '$uibModalInstance', '$cookies', '$routeParams', '$location', 'currentUser', 'UserService'];
+  function UserModalController($scope, $uibModalInstance, $cookies, $routeParams, $location, currentUser, UserService) {
     var ctrl = this;
 
     $scope.currentUser = currentUser;

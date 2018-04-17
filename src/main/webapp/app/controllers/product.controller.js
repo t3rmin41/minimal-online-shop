@@ -21,18 +21,10 @@
       ctrl.getProducts();
     };
 
-    ctrl.getAllProducts = function() {
+    ctrl.getProducts = function() {
       ProductService.getAllProducts(getProductsSuccessCb, ErrorController.httpGetErroCb);
     }
-    
-    ctrl.getScreenProducts = function() {
-      ProductService.getEditableProductsByScreenId($rootScope.chosenScreenId, getProductsSuccessCb, ErrorController.httpGetErroCb);
-    }
-    
-    ctrl.getEditableProducts = function() {
-      ProductService.getEditableProducts(getProductsSuccessCb, ErrorController.httpGetErroCb);
-    }
-    
+
     var getProductsSuccessCb = function(data, status, headers) {
       $scope.products = data;
     }
@@ -51,7 +43,7 @@
         size: 'md'
       });
       modal.result.then(function(){
-        ctrl.getEditableProducts();
+        ctrl.getProducts();
       }, ErrorController.httpGetErroCb);
     }
     
@@ -67,7 +59,7 @@
         size : modalSize
       });
       modal.result.then(function(){
-        ctrl.getEditableProducts();
+        ctrl.getProducts();
       }, ErrorController.httpGetErroCb);
     }
     

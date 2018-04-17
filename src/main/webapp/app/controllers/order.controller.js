@@ -21,18 +21,10 @@
       ctrl.getOrders();
     };
 
-    ctrl.getAllOrders = function() {
+    ctrl.getOrders = function() {
       OrderService.getAllOrders(getOrdersSuccessCb, ErrorController.httpGetErroCb);
     }
-    
-    ctrl.getScreenOrders = function() {
-      OrderService.getEditableOrdersByScreenId($rootScope.chosenScreenId, getOrdersSuccessCb, ErrorController.httpGetErroCb);
-    }
-    
-    ctrl.getEditableOrders = function() {
-      OrderService.getEditableOrders(getOrdersSuccessCb, ErrorController.httpGetErroCb);
-    }
-    
+
     var getOrdersSuccessCb = function(data, status, headers) {
       $scope.orders = data;
     }
@@ -51,13 +43,13 @@
         size: 'md'
       });
       modal.result.then(function(){
-        ctrl.getEditableOrders();
+        ctrl.getOrders();
       }, ErrorController.httpGetErroCb);
     }
     
     $scope.editOrder = function(order) {
       var orderToEdit = order;
-      var modalSize = Order.skills.length > 0 ? 'lg' : 'md';
+      var modalSize = 'md';
       var modal = $uibModal.open({
         resolve: {
           currentOrder: angular.copy(orderToEdit)
@@ -67,7 +59,7 @@
         size : modalSize
       });
       modal.result.then(function(){
-        ctrl.getEditableOrders();
+        ctrl.getOrders();
       }, ErrorController.httpGetErroCb);
     }
     
