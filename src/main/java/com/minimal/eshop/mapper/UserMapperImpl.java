@@ -183,7 +183,7 @@ public class UserMapperImpl implements UserMapper, BeanValidator {
             .setFirstName(jpa.getFirstName())
             .setLastName(jpa.getLastName())
             .setEmail(jpa.getEmail())
-            .setId(null != jpa.getId() ? jpa.getId().toString() : null)
+            .setId(null != jpa.getId() ? jpa.getId() : null)
             .setRoles(convertUserRolesToRoleBeans(jpa.getRoles())).setEnabled(jpa.getEnabled());
   }
 

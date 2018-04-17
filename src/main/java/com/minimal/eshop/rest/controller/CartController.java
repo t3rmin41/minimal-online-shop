@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.minimal.eshop.bean.CartBean;
 import com.minimal.eshop.bean.OrderBean;
 import com.minimal.eshop.bean.ProductBean;
+import com.minimal.eshop.bean.UserBean;
 import com.minimal.eshop.service.CartService;
 import com.minimal.eshop.service.ProductService;
+import com.minimal.eshop.service.UserService;
 
 @Controller
 @RequestMapping(value = "/cart", produces = APPLICATION_JSON_UTF8_VALUE)
@@ -27,6 +29,9 @@ public class CartController {
   @Autowired
   private ProductService productService;
   
+  @Autowired
+  private UserService userService;
+  
   @Inject
   private CartBean cartBean;
   
@@ -36,9 +41,11 @@ public class CartController {
   }
   
   @RequestMapping(value = "/product/add", method = RequestMethod.POST, consumes=APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody CartBean addProductToCart(@RequestBody OrderBean orderBean, Principal principal) {
-      ProductBean productBean = productService.getProductBeanById(orderBean.getProductId());
-      orderBean.setProductName(productBean.getTitle());
+  public @ResponseBody CartBean addProductToCart(@RequestBody ProductBean productBean, Principal principal) {
+      ProductBean product = productService.getProductBeanById(productBean.getId());
+      OrderBean orderBean = new OrderBean().setProductId(product.getId()).setOrderedBy(principal.getName());
+      orderBean.setProductName(product.getTitle());
+      orderBean.setPrice(product.getPrice());
       cartBean.getItems().add(orderBean);
       return cartBean;
   }
@@ -50,10 +57,12 @@ public class CartController {
   }
   
   @RequestMapping(value = "/submit", method = RequestMethod.POST, consumes=APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody CartBean submitCart() {
-      cartService.submitCart(cartBean);
-      cartBean.clear();
-      return cartBean;
+  public @ResponseBody CartBean submitCart(Principal principal) {
+    UserBean userBean = userService.getUserByEmail(principal.getName());
+    cartBean.setUserId(userBean.getId());
+    cartService.submitCart(cartBean);
+    cartBean.clear();
+    return cartBean;
   }
   
 }
