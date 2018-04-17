@@ -5,8 +5,8 @@
     .module('app')
     .controller('ProductController', ProductController);
 
-  ProductController.$inject = ['$rootScope', '$scope', '$cookies', '$routeParams', '$uibModal', '$location', 'ProductService', 'ErrorController'];
-  function ProductController($rootScope, $scope, $cookies, $routeParams, $uibModal, $location, ProductService, ErrorController) {
+  ProductController.$inject = ['$rootScope', '$scope', '$cookies', '$routeParams', '$uibModal', '$location', 'ProductService', 'CartService', 'ErrorController'];
+  function ProductController($rootScope, $scope, $cookies, $routeParams, $uibModal, $location, ProductService, CartService, ErrorController) {
 
     var ctrl = this;
 
@@ -17,7 +17,6 @@
     });
     
     ctrl.$onInit = function() {
-      //ctrl.getEditableProducts();
       ctrl.getProducts();
     };
 
@@ -97,8 +96,8 @@
 
   angular.module('app').controller('ProductModalController', ProductModalController);
 
-  ProductModalController.$inject = ['$scope', '$uibModalInstance', '$cookies', '$routeParams', '$location', 'currentProduct', 'ProductService'];
-  function ProductModalController($scope, $uibModalInstance, $cookies, $routeParams, $location, currentProduct, ProductService) {
+  ProductModalController.$inject = ['$scope', '$uibModalInstance', '$cookies', '$routeParams', '$location', 'currentProduct', 'ProductService', 'CartService'];
+  function ProductModalController($scope, $uibModalInstance, $cookies, $routeParams, $location, currentProduct, ProductService, CartService) {
     var ctrl = this;
 
     $scope.modalTitle = "";

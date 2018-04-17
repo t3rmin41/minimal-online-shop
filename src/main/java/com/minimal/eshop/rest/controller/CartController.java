@@ -30,23 +30,29 @@ public class CartController {
   @Inject
   private CartBean cartBean;
   
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @RequestMapping(method = RequestMethod.GET)
   public @ResponseBody CartBean getCart() {
       return cartBean;
   }
   
-  @RequestMapping(value = "/addOrder", method = RequestMethod.POST, consumes=APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody CartBean addOrderToCart(@RequestBody OrderBean orderBean, Principal principal) {
-      //ProductBean productBean = productService.getProductBeanById(orderBean.getProductId());
-      //orderBean.setProductName(productBean.getTitle());
-      //cartBean.getItems().add(orderBean);
+  @RequestMapping(value = "/product/add", method = RequestMethod.POST, consumes=APPLICATION_JSON_UTF8_VALUE)
+  public @ResponseBody CartBean addProductToCart(@RequestBody OrderBean orderBean, Principal principal) {
+      ProductBean productBean = productService.getProductBeanById(orderBean.getProductId());
+      orderBean.setProductName(productBean.getTitle());
+      cartBean.getItems().add(orderBean);
+      return cartBean;
+  }
+  
+  @RequestMapping(value = "/product/remove", method = RequestMethod.DELETE, consumes=APPLICATION_JSON_UTF8_VALUE)
+  public @ResponseBody CartBean removeProductFromCart(@RequestBody OrderBean orderBean, Principal principal) {
+      cartBean.getItems().remove(orderBean);
       return cartBean;
   }
   
   @RequestMapping(value = "/submit", method = RequestMethod.POST, consumes=APPLICATION_JSON_UTF8_VALUE)
   public @ResponseBody CartBean submitCart() {
       cartService.submitCart(cartBean);
-      //cartBean.clear();
+      cartBean.clear();
       return cartBean;
   }
   

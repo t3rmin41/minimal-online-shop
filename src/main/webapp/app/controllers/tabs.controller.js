@@ -5,14 +5,14 @@
         .module('app')
         .controller('TabsController', TabsController);
 
-    TabsController.$inject = ['$rootScope', '$scope',  '$cookies', '$filter', '$location', '$sce'];
+    TabsController.$inject = ['$rootScope', '$scope',  '$cookies', '$filter', '$location', '$sce', 'CartService'];
 
-    function TabsController($rootScope, $scope, $cookies, $filter, $location, $sce) {
+    function TabsController($rootScope, $scope, $cookies, $filter, $location, $sce, CartService) {
 
       var ctrl = this;
 
-      var hasAdmin = $cookies.getObject('user').roles.filter(function(role){ return role.code == "ADMIN"}).length > 0;
-      var hasManager = $cookies.getObject('user').roles.filter(function(role){ return role.code == "MANAGER"}).length > 0;
+      var $rootScope.hasAdmin = $cookies.getObject('user').roles.filter(function(role){ return role.code == "ADMIN"}).length > 0;
+      var $rootScope.hasManager = $cookies.getObject('user').roles.filter(function(role){ return role.code == "MANAGER"}).length > 0;
 
       $scope.tabs = [
                       { id: '0', title: 'Products', path: 'app/views/product.html', ctrl : 'ProductController', reloadEvent: 'ProductReload' },
@@ -23,7 +23,7 @@
                         { id: '2', title: 'Users', path: 'app/views/user.html', ctrl : 'UserController', reloadEvent: 'UserReload' }
                       ];
 
-      if (hasAdmin) {
+      if ($rootScope.hasAdmin) {
         $scope.tabs = $scope.tabs.concat(adminTabs);
       }
       

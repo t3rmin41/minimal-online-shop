@@ -71,4 +71,19 @@ public class OrderBean implements Serializable {
       return this;
   }
   
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof OrderBean) {
+      return ((OrderBean) o).productId == this.productId;
+    }
+    return false;
+  }
+  
+  @Override
+  public int hashCode() {
+    int hash = 3;
+    hash = (int) (this.id * this.productId * hash);
+    return hash;
+  }
+  
 }
