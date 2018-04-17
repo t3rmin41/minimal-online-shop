@@ -10,8 +10,11 @@
 
     var ctrl = this;
 
-    $scope.products = [];
+    $scope.hasManager = $cookies.getObject('user').roles.filter(function(role){ return role.code == "MANAGER"}).length > 0;
+    $scope.hasAdmin = $cookies.getObject('user').roles.filter(function(role){ return role.code == "ADMIN"}).length > 0;
     
+    $scope.products = [];
+
     $rootScope.$on('ProductReload', function (event, message){
       ctrl.getProducts();
     });
@@ -30,6 +33,10 @@
     
     var getProductsErrorCb = function(data, status, headers) {
       //console.log(status);
+    }
+    
+    $scope.addToCart = function(product) {
+      CartService.addProductToCart(product, function(){}, ErrorController.httpGetErroCb);
     }
     
     $scope.addProduct = function() {
