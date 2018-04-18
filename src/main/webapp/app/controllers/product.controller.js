@@ -36,7 +36,9 @@
     }
     
     $scope.addToCart = function(product) {
-      CartService.addProductToCart(product, function(){}, ErrorController.httpGetErroCb);
+      CartService.addProductToCart(product, function(){
+        $scope.$emit('CartReload', "Reload cart after adding product");
+      }, ErrorController.httpGetErroCb);
     }
     
     $scope.addProduct = function() {
