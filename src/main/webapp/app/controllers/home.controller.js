@@ -22,6 +22,8 @@
     
     $scope.user = $cookies.getObject('user');
     
+    $scope.cart = {};
+    
     ctrl.$onInit = function() {
       if (undefined != $cookies.get('token') && null != $cookies.get('token')) {
       }
@@ -31,11 +33,7 @@
     if (!$scope.authenticated) {
       $location.path("/login");
     }
-    
-    $scope.user = $cookies.getObject('user');
-    
-    $scope.cart = {};
-    
+
     ctrl.getUserCart = function() {
       CartService.getUserCart(getCartSuccessCb, getCartErrorCb);
     }
