@@ -6,6 +6,7 @@ public class ProductBean implements Serializable {
 
   private Long id;
   private String title;
+  private String shortDescription;
   private Double price;
   private boolean deleted;
 
@@ -22,6 +23,13 @@ public class ProductBean implements Serializable {
   public ProductBean setTitle(String title) {
       this.title = title;
       return this;
+  }
+  public String getShortDescription() {
+    return shortDescription;
+  }
+  public ProductBean setShortDescription(String shortDescription) {
+    this.shortDescription = shortDescription;
+    return this;
   }
   public Double getPrice() {
       return price;

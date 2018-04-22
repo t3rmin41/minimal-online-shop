@@ -6,11 +6,13 @@
     <tbody>
       <tr>
         <th>Title</th>
+        <th>Short description</th>
         <th>Price</th>
         <th>Actions</th>
       </tr>
       <tr ng-repeat="product in products | filter:productsearch">
         <td>{{product.title}}</td>
+        <td>{{product.shortDescription}}</td>
         <td>{{product.price}}</td>
         <td>
             <button ng-show="hasManager || hasAdmin" class="btn btn-small" ng-click="editProduct(product)">Edit</button>

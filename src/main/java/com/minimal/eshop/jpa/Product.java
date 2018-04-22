@@ -17,6 +17,8 @@ public class Product {
   private Long id;
   @Column(name = "TITLE")
   private String title;
+  @Column(name = "SHORT_DESCRIPTION")
+  private String shortDescription;
   @Column(name = "PRICE")
   private Double price;
   @Column(name = "DELETED")
@@ -33,6 +35,12 @@ public class Product {
   }
   public void setTitle(String title) {
     this.title = title;
+  }
+  public String getShortDescription() {
+    return shortDescription;
+  }
+  public void setShortDescription(String shortDescription) {
+    this.shortDescription = shortDescription;
   }
   public Double getPrice() {
     return price;

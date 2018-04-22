@@ -46,6 +46,7 @@ public class ProductMapperImpl implements ProductMapper, BeanValidator {
     Product jpa = new Product();
     jpa.setPrice(bean.getPrice());
     jpa.setTitle(bean.getTitle());
+    jpa.setShortDescription(bean.getShortDescription());
     jpa = productRepo.saveProduct(jpa);
     return convertJpaToBean(jpa);
   }
@@ -69,7 +70,9 @@ public class ProductMapperImpl implements ProductMapper, BeanValidator {
   }
 
   private ProductBean convertJpaToBean(Product jpa) {
-    return new ProductBean().setId(jpa.getId()).setTitle(jpa.getTitle()).setPrice(jpa.getPrice()).setDeleted(jpa.isDeleted());
+    return new ProductBean().setId(jpa.getId()).setTitle(jpa.getTitle())
+                            .setShortDescription(jpa.getShortDescription())
+                            .setPrice(jpa.getPrice()).setDeleted(jpa.isDeleted());
 }
   
 }
