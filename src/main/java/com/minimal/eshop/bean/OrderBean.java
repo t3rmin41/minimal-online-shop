@@ -8,6 +8,7 @@ public class OrderBean implements Serializable {
   private Long id;
   private Long productId;
   private String productName;
+  private String shortDescription;
   private Double price;
   private String status;
   private String orderedBy;
@@ -34,6 +35,13 @@ public class OrderBean implements Serializable {
   public OrderBean setProductName(String productName) {
       this.productName = productName;
       return this;
+  }
+  public String getShortDescription() {
+    return shortDescription;
+  }
+  public OrderBean setShortDescription(String shortDescription) {
+    this.shortDescription = shortDescription;
+    return this;
   }
   public Double getPrice() {
       return price;

@@ -102,8 +102,9 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
 
   private OrderBean convertJpaToBean(Order jpa) {
     return new OrderBean().setId(jpa.getId()).setProductId(jpa.getProduct().getId())
-        .setProductName(jpa.getTitle()).setPrice(jpa.getPrice())
-        .setOrderedBy(jpa.getOrderedBy().getEmail()).setStatus(jpa.getStatus())
+        .setProductName(jpa.getTitle()).setShortDescription(jpa.getShortDescription())
+        .setPrice(jpa.getPrice()).setOrderedBy(jpa.getOrderedBy()
+        .getEmail()).setStatus(jpa.getStatus())
         .setCreated(jpa.getCreated()).setUpdated(jpa.getUpdated());
   }
 
@@ -115,13 +116,12 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
     jpa.setProduct(product);
     jpa.setPrice(product.getPrice());
     jpa.setTitle(product.getTitle());
+    jpa.setShortDescription(bean.getShortDescription());
     jpa.setStatus(bean.getStatus());
     jpa.setOrderedBy(user);
     jpa.setCreated(bean.getCreated());
     jpa.setUpdated(bean.getUpdated());
     return jpa;
   }
-
-
 
 }
