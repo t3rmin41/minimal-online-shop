@@ -11,11 +11,6 @@
 
     var ctrl = this;
 
-    $scope.$on('CartReload', function (event, message){
-      console.log(message);
-      ctrl.getUserCart();
-    });
-    
     $scope.route = $route;
 
     $scope.authenticated = ('true' == $cookies.get('authenticated'));
@@ -23,6 +18,21 @@
     $scope.user = $cookies.getObject('user');
     
     $scope.cart = {};
+    
+    $scope.$on('CartReload', function (event, message){
+        console.log(message);
+        //CartService.getUserCart(cartReloadSuccessCb, cartReloadErrorCb);
+        ctrl.getUserCart();
+    })
+    
+    var cartReloadSuccessCb = function(data, status, headers) {
+      //angular.copy(data, $scope.cart);
+      $scope.cart = data;
+    }
+    
+    var cartReloadErrorCb = function(data, status, headers) {
+      //$scope.cart = data;
+    }
     
     ctrl.$onInit = function() {
       if (undefined != $cookies.get('token') && null != $cookies.get('token')) {
@@ -58,11 +68,11 @@
       //console.log(status);
     }
     
-    ctrl.submitCart = function(cart) {
+    $scope.sumbitCart = function(cart) {
       CartService.submitCart(cart, function(){ 
-        ctrl.getUserCart(); 
+        ctrl.getUserCart();
       }, function(){});
-    }
+    };
     
     $scope.logout = function() {
       LoginService.logout(logoutCallback);
