@@ -58,6 +58,12 @@
       //console.log(status);
     }
     
+    ctrl.submitCart = function(cart) {
+      CartService.submitCart(cart, function(){ 
+        ctrl.getUserCart(); 
+      }, function(){});
+    }
+    
     $scope.logout = function() {
       LoginService.logout(logoutCallback);
     };
