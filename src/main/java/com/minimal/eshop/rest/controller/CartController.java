@@ -45,6 +45,7 @@ public class CartController {
       ProductBean product = productService.getProductBeanById(productBean.getId());
       OrderBean orderBean = new OrderBean().setProductId(product.getId()).setOrderedBy(principal.getName());
       orderBean.setProductName(product.getTitle());
+      orderBean.setShortDescription(productBean.getShortDescription());
       orderBean.setPrice(product.getPrice());
       cartBean.getItems().add(orderBean);
       return cartBean;
