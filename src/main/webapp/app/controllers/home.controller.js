@@ -21,19 +21,9 @@
     
     $scope.$on('CartReload', function (event, message){
         console.log(message);
-        //CartService.getUserCart(cartReloadSuccessCb, cartReloadErrorCb);
         ctrl.getUserCart();
     })
-    
-    var cartReloadSuccessCb = function(data, status, headers) {
-      //angular.copy(data, $scope.cart);
-      $scope.cart = data;
-    }
-    
-    var cartReloadErrorCb = function(data, status, headers) {
-      //$scope.cart = data;
-    }
-    
+
     ctrl.$onInit = function() {
       if (undefined != $cookies.get('token') && null != $cookies.get('token')) {
       }
@@ -49,7 +39,7 @@
     }
     
     var getCartSuccessCb = function(data, status, headers) {
-      $scope.cart = data;
+      angular.element($('#cart')).scope().cart = data;
     }
     
     var getCartErrorCb = function(data, status, headers) {
@@ -73,7 +63,7 @@
         ctrl.getUserCart();
       }, function(){});
     };
-    
+
     $scope.logout = function() {
       LoginService.logout(logoutCallback);
     };
