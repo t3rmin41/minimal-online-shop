@@ -103,6 +103,8 @@
 
     $scope.currentOrder = currentOrder;
     
+    $scope.statuses = [];
+    
     $scope.modalTitle = "";
     if (currentOrder.id) {
       $scope.modalTitle = "Edit order";
@@ -111,9 +113,15 @@
     }
 
     ctrl.$onInit = function() {
-      //
+      ctrl.getStatuses();
     };
 
+    ctrl.getStatuses = function() {
+      OrderService.getOrderStatusList(function(data, status, headers){
+        $scope.statuses = data;
+      }, function(){});
+    };
+    
     var getErrorCallback = function(data, status, headers) {
       //console.log(status);
     }

@@ -16,7 +16,7 @@ public class CartServiceImpl implements CartService {
   @Override
   public CartBean submitCart(CartBean bean) {
     for (OrderBean orderBean : bean.getItems()) {
-      orderBean.setStatus(new OrderStatusBean().setCode(OrderStatus.PENDING.getName()).setTitle(OrderStatus.PENDING.getStatusTitle()));
+      orderBean.setStatus(new OrderStatusBean().setCode(OrderStatus.PENDING.toString()).setTitle(OrderStatus.PENDING.getStatusTitle()));
       orderService.saveOrder(orderBean);
     }
     return bean;

@@ -98,10 +98,10 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
   }
   
   @Override
-  public OrderStatusBean getTypeBeanByCode(String code) {
+  public OrderStatusBean getTypeBeanByName(String name) {
     for (OrderStatus status : OrderStatus.values()) {
-      if (status.toString().equals(code)) {
-        return new OrderStatusBean().setCode(status.getName()).setTitle(status.getStatusTitle());
+      if (status.name().equals(name)) {
+        return new OrderStatusBean().setCode(status.name()).setTitle(status.getStatusTitle());
       }
     }
     return null;
@@ -118,7 +118,7 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
         .setProductName(jpa.getTitle()).setShortDescription(jpa.getShortDescription())
         .setPrice(jpa.getPrice()).setOrderedBy(jpa.getOrderedBy()
         .getEmail())
-        .setStatus(getTypeBeanByCode(jpa.getStatus()))
+        .setStatus(getTypeBeanByName(jpa.getStatus()))
         .setCreated(jpa.getCreated()).setUpdated(jpa.getUpdated());
   }
 

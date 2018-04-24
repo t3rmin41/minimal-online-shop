@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public OrderBean updateOrder(OrderBean bean) {
     for (OrderStatus status : OrderStatus.values()) {
-      if (status.name().equals(bean.getStatus())) {
+      if (status.name().equals(bean.getStatus().getCode())) {
         return orderMapper.updateOrder(bean);
       }
     }

@@ -8,17 +8,12 @@ public enum OrderStatus {
   PRODUCT_DELETED("Product deleted"),
   COMPLETED("Completed");
 
-  private String name;
   private String statusTitle;
 
   private OrderStatus(String status) {
     this.statusTitle = status;
   }
 
-  public String getName() {
-    return this.name;
-  }
-  
   public String getStatusTitle() {
     return this.statusTitle;
   }
@@ -34,7 +29,7 @@ public enum OrderStatus {
 
   public static OrderStatus getOrderStatusByName(String code) {
     for (OrderStatus current : OrderStatus.values()) {
-      if (current.name.equals(code)) {
+      if (current.toString().equals(code)) {
         return current;
       }
     }

@@ -18,7 +18,7 @@ public interface OrderMapper {
   
   OrderBean convertOrderToBeanById(Long id);
   
-  OrderStatusBean getTypeBeanByCode(String code);
+  OrderStatusBean getTypeBeanByName(String name);
   
   List<OrderBean> getUserOrdersByUsername(String email);
   

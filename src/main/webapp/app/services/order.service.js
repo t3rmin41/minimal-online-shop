@@ -45,6 +45,17 @@
       }).success(success).error(error);
     };
 
+    service.getOrderStatusList = function(success, error) {
+      $http({
+        url: '/orders/statuslist',
+        method: 'GET',
+        headers : {
+          "Content-Type" : "application/json;charset=UTF-8",
+          "Accept" : "application/json;charset=UTF-8"
+        }
+      }).success(success).error(error);
+    };
+    
     service.saveOrder = function(order, success, error) {
       $http({
         url: '/orders/save',
