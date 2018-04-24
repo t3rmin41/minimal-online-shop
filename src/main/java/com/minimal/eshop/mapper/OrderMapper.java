@@ -2,6 +2,7 @@ package com.minimal.eshop.mapper;
 
 import java.util.List;
 import com.minimal.eshop.bean.OrderBean;
+import com.minimal.eshop.bean.OrderStatusBean;
 
 public interface OrderMapper {
 
@@ -16,6 +17,8 @@ public interface OrderMapper {
   boolean deleteOrderById(Long id);
   
   OrderBean convertOrderToBeanById(Long id);
+  
+  OrderStatusBean getTypeBeanByCode(String code);
   
   List<OrderBean> getUserOrdersByUsername(String email);
   

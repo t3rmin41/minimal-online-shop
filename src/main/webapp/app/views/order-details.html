@@ -8,6 +8,11 @@
         <input type="text" id="txtProductName" class="form-control" ng-model="currentOrder.productName" />
         <p class="help-block" ng-show="errors['productName']"> {{ errors['productName'] }} </p>
     </div>
+    <div class="form-group" ng-class="{ 'has-error' : errors['shortDescription'] }">
+        <label for="txtShortDescription">Short description:</label>
+        <input type="text" id="txtShortDescription" class="form-control" ng-model="currentOrder.shortDescription" />
+        <p class="help-block" ng-show="errors['shortDescription']"> {{ errors['shortDescription'] }} </p>
+    </div>
     <div class="form-group" ng-class="{ 'has-error' : errors['price'] }">
         <label for="txtPrice">Price:</label>
         <input type="text" id="txtPrice" class="form-control" ng-model="currentOrder.price" />
@@ -15,7 +20,7 @@
     </div>
     <div class="form-group" ng-class="{ 'has-error' : errors['status'] }">
         <label for="txtStatus">Status:</label>
-        <input type="text" id="txtStatus" class="form-control" ng-model="currentOrder.status" />
+        <input type="text" id="txtStatus" class="form-control" ng-model="currentOrder.status.title" />
         <p class="help-block" ng-show="errors['status']"> {{ errors['status'] }} </p>
     </div>
 </div>

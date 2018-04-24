@@ -61,7 +61,7 @@ public class OrderController {
   public @ResponseBody Map<OrderStatus, String> getOrderStatusMap() {
       Map<OrderStatus, String> statusMap = new HashMap<OrderStatus, String>();
       for (OrderStatus status : OrderStatus.values()) {
-        statusMap.put(status, status.getCode());
+        statusMap.put(status, status.getName());
       }
       return statusMap;
   }

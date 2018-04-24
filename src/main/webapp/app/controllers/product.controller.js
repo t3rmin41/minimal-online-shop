@@ -109,6 +109,8 @@
   function ProductModalController($scope, $uibModalInstance, $cookies, $routeParams, $location, currentProduct, ProductService, CartService) {
     var ctrl = this;
 
+    $scope.currentProduct = currentProduct;
+    
     $scope.modalTitle = "";
     if (currentProduct.id) {
       $scope.modalTitle = "Edit product";

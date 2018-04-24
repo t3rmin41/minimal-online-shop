@@ -1,7 +1,9 @@
 package com.minimal.eshop.bean;
 
 import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductBean implements Serializable {
 
   private Long id;

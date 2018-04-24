@@ -6,14 +6,16 @@
     <tbody>
       <tr>
         <th>Product</th>
+        <th>Short description</th>
         <th>Price</th>
         <th>Status</th>
         <th>Actions</th>
       </tr>
       <tr ng-repeat="order in orders | filter:ordersearch">
         <td>{{order.productName}}</td>
+        <td>{{order.shortDescription}}</td>
         <td>{{order.price}}</td>
-        <td>{{order.status}}</td>
+        <td>{{order.status.title}}</td>
         <td>
             <button class="btn btn-small" ng-click="editOrder(order)">Edit</button>
             <button class="btn btn-small" ng-click="deleteOrder(order)">Delete</button>

@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.minimal.eshop.bean.OrderBean;
+import com.minimal.eshop.bean.OrderStatusBean;
+import com.minimal.eshop.enums.OrderStatus;
 import com.minimal.eshop.errorhandling.ErrorField;
 import com.minimal.eshop.errorhandling.WrongBeanFormatException;
 import com.minimal.eshop.jpa.Order;
@@ -54,7 +57,7 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
         jpa.setPrice(bean.getPrice());
     }
     if (null != bean.getStatus()) {
-        jpa.setStatus(bean.getStatus());
+        jpa.setStatus(bean.getStatus().getCode());
     }
     return convertJpaToBean(orderRepo.updateOrder(jpa));
   }
@@ -95,6 +98,16 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
   }
   
   @Override
+  public OrderStatusBean getTypeBeanByCode(String code) {
+    for (OrderStatus status : OrderStatus.values()) {
+      if (status.toString().equals(code)) {
+        return new OrderStatusBean().setCode(status.getName()).setTitle(status.getStatusTitle());
+      }
+    }
+    return null;
+  }
+  
+  @Override
   public List<ErrorField> validateBean(Serializable bean) throws WrongBeanFormatException {
     // TODO Auto-generated method stub
     return null;
@@ -104,7 +117,8 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
     return new OrderBean().setId(jpa.getId()).setProductId(jpa.getProduct().getId())
         .setProductName(jpa.getTitle()).setShortDescription(jpa.getShortDescription())
         .setPrice(jpa.getPrice()).setOrderedBy(jpa.getOrderedBy()
-        .getEmail()).setStatus(jpa.getStatus())
+        .getEmail())
+        .setStatus(getTypeBeanByCode(jpa.getStatus()))
         .setCreated(jpa.getCreated()).setUpdated(jpa.getUpdated());
   }
 
@@ -117,11 +131,13 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
     jpa.setPrice(product.getPrice());
     jpa.setTitle(product.getTitle());
     jpa.setShortDescription(bean.getShortDescription());
-    jpa.setStatus(bean.getStatus());
+    jpa.setStatus(bean.getStatus().getCode());
     jpa.setOrderedBy(user);
     jpa.setCreated(bean.getCreated());
     jpa.setUpdated(bean.getUpdated());
     return jpa;
   }
+
+
 
 }

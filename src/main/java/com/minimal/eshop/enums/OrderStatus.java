@@ -8,28 +8,33 @@ public enum OrderStatus {
   PRODUCT_DELETED("Product deleted"),
   COMPLETED("Completed");
 
-  private String code;
+  private String name;
+  private String statusTitle;
 
   private OrderStatus(String status) {
-    this.code = status;
+    this.statusTitle = status;
   }
 
-  public String getCode() {
-    return this.code;
+  public String getName() {
+    return this.name;
+  }
+  
+  public String getStatusTitle() {
+    return this.statusTitle;
   }
 
-  public static String getOrderStatusName(OrderStatus status) {
+  public static String getOrderStatusTitle(OrderStatus status) {
     for (OrderStatus current : OrderStatus.values()) {
       if (status.equals(current)) {
-        return current.code;
+        return current.statusTitle;
       }
     }
     return null;
   }
 
-  public static OrderStatus getOrderStatusByName(String statusName) {
+  public static OrderStatus getOrderStatusByName(String code) {
     for (OrderStatus current : OrderStatus.values()) {
-      if (current.code.equals(statusName)) {
+      if (current.name.equals(code)) {
         return current;
       }
     }

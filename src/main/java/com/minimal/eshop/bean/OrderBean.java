@@ -2,7 +2,10 @@ package com.minimal.eshop.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.minimal.eshop.enums.OrderStatus;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderBean implements Serializable {
 
   private Long id;
@@ -10,7 +13,7 @@ public class OrderBean implements Serializable {
   private String productName;
   private String shortDescription;
   private Double price;
-  private String status;
+  private OrderStatusBean status;
   private String orderedBy;
   private Date created;
   private Date updated;
@@ -50,10 +53,10 @@ public class OrderBean implements Serializable {
       this.price = price;
       return this;
   }
-  public String getStatus() {
+  public OrderStatusBean getStatus() {
       return status;
   }
-  public OrderBean setStatus(String status) {
+  public OrderBean setStatus(OrderStatusBean status) {
       this.status = status;
       return this;
   }

@@ -36,7 +36,7 @@
     $scope.addOrder = function() {
       var modal = $uibModal.open({
         resolve: {
-          currentOrder: { skills : [] }
+          currentOrder: {}
         },
         templateUrl: 'app/views/order-details.html',
         controller: OrderModalController,
@@ -101,6 +101,8 @@
   function OrderModalController($scope, $uibModalInstance, $cookies, $routeParams, $location, currentOrder, OrderService) {
     var ctrl = this;
 
+    $scope.currentOrder = currentOrder;
+    
     $scope.modalTitle = "";
     if (currentOrder.id) {
       $scope.modalTitle = "Edit order";
