@@ -18,7 +18,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
-//apply plugin: 'war' // applying this plugin puts .war in build/libs directory. Without it .jar is created
+apply plugin: 'war' // applying this plugin puts .war in build/libs directory. Without it .jar is created
 
 sourceSets {
     main {
@@ -36,13 +36,13 @@ sourceSets {
     }
 }
 
-jar {
-    baseName = 'com.minimal.eshop.app'
-    version = '0.0.1'
-}
+//jar {
+//    baseName = 'com.minimal.eshop.app'
+//    version = '0.0.1'
+//}
 
 //war {
-//    archiveName = 'com.minimal.eshop.app.1.0.0.war'
+//    archiveName = 'com.minimal.eshop.app.0.0.1.war'
 //}
 
 sourceCompatibility = 1.8
@@ -62,7 +62,7 @@ configurations.all {
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
-    //providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-devtools") //for reloading static content through browser refresh
     compile("org.springframework.session:spring-session:1.3.1.RELEASE")
