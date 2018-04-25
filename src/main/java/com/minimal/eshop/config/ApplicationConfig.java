@@ -1,6 +1,6 @@
 package com.minimal.eshop.config;
 
-import org.h2.server.web.WebServlet;
+//import org.h2.server.web.WebServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,11 +19,11 @@ public class ApplicationConfig {
     return new ApplicationContextProvider();
   }
   
-  @Bean
-  public ServletRegistrationBean h2servletRegistration(){
-      ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
-      registrationBean.addUrlMappings("/h2-console/*");
-      return registrationBean;
-  }
+//  @Bean
+//  public ServletRegistrationBean h2servletRegistration(){
+//      ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
+//      registrationBean.addUrlMappings("/h2-console/*");
+//      return registrationBean;
+//  }
   
 }
