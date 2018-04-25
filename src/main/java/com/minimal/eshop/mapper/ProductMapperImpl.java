@@ -70,6 +70,15 @@ public class ProductMapperImpl implements ProductMapper, BeanValidator {
   public List<ErrorField> validateBean(Serializable bean) throws WrongBeanFormatException {
     List<ErrorField> errors = new LinkedList<ErrorField>();
     ProductBean productBean = (ProductBean) bean;
+    if (productBean.getShortDescription().length() > 15) {
+      errors.add(new ErrorField("shortDescription", "Short description maximum length is 15 chars"));
+    }
+    if (productBean.getPrice() < 0) {
+      errors.add(new ErrorField("price", "Price cannot be negative"));
+    }
+    if (errors.size() > 0) {
+      throw new WrongBeanFormatException("Wrong user fields", errors);
+    }
     return errors;
   }
 
