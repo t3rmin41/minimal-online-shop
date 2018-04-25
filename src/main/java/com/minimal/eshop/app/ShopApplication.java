@@ -17,15 +17,15 @@ import com.minimal.eshop.security.SecurityConfig;
 
 @SpringBootApplication
 @Import({ApplicationConfig.class, MvcConfig.class, JpaConfig.class, SwaggerConfig.class, SecurityConfig.class}) // H2DatabaseStop.class})
-public class ShopApplication extends SpringBootServletInitializer {
+public class ShopApplication { // extends SpringBootServletInitializer {
   
   private static Logger log = LoggerFactory.getLogger(ShopApplication.class);
 
   //for traditional .war deployment need to extend SpringBootServletInitializer
-  @Override
-  protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-      return application.sources(ShopApplication.class);
-  }
+  //@Override
+  //protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+  //    return application.sources(ShopApplication.class);
+  //}
 
   public static void main(String[] args) {
     SpringApplication springApplication = new SpringApplication(ShopApplication.class);
