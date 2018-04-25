@@ -2,14 +2,18 @@ package com.minimal.eshop.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.minimal.eshop.enums.OrderStatus;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderBean implements Serializable {
 
   private Long id;
   private Long productId;
   private String productName;
+  private String shortDescription;
   private Double price;
-  private String status;
+  private OrderStatusBean status;
   private String orderedBy;
   private Date created;
   private Date updated;
@@ -35,6 +39,13 @@ public class OrderBean implements Serializable {
       this.productName = productName;
       return this;
   }
+  public String getShortDescription() {
+    return shortDescription;
+  }
+  public OrderBean setShortDescription(String shortDescription) {
+    this.shortDescription = shortDescription;
+    return this;
+  }
   public Double getPrice() {
       return price;
   }
@@ -42,10 +53,10 @@ public class OrderBean implements Serializable {
       this.price = price;
       return this;
   }
-  public String getStatus() {
+  public OrderStatusBean getStatus() {
       return status;
   }
-  public OrderBean setStatus(String status) {
+  public OrderBean setStatus(OrderStatusBean status) {
       this.status = status;
       return this;
   }
@@ -69,6 +80,21 @@ public class OrderBean implements Serializable {
   public OrderBean setUpdated(Date updated) {
       this.updated = updated;
       return this;
+  }
+  
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof OrderBean) {
+      return ((OrderBean) o).productId == this.productId;
+    }
+    return false;
+  }
+  
+  @Override
+  public int hashCode() {
+    int hash = 3;
+    hash = (int) (this.id * this.productId * hash);
+    return hash;
   }
   
 }

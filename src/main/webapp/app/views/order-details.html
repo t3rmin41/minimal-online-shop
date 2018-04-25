@@ -8,16 +8,27 @@
         <input type="text" id="txtProductName" class="form-control" ng-model="currentOrder.productName" />
         <p class="help-block" ng-show="errors['productName']"> {{ errors['productName'] }} </p>
     </div>
+    <div class="form-group" ng-class="{ 'has-error' : errors['shortDescription'] }">
+        <label for="txtShortDescription">Short description:</label>
+        <input type="text" id="txtShortDescription" class="form-control" ng-model="currentOrder.shortDescription" />
+        <p class="help-block" ng-show="errors['shortDescription']"> {{ errors['shortDescription'] }} </p>
+    </div>
     <div class="form-group" ng-class="{ 'has-error' : errors['price'] }">
         <label for="txtPrice">Price:</label>
         <input type="text" id="txtPrice" class="form-control" ng-model="currentOrder.price" />
         <p class="help-block" ng-show="errors['price']"> {{ errors['price'] }} </p>
     </div>
+
     <div class="form-group" ng-class="{ 'has-error' : errors['status'] }">
-        <label for="txtStatus">Status:</label>
-        <input type="text" id="txtStatus" class="form-control" ng-model="currentOrder.status" />
+        <label for="type">Status:</label>
+        <select name="status" id="status" class="form-control" 
+                ng-model="currentOrder.status.code"
+                ng-change="checkSelectedStatus()">
+          <option ng-repeat="status in statuses" value="{{status.code}}" ng-selected="currentOrder.status.code === status.code" >{{status.title}}</option>
+        </select>
         <p class="help-block" ng-show="errors['status']"> {{ errors['status'] }} </p>
     </div>
+    
 </div>
 <div class="modal-footer">
     <div class="form-group">

@@ -5,9 +5,9 @@
         .module('app')
         .controller('TabsController', TabsController);
 
-    TabsController.$inject = ['$rootScope', '$scope',  '$cookies', '$filter', '$location', '$sce'];
+    TabsController.$inject = ['$rootScope', '$scope',  '$cookies', '$filter', '$location', '$sce', 'CartService'];
 
-    function TabsController($rootScope, $scope, $cookies, $filter, $location, $sce) {
+    function TabsController($rootScope, $scope, $cookies, $filter, $location, $sce, CartService) {
 
       var ctrl = this;
 

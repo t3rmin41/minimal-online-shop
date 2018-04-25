@@ -5,40 +5,37 @@
     .module('app')
     .controller('ProductController', ProductController);
 
-  ProductController.$inject = ['$rootScope', '$scope', '$cookies', '$routeParams', '$uibModal', '$location', 'ProductService', 'ErrorController'];
-  function ProductController($rootScope, $scope, $cookies, $routeParams, $uibModal, $location, ProductService, ErrorController) {
+  ProductController.$inject = ['$rootScope', '$scope', '$cookies', '$routeParams', '$uibModal', '$location', 'ProductService', 'CartService', 'ErrorController'];
+  function ProductController($rootScope, $scope, $cookies, $routeParams, $uibModal, $location, ProductService, CartService, ErrorController) {
 
     var ctrl = this;
 
     $scope.products = [];
-    
+
     $rootScope.$on('ProductReload', function (event, message){
       ctrl.getProducts();
     });
     
     ctrl.$onInit = function() {
-      //ctrl.getEditableProducts();
       ctrl.getProducts();
     };
 
-    ctrl.getAllProducts = function() {
+    ctrl.getProducts = function() {
       ProductService.getAllProducts(getProductsSuccessCb, ErrorController.httpGetErroCb);
     }
-    
-    ctrl.getScreenProducts = function() {
-      ProductService.getEditableProductsByScreenId($rootScope.chosenScreenId, getProductsSuccessCb, ErrorController.httpGetErroCb);
-    }
-    
-    ctrl.getEditableProducts = function() {
-      ProductService.getEditableProducts(getProductsSuccessCb, ErrorController.httpGetErroCb);
-    }
-    
+
     var getProductsSuccessCb = function(data, status, headers) {
       $scope.products = data;
     }
     
     var getProductsErrorCb = function(data, status, headers) {
       //console.log(status);
+    }
+    
+    $scope.addToCart = function(product) {
+      CartService.addProductToCart(product, function(){
+        $scope.$emit('CartReload', "Reload cart after adding product");
+      }, ErrorController.httpGetErroCb);
     }
     
     $scope.addProduct = function() {
@@ -51,7 +48,7 @@
         size: 'md'
       });
       modal.result.then(function(){
-        ctrl.getEditableProducts();
+        ctrl.getProducts();
       }, ErrorController.httpGetErroCb);
     }
     
@@ -67,7 +64,7 @@
         size : modalSize
       });
       modal.result.then(function(){
-        ctrl.getEditableProducts();
+        ctrl.getProducts();
       }, ErrorController.httpGetErroCb);
     }
     
@@ -105,10 +102,12 @@
 
   angular.module('app').controller('ProductModalController', ProductModalController);
 
-  ProductModalController.$inject = ['$scope', '$uibModalInstance', '$cookies', '$routeParams', '$location', 'currentProduct', 'ProductService'];
-  function ProductModalController($scope, $uibModalInstance, $cookies, $routeParams, $location, currentProduct, ProductService) {
+  ProductModalController.$inject = ['$scope', '$uibModalInstance', '$cookies', '$routeParams', '$location', 'currentProduct', 'ProductService', 'CartService'];
+  function ProductModalController($scope, $uibModalInstance, $cookies, $routeParams, $location, currentProduct, ProductService, CartService) {
     var ctrl = this;
 
+    $scope.currentProduct = currentProduct;
+    
     $scope.modalTitle = "";
     if (currentProduct.id) {
       $scope.modalTitle = "Edit product";

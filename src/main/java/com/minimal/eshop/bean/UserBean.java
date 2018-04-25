@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserBean implements Serializable {
 
-  private String id;
+  private Long id;
   private String firstName;
   private String lastName;
   private String email;
@@ -16,10 +16,10 @@ public class UserBean implements Serializable {
   private List<RoleBean> roles;
   private boolean enabled;
 
-  public String getId() {
+  public Long getId() {
       return id;
   }
-  public UserBean setId(String id) {
+  public UserBean setId(Long id) {
       this.id = id;
       return this;
   }

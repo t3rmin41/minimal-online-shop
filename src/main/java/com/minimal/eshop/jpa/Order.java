@@ -24,6 +24,8 @@ public class Order {
   private Product product;
   @Column(name = "TITLE")
   private String title;
+  @Column(name = "SHORT_DESCRIPTION")
+  private String shortDescription;
   @Column(name = "PRICE")
   private Double price;
   @ManyToOne(fetch = FetchType.LAZY)
@@ -53,6 +55,12 @@ public class Order {
   }
   public void setTitle(String title) {
     this.title = title;
+  }
+  public String getShortDescription() {
+    return shortDescription;
+  }
+  public void setShortDescription(String shortDescription) {
+    this.shortDescription = shortDescription;
   }
   public Double getPrice() {
     return price;
