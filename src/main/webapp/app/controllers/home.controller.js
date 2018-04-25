@@ -14,8 +14,15 @@
     $scope.route = $route;
 
     $scope.authenticated = ('true' == $cookies.get('authenticated'));
-    
-    $scope.user = $cookies.getObject('user');
+
+    if ($scope.authenticated) {
+      $rootScope.user = $cookies.getObject('user');
+    }
+
+    if ($scope.authenticated) {
+      $rootScope.hasManager = $scope.user.roles.filter(function(role){ return role.code == "MANAGER"}).length > 0;
+      $rootScope.hasAdmin = $scope.user.roles.filter(function(role){ return role.code == "ADMIN"}).length > 0;
+    }
     
     $scope.cart = {};
     

@@ -59,8 +59,8 @@ public class CartController {
   
   @RequestMapping(value = "/submit", method = RequestMethod.POST, consumes=APPLICATION_JSON_UTF8_VALUE)
   public @ResponseBody CartBean submitCart(Principal principal) {
-    UserBean userBean = userService.getUserByEmail(principal.getName());
-    cartBean.setUserId(userBean.getId());
+    //UserBean userBean = userService.getUserByEmail(principal.getName());
+    //cartBean.setUserId(userBean.getId());
     cartService.submitCart(cartBean);
     cartBean.clear();
     return cartBean;

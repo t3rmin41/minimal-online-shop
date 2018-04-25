@@ -10,7 +10,7 @@
     </div>
     <div class="form-group" ng-class="{ 'has-error' : errors['shortDescription'] }">
         <label for="txtTitle">Short description:</label>
-        <input type="text" id="txtShortDescription" class="form-control" max="15" ng-model="currentProduct.shortDescription" />
+        <input type="text" id="txtShortDescription" class="form-control" maxlength="15" ng-model="currentProduct.shortDescription" />
         <p class="help-block" ng-show="errors['shortDescription']"> {{ errors['shortDescription'] }} </p>
     </div>
     <div class="form-group" ng-class="{ 'has-error' : errors['price'] }">

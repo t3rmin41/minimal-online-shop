@@ -10,9 +10,6 @@
 
     var ctrl = this;
 
-    $scope.hasManager = $cookies.getObject('user').roles.filter(function(role){ return role.code == "MANAGER"}).length > 0;
-    $scope.hasAdmin = $cookies.getObject('user').roles.filter(function(role){ return role.code == "ADMIN"}).length > 0;
-    
     $scope.products = [];
 
     $rootScope.$on('ProductReload', function (event, message){

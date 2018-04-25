@@ -14,7 +14,7 @@
         <div class="col-md-6">
           <ul class="nav navbar-nav">
             <li class="dropdown">
-                <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ user.firstName }} {{ user.lastName }} <span class="caret"></span></a>
+                <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ $root.user.firstName }} {{ $root.user.lastName }} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a ng-click="logout()">Logout</a></li>
                 </ul>
@@ -27,21 +27,10 @@
           <ul class="nav navbar-nav">
             <li class="dropdown">
                 <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Cart <span class="caret"></span></a>
-                <!-- 
-                <ul class="dropdown-menu">
-                    <li ng-repeat-start='(key, order) in cart.items'><span>{{order.shortDescription}}</span><span ng-click="$ctrl.removeFromCart(order)">X</span></li>
-                    <li ng-repeat-end ng-if='cart.items.length > 0' role="separator" class="divider">
-                    </li>
-                    <li ng-if='cart.items.length > 0'><span ng-click="sumbitCart(cart)">Submit cart</span>
-                    </li>
-                </ul>
-                -->
                 <ul id="cart" class="dropdown-menu">
                     <li ng-repeat="order in cart.items"><span>{{order.shortDescription}}</span><span ng-click="$ctrl.removeFromCart(order)">X</span></li>
-                    <li ng-if="cart.items.length > 0" role="separator" class="divider">
-                    </li>
-                    <li ng-if="cart.items.length > 0"><span ng-click="sumbitCart(cart)">Submit cart</span>
-                    </li>
+                    <li ng-if="cart.items.length > 0" role="separator" class="divider"></li>
+                    <li ng-if="cart.items.length > 0"><span ng-click="sumbitCart(cart)">Submit cart</span></li>
                 </ul>
             </li>
           </ul>

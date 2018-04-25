@@ -13,18 +13,35 @@
     $scope.orders = [];
     
     $rootScope.$on('OrderReload', function (event, message){
-      ctrl.getOrders();
+      if ($rootScope.hasManager || $rootScope.hasAdmin) {
+        ctrl.getAllOrders();
+      } else {
+        //ctrl.getUserOrdersByName($rootScope.user);
+        ctrl.getUserOrdersById($rootScope.user);
+      }
     });
     
     ctrl.$onInit = function() {
-      //ctrl.getEditableOrders();
-      ctrl.getOrders();
+      if ($rootScope.hasManager || $rootScope.hasAdmin) {
+        ctrl.getAllOrders();
+      } else {
+        //ctrl.getUserOrdersByName($rootScope.user);
+        ctrl.getUserOrdersById($rootScope.user);
+      }
     };
 
-    ctrl.getOrders = function() {
+    ctrl.getAllOrders = function() {
       OrderService.getAllOrders(getOrdersSuccessCb, ErrorController.httpGetErroCb);
     }
 
+    ctrl.getUserOrdersById = function(user) {
+      OrderService.getUserOrdersById(user.id, getOrdersSuccessCb, ErrorController.httpGetErroCb);
+    }
+    
+    ctrl.getUserOrdersByName = function(user) {
+      OrderService.getUserOrdersByName(user.email, getOrdersSuccessCb, ErrorController.httpGetErroCb);
+    }
+    
     var getOrdersSuccessCb = function(data, status, headers) {
       $scope.orders = data;
     }
@@ -43,7 +60,7 @@
         size: 'md'
       });
       modal.result.then(function(){
-        ctrl.getOrders();
+        ctrl.getAllOrders();
       }, ErrorController.httpGetErroCb);
     }
     
@@ -59,7 +76,7 @@
         size : modalSize
       });
       modal.result.then(function(){
-        ctrl.getOrders();
+        ctrl.getAllOrders();
       }, ErrorController.httpGetErroCb);
     }
     
@@ -87,7 +104,6 @@
           }
         }
       });
-
       modal.result.then(function(){
         ctrl.getAllOrders();
       }, function() {});

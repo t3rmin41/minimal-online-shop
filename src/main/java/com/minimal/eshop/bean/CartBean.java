@@ -12,24 +12,24 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class CartBean implements Serializable {
 
-  private Long userId;
+  //private Long userId;
   
   private List<OrderBean> items = new ArrayList<OrderBean>();
 
-  public Long getUserId() {
-    return userId;
-  }
-
-  public void setUserId(Long userId) {
-    this.userId = userId;
-  }
+//  public Long getUserId() {
+//    return userId;
+//  }
+//
+//  public void setUserId(Long userId) {
+//    this.userId = userId;
+//  }
   
   public List<OrderBean> getItems() {
-      return this.items;
+    return this.items;
   }
 
   public void clear() {
-      this.items.clear();
+    this.items.clear();
   }
   
 }

@@ -35,7 +35,7 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
     List<Order> orders = orderRepo.getOrders();
     List<OrderBean> beans = new ArrayList<OrderBean>();
     for (Order jpa : orders) {
-        beans.add(convertJpaToBean(jpa));
+      beans.add(convertJpaToBean(jpa));
     }
     return beans;
   }
@@ -54,10 +54,10 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
   public OrderBean updateOrder(OrderBean bean) {
     Order jpa = orderRepo.getOrderById(bean.getId());
     if (null != bean.getPrice()) {
-        jpa.setPrice(bean.getPrice());
+      jpa.setPrice(bean.getPrice());
     }
     if (null != bean.getStatus()) {
-        jpa.setStatus(bean.getStatus().getCode());
+      jpa.setStatus(bean.getStatus().getCode());
     }
     return convertJpaToBean(orderRepo.updateOrder(jpa));
   }
@@ -82,7 +82,7 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
     List<Order> orders = orderRepo.getUserOrdersByEmail(email);
     List<OrderBean> beans = new ArrayList<OrderBean>();
     for (Order jpa : orders) {
-        beans.add(convertJpaToBean(jpa));
+      beans.add(convertJpaToBean(jpa));
     }
     return beans;
   }

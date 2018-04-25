@@ -15,14 +15,14 @@
         <td>{{product.shortDescription}}</td>
         <td>{{product.price}}</td>
         <td>
-            <button ng-show="hasManager || hasAdmin" class="btn btn-small" ng-click="editProduct(product)">Edit</button>
-            <button ng-show="hasManager || hasAdmin" class="btn btn-small" ng-click="deleteProduct(product)">Delete</button>
+            <button ng-show="$root.hasManager || $root.hasAdmin" class="btn btn-small" ng-click="editProduct(product)">Edit</button>
+            <button ng-show="$root.hasManager || $root.hasAdmin" class="btn btn-small" ng-click="deleteProduct(product)">Delete</button>
             <button class="btn btn-small" ng-click="addToCart(product)">Add to cart</button>
         </td>
       </tr>
     </tbody>
   </table>
-  <div ng-show="hasManager || hasAdmin" class="form-group">
+  <div ng-show="$root.hasManager || $root.hasAdmin" class="form-group">
     <button ng-click="addProduct()" class="btn btn-primary">Add product</button>
   </div>
 </div>
