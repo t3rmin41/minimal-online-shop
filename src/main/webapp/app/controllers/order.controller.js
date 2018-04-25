@@ -13,24 +13,33 @@
     $scope.orders = [];
     
     $rootScope.$on('OrderReload', function (event, message){
-      ctrl.getOrders();
+      if ($rootScope.hasManager || $rootScope.hasAdmin) {
+        ctrl.getAllOrders();
+      } else {
+        //ctrl.getUserOrdersByName($rootScope.user);
+        ctrl.getUserOrdersById($rootScope.user);
+      }
     });
     
     ctrl.$onInit = function() {
-      //ctrl.getEditableOrders();
-      ctrl.getOrders();
+      if ($rootScope.hasManager || $rootScope.hasAdmin) {
+        ctrl.getAllOrders();
+      } else {
+        //ctrl.getUserOrdersByName($rootScope.user);
+        ctrl.getUserOrdersById($rootScope.user);
+      }
     };
 
     ctrl.getAllOrders = function() {
       OrderService.getAllOrders(getOrdersSuccessCb, ErrorController.httpGetErroCb);
     }
-    
-    ctrl.getScreenOrders = function() {
-      OrderService.getEditableOrdersByScreenId($rootScope.chosenScreenId, getOrdersSuccessCb, ErrorController.httpGetErroCb);
+
+    ctrl.getUserOrdersById = function(user) {
+      OrderService.getUserOrdersById(user.id, getOrdersSuccessCb, ErrorController.httpGetErroCb);
     }
     
-    ctrl.getEditableOrders = function() {
-      OrderService.getEditableOrders(getOrdersSuccessCb, ErrorController.httpGetErroCb);
+    ctrl.getUserOrdersByName = function(user) {
+      OrderService.getUserOrdersByName(user.email, getOrdersSuccessCb, ErrorController.httpGetErroCb);
     }
     
     var getOrdersSuccessCb = function(data, status, headers) {
@@ -44,20 +53,20 @@
     $scope.addOrder = function() {
       var modal = $uibModal.open({
         resolve: {
-          currentOrder: { skills : [] }
+          currentOrder: {}
         },
         templateUrl: 'app/views/order-details.html',
         controller: OrderModalController,
         size: 'md'
       });
       modal.result.then(function(){
-        ctrl.getEditableOrders();
+        ctrl.getAllOrders();
       }, ErrorController.httpGetErroCb);
     }
     
     $scope.editOrder = function(order) {
       var orderToEdit = order;
-      var modalSize = Order.skills.length > 0 ? 'lg' : 'md';
+      var modalSize = 'md';
       var modal = $uibModal.open({
         resolve: {
           currentOrder: angular.copy(orderToEdit)
@@ -67,7 +76,7 @@
         size : modalSize
       });
       modal.result.then(function(){
-        ctrl.getEditableOrders();
+        ctrl.getAllOrders();
       }, ErrorController.httpGetErroCb);
     }
     
@@ -95,7 +104,6 @@
           }
         }
       });
-
       modal.result.then(function(){
         ctrl.getAllOrders();
       }, function() {});
@@ -109,6 +117,10 @@
   function OrderModalController($scope, $uibModalInstance, $cookies, $routeParams, $location, currentOrder, OrderService) {
     var ctrl = this;
 
+    $scope.currentOrder = currentOrder;
+    
+    $scope.statuses = [];
+    
     $scope.modalTitle = "";
     if (currentOrder.id) {
       $scope.modalTitle = "Edit order";
@@ -117,9 +129,15 @@
     }
 
     ctrl.$onInit = function() {
-      //
+      ctrl.getStatuses();
     };
 
+    ctrl.getStatuses = function() {
+      OrderService.getOrderStatusList(function(data, status, headers){
+        $scope.statuses = data;
+      }, function(){});
+    };
+    
     var getErrorCallback = function(data, status, headers) {
       //console.log(status);
     }
