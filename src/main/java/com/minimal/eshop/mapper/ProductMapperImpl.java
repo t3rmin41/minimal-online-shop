@@ -77,7 +77,7 @@ public class ProductMapperImpl implements ProductMapper, BeanValidator {
       errors.add(new ErrorField("price", "Price cannot be negative"));
     }
     if (errors.size() > 0) {
-      throw new WrongBeanFormatException("Wrong user fields", errors);
+      throw new WrongBeanFormatException("Wrong data entered", errors);
     }
     return errors;
   }
