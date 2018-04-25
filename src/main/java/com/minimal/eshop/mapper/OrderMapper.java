@@ -3,6 +3,7 @@ package com.minimal.eshop.mapper;
 import java.util.List;
 import com.minimal.eshop.bean.OrderBean;
 import com.minimal.eshop.bean.OrderStatusBean;
+import com.minimal.eshop.jpa.Order;
 
 public interface OrderMapper {
 
@@ -19,6 +20,8 @@ public interface OrderMapper {
   OrderBean convertOrderToBeanById(Long id);
   
   OrderStatusBean getTypeBeanByName(String name);
+  
+  List<OrderBean> convertJpaListToBeans(List<Order> jpas);
   
   List<OrderBean> getUserOrdersByUsername(String email);
   

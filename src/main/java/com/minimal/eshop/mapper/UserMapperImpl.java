@@ -162,7 +162,7 @@ public class UserMapperImpl implements UserMapper, BeanValidator {
       errors.add(new ErrorField("roles", "Wrong one or more roles"));
     }
     if (errors.size() > 0) {
-      throw new WrongBeanFormatException("Wrong user fields", errors);
+      throw new WrongBeanFormatException("Wrong data entered", errors);
     }
     return errors;
   }
