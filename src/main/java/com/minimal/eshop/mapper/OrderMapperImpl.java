@@ -2,6 +2,7 @@ package com.minimal.eshop.mapper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,12 +33,7 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
   
   @Override
   public List<OrderBean> getAllOrders() {
-    List<Order> orders = orderRepo.getOrders();
-    List<OrderBean> beans = new ArrayList<OrderBean>();
-    for (Order jpa : orders) {
-      beans.add(convertJpaToBean(jpa));
-    }
-    return beans;
+    return convertJpaListToBeans(orderRepo.getOrders());
   }
 
   @Override
@@ -47,11 +43,13 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
 
   @Override
   public OrderBean saveOrder(OrderBean bean) {
+    validateBean(bean);
     return convertJpaToBean(orderRepo.saveOrder(convertBeanToJpa(bean)));
   }
 
   @Override
   public OrderBean updateOrder(OrderBean bean) {
+    validateBean(bean);
     Order jpa = orderRepo.getOrderById(bean.getId());
     if (null != bean.getPrice()) {
       jpa.setPrice(bean.getPrice());
@@ -79,22 +77,12 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
 
   @Override
   public List<OrderBean> getUserOrdersByUsername(String email) {
-    List<Order> orders = orderRepo.getUserOrdersByEmail(email);
-    List<OrderBean> beans = new ArrayList<OrderBean>();
-    for (Order jpa : orders) {
-      beans.add(convertJpaToBean(jpa));
-    }
-    return beans;
+    return convertJpaListToBeans(orderRepo.getUserOrdersByEmail(email));
   }
 
   @Override
   public List<OrderBean> getUserOrdersById(Long id) {
-    List<Order> orders = orderRepo.getUserOrdersById(id);
-    List<OrderBean> beans = new ArrayList<OrderBean>();
-    for (Order jpa : orders) {
-        beans.add(convertJpaToBean(jpa));
-    }
-    return beans;
+    return convertJpaListToBeans(orderRepo.getUserOrdersById(id));
   }
   
   @Override
@@ -109,10 +97,20 @@ public class OrderMapperImpl implements OrderMapper, BeanValidator {
   
   @Override
   public List<ErrorField> validateBean(Serializable bean) throws WrongBeanFormatException {
-    // TODO Auto-generated method stub
-    return null;
+    List<ErrorField> errors = new LinkedList<ErrorField>();
+    OrderBean orderBean = (OrderBean) bean;
+    return errors;
   }
 
+  @Override
+  public List<OrderBean> convertJpaListToBeans(List<Order> jpas) {
+    List<OrderBean> beans = new ArrayList<OrderBean>();
+    jpas.stream().forEach(order -> {
+      beans.add(convertJpaToBean(order));
+    });
+    return beans;
+  }
+  
   private OrderBean convertJpaToBean(Order jpa) {
     return new OrderBean().setId(jpa.getId()).setProductId(jpa.getProduct().getId())
         .setProductName(jpa.getTitle()).setShortDescription(jpa.getShortDescription())
