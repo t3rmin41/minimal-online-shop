@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.minimal.eshop.bean.UserBean;
+import com.minimal.eshop.domain.UserBean;
 import com.minimal.eshop.mapper.UserMapper;
 
 @Service

@@ -1,4 +1,4 @@
-package com.minimal.eshop.bean;
+package com.minimal.eshop.domain;
 
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

@@ -1,17 +1,17 @@
 package com.minimal.eshop.repository;
 
 import java.util.List;
-import com.minimal.eshop.jpa.Product;
+import com.minimal.eshop.jpa.ProductDao;
 
 public interface ProductRepository {
 
-  List<Product> getAllProducts();
+  List<ProductDao> getAllProducts();
   
-  Product getProductById(Long id);
+  ProductDao getProductById(Long id);
   
-  Product saveProduct(Product jpa);
+  ProductDao saveProduct(ProductDao jpa);
   
-  Product updateProduct(Product jpa);
+  ProductDao updateProduct(ProductDao jpa);
   
   boolean deleteProductById(Long id);
 }

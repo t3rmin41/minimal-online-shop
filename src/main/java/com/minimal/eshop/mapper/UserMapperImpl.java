@@ -10,13 +10,13 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.minimal.eshop.bean.RoleBean;
-import com.minimal.eshop.bean.UserBean;
+import com.minimal.eshop.domain.RoleBean;
+import com.minimal.eshop.domain.UserBean;
 import com.minimal.eshop.enums.RoleType;
 import com.minimal.eshop.errorhandling.ErrorField;
 import com.minimal.eshop.errorhandling.WrongBeanFormatException;
-import com.minimal.eshop.jpa.Role;
-import com.minimal.eshop.jpa.User;
+import com.minimal.eshop.jpa.RoleDao;
+import com.minimal.eshop.jpa.UserDao;
 import com.minimal.eshop.repository.UserRepository;
 
 @Service
@@ -35,7 +35,7 @@ public class UserMapperImpl implements UserMapper, BeanValidator {
 
   @Override
   public UserBean getUserBeanByEmailAndPassword(String email, String password) {
-    User jpa = userRepo.getUserByEmailAndPassword(email, password);
+    UserDao jpa = userRepo.getUserByEmailAndPassword(email, password);
     if (null != jpa) {
         return convertJpaToBean(jpa);
     } else {
@@ -45,7 +45,7 @@ public class UserMapperImpl implements UserMapper, BeanValidator {
 
   @Override
   public UserBean convertUserToBeanByUserId(Long id) {
-    User jpa = userRepo.getUserById(id);
+    UserDao jpa = userRepo.getUserById(id);
     if (null != jpa) {
         return convertJpaToBean(jpa);
     } else {
@@ -55,16 +55,16 @@ public class UserMapperImpl implements UserMapper, BeanValidator {
 
   @Override
   public UserBean saveUser(UserBean bean) {
-    User jpa = new User();
+    UserDao jpa = new UserDao();
     validateBean(bean);
     setSimpleFieldsFromBean(jpa, bean);
     jpa.setEnabled(true);
-    User created = userRepo.saveUser(jpa);
+    UserDao created = userRepo.saveUser(jpa);
     Set<String> roleNames = new HashSet<String>();
     bean.getRoles().stream().forEach(r -> {
       roleNames.add(r.getCode());
     });
-    Set<Role> roles = convertUserNewRoleStringToRoles(created, roleNames);
+    Set<RoleDao> roles = convertUserNewRoleStringToRoles(created, roleNames);
     userRepo.assignRoles(roles);
     return convertUserToBeanByUserId(created.getId());
   }
@@ -72,7 +72,7 @@ public class UserMapperImpl implements UserMapper, BeanValidator {
   @Override
   public List<UserBean> getAllUsers() {
     List<UserBean> beans = new ArrayList<UserBean>();
-    for (User jpa : userRepo.getAllUsers()) {
+    for (UserDao jpa : userRepo.getAllUsers()) {
         beans.add(convertJpaToBean(jpa));
     }
     return beans;
@@ -80,13 +80,13 @@ public class UserMapperImpl implements UserMapper, BeanValidator {
 
   @Override
   public boolean deleteUserById(Long id) {
-    User jpa = userRepo.getUserById(id);
+    UserDao jpa = userRepo.getUserById(id);
     return userRepo.deleteUser(jpa);
   }
 
   @Override
   public UserBean updateUser(UserBean bean) {
-    User jpa = userRepo.getUserById(new Long(bean.getId()));
+    UserDao jpa = userRepo.getUserById(new Long(bean.getId()));
     validateBean(bean);
     setSimpleFieldsFromBean(jpa, bean);
     UserBean oldBean = convertUserToBeanByUserId(new Long(bean.getId()));
@@ -100,9 +100,9 @@ public class UserMapperImpl implements UserMapper, BeanValidator {
   }
 
   @Override
-  public List<RoleBean> convertUserRolesToRoleBeans(Set<Role> roles) {
+  public List<RoleBean> convertUserRolesToRoleBeans(Set<RoleDao> roles) {
     List<RoleBean> roleBeans = new LinkedList<RoleBean>();
-    for (Role role : roles) {
+    for (RoleDao role : roles) {
       roleBeans.add(new RoleBean().setCode(role.getRole()).setTitle(RoleType.getRoleTitleByCode(role.getRole())));
     }
     return roleBeans;
@@ -110,13 +110,13 @@ public class UserMapperImpl implements UserMapper, BeanValidator {
 
   @Override
   public void addRoles(Long userId, Set<String> roles) {
-    User jpa = userRepo.getUserById(userId);
+    UserDao jpa = userRepo.getUserById(userId);
     userRepo.assignRoles(convertUserNewRoleStringToRoles(jpa, roles));
   }
 
   @Override
   public void removeRoles(Long userId, Set<String> roles) {
-    User jpa = userRepo.getUserById(userId);
+    UserDao jpa = userRepo.getUserById(userId);
     userRepo.removeRoles(userRepo.getUserRolesByNames(jpa, roles));
   }
 
@@ -167,10 +167,10 @@ public class UserMapperImpl implements UserMapper, BeanValidator {
     return errors;
   }
   
-  private Set<Role> convertUserNewRoleStringToRoles(User jpa, Set<String> roleNames) {
-    Set<Role> roles = new HashSet<Role>();
+  private Set<RoleDao> convertUserNewRoleStringToRoles(UserDao jpa, Set<String> roleNames) {
+    Set<RoleDao> roles = new HashSet<RoleDao>();
     for (String rolename : roleNames) {
-        Role jpaRole = new Role();
+        RoleDao jpaRole = new RoleDao();
         jpaRole.setUser(jpa);
         jpaRole.setRole(rolename);
         roles.add(jpaRole);
@@ -178,7 +178,7 @@ public class UserMapperImpl implements UserMapper, BeanValidator {
     return roles;
 }
 
-  private UserBean convertJpaToBean(User jpa) {
+  private UserBean convertJpaToBean(UserDao jpa) {
     return new UserBean()//.setPassword(jpa.getPassword())
             .setFirstName(jpa.getFirstName())
             .setLastName(jpa.getLastName())
@@ -187,15 +187,15 @@ public class UserMapperImpl implements UserMapper, BeanValidator {
             .setRoles(convertUserRolesToRoleBeans(jpa.getRoles())).setEnabled(jpa.getEnabled());
   }
 
-  private Set<String> convertExistingUserRolesToStrings(Set<Role> roles) {
+  private Set<String> convertExistingUserRolesToStrings(Set<RoleDao> roles) {
     Set<String> roleNames = new HashSet<String>();
-    for (Role role : roles) {
+    for (RoleDao role : roles) {
       roleNames.add(role.getRole());
     }
     return roleNames;
   }
 
-  private User setSimpleFieldsFromBean(User jpa, UserBean bean) {
+  private UserDao setSimpleFieldsFromBean(UserDao jpa, UserBean bean) {
     jpa.setEmail(bean.getEmail());
     if (null != bean.getPassword() && !bean.getPassword().isEmpty() && !passwordEncoder.encode(bean.getPassword()).equals(jpa.getPassword())) {
       jpa.setPassword(bean.getPassword());

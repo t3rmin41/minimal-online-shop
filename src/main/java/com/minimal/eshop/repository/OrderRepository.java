@@ -1,21 +1,21 @@
 package com.minimal.eshop.repository;
 
 import java.util.List;
-import com.minimal.eshop.jpa.Order;
+import com.minimal.eshop.jpa.OrderDao;
 
 public interface OrderRepository {
 
-  Order saveOrder(Order order);
+  OrderDao saveOrder(OrderDao order);
   
-  List<Order> getOrders();
+  List<OrderDao> getOrders();
   
-  List<Order> getUserOrdersByEmail(String email);
+  List<OrderDao> getUserOrdersByEmail(String email);
   
-  List<Order> getUserOrdersById(Long userId);
+  List<OrderDao> getUserOrdersById(Long userId);
   
-  Order getOrderById(Long id);
+  OrderDao getOrderById(Long id);
   
-  Order updateOrder(Order order);
+  OrderDao updateOrder(OrderDao order);
   
   boolean deleteOrderById(Long id);
 }
