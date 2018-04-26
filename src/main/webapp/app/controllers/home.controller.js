@@ -66,7 +66,8 @@
     }
     
     $scope.sumbitCart = function(cart) {
-      CartService.submitCart(cart, function(){ 
+      CartService.submitCart(cart, function(){
+        $rootScope.$broadcast('CartSubmit', "Cart submitted");
         ctrl.getUserCart();
       }, function(){});
     };

@@ -28,9 +28,9 @@
             <li class="dropdown">
                 <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Cart <span class="caret"></span></a>
                 <ul id="cart" class="dropdown-menu">
-                    <li ng-repeat="order in cart.items"><span>{{order.shortDescription}}</span><span ng-click="$ctrl.removeFromCart(order)">X</span></li>
+                    <li ng-repeat="order in cart.items"><span>{{order.shortDescription}}</span><i class="glyphicon glyphicon-remove pull-right" ng-click="$ctrl.removeFromCart(order)"></i></li>
                     <li ng-if="cart.items.length > 0" role="separator" class="divider"></li>
-                    <li ng-if="cart.items.length > 0"><span ng-click="sumbitCart(cart)">Submit cart</span></li>
+                    <li ng-if="cart.items.length > 0"><a ng-click="sumbitCart(cart)">Submit cart</a></li>
                 </ul>
             </li>
           </ul>
@@ -38,9 +38,13 @@
       </div>
     </div>
     <div ng-controller="TabsController" class="row">
+      <div class="col-lg-10">
         <nav>
         <ul class="nav nav-tabs">
-            <li ng-repeat="tab in tabs"><a href="#/" ng-click="setCurrentTab(tab.id)">{{ tab.title }}</a></li>
+            <li ng-repeat="tab in tabs" ng-class='{active : tab.selected}'>
+              <a href="#/" ng-click="setCurrentTab(tab.id)">{{ tab.title }} <i ng-show='!tab.selected && tab.newOrdersAdded' class="glyphicon glyphicon-exclamation-sign pull-left newOrders"></i>
+              </a>
+            </li>
         </ul>
         </nav>
         <div id="{{currentTab.id}}" class="tab-content">
@@ -48,5 +52,6 @@
                 <div ng-include src="templateUrl(currentTab.id)"></div>
             </div>
         </div>
+      </div>
     </div>
 </div>
