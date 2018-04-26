@@ -34,7 +34,7 @@ public class OrderRepositoryImpl implements OrderRepository {
   @Override
   @Transactional
   public List<OrderDao> getOrders() {
-    String q = "SELECT o FROM Order o";
+    String q = "SELECT o FROM OrderDao o";
     TypedQuery<OrderDao> query = em.createQuery(q, OrderDao.class);
     return query.getResultList();
   }
@@ -42,7 +42,7 @@ public class OrderRepositoryImpl implements OrderRepository {
   @Override
   @Transactional
   public List<OrderDao> getUserOrdersByEmail(String email) {
-    String q = "SELECT o FROM Order o WHERE o.orderedBy = (SELECT u FROM User u WHERE u.email = :pemail)";
+    String q = "SELECT o FROM OrderDao o WHERE o.orderedBy = (SELECT u FROM UserDao u WHERE u.email = :pemail)";
     TypedQuery<OrderDao> query = em.createQuery(q, OrderDao.class);
     query.setParameter("pemail", email);
     return query.getResultList();
@@ -51,7 +51,7 @@ public class OrderRepositoryImpl implements OrderRepository {
   @Override
   @Transactional
   public List<OrderDao> getUserOrdersById(Long userId) {
-    String q = "SELECT o FROM Order o WHERE o.orderedBy = (SELECT u FROM User u WHERE u.id = :pid)";
+    String q = "SELECT o FROM OrderDao o WHERE o.orderedBy = (SELECT u FROM UserDao u WHERE u.id = :pid)";
     TypedQuery<OrderDao> query = em.createQuery(q, OrderDao.class);
     query.setParameter("pid", userId);
     return query.getResultList();
@@ -60,7 +60,7 @@ public class OrderRepositoryImpl implements OrderRepository {
   @Override
   @Transactional
   public OrderDao getOrderById(Long id) {
-    String q = "SELECT o FROM Order o WHERE o.id = :pid";
+    String q = "SELECT o FROM OrderDao o WHERE o.id = :pid";
     TypedQuery<OrderDao> query = em.createQuery(q, OrderDao.class);
     query.setParameter("pid", id);
     return query.getSingleResult();

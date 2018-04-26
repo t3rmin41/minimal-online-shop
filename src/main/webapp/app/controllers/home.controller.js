@@ -27,7 +27,7 @@
     $scope.cart = {};
     
     $scope.$on('CartReload', function (event, message){
-        console.log(message);
+        //console.log(message);
         ctrl.getUserCart();
     })
 

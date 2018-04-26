@@ -16,7 +16,7 @@
 
       $scope.tabs = [
                       { id: '0', title: 'Products', path: 'app/views/product.html', ctrl : 'ProductController', selected: true, newOrdersAdded: false, reloadEvent: 'ProductReload' },
-                      { id: '1', title: 'Orders', path: 'app/views/order.html', ctrl : 'OrderController', selected: false, newOrdersAdded: true, reloadEvent: 'OrderReload' },
+                      { id: '1', title: 'Orders', path: 'app/views/order.html', ctrl : 'OrderController', selected: false, newOrdersAdded: false, reloadEvent: 'OrderReload' },
                     ];
 
       var adminTabs = [
