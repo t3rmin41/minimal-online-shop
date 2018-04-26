@@ -6,10 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.minimal.eshop.bean.ProductBean;
+import com.minimal.eshop.domain.ProductBean;
 import com.minimal.eshop.errorhandling.ErrorField;
 import com.minimal.eshop.errorhandling.WrongBeanFormatException;
-import com.minimal.eshop.jpa.Product;
+import com.minimal.eshop.jpa.ProductDao;
 import com.minimal.eshop.repository.ProductRepository;
 
 @Service
@@ -19,7 +19,7 @@ public class ProductMapperImpl implements ProductMapper, BeanValidator {
   private ProductRepository productRepo;
   
   @Override
-  public ProductBean getProductBeanByProduct(Product jpa) {
+  public ProductBean getProductBeanByProduct(ProductDao jpa) {
     return convertJpaToBean(jpa);
   }
 
@@ -29,7 +29,7 @@ public class ProductMapperImpl implements ProductMapper, BeanValidator {
   }
 
   @Override
-  public List<ProductBean> getProductBeansByProducts(List<Product> jpas) {
+  public List<ProductBean> getProductBeansByProducts(List<ProductDao> jpas) {
     List<ProductBean> beans = new LinkedList<ProductBean>();
     jpas.stream().forEach(p -> {
       beans.add(convertJpaToBean(p));
@@ -45,7 +45,7 @@ public class ProductMapperImpl implements ProductMapper, BeanValidator {
   @Override
   public ProductBean saveProduct(ProductBean bean) {
     validateBean(bean);
-    Product jpa = new Product();
+    ProductDao jpa = new ProductDao();
     jpa.setPrice(bean.getPrice());
     jpa.setTitle(bean.getTitle());
     jpa.setShortDescription(bean.getShortDescription());
@@ -56,7 +56,7 @@ public class ProductMapperImpl implements ProductMapper, BeanValidator {
   @Override
   public ProductBean updateProduct(ProductBean bean) {
     validateBean(bean);
-    Product jpa = productRepo.getProductById(bean.getId());
+    ProductDao jpa = productRepo.getProductById(bean.getId());
     jpa.setPrice(bean.getPrice());
     return convertJpaToBean(productRepo.updateProduct(jpa));
   }
@@ -82,7 +82,7 @@ public class ProductMapperImpl implements ProductMapper, BeanValidator {
     return errors;
   }
 
-  private ProductBean convertJpaToBean(Product jpa) {
+  private ProductBean convertJpaToBean(ProductDao jpa) {
     return new ProductBean().setId(jpa.getId()).setTitle(jpa.getTitle())
                             .setShortDescription(jpa.getShortDescription())
                             .setPrice(jpa.getPrice()).setDeleted(jpa.isDeleted());

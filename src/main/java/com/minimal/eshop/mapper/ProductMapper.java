@@ -1,16 +1,16 @@
 package com.minimal.eshop.mapper;
 
 import java.util.List;
-import com.minimal.eshop.bean.ProductBean;
-import com.minimal.eshop.jpa.Product;
+import com.minimal.eshop.domain.ProductBean;
+import com.minimal.eshop.jpa.ProductDao;
 
 public interface ProductMapper {
 
-  ProductBean getProductBeanByProduct(Product jpa);
+  ProductBean getProductBeanByProduct(ProductDao jpa);
   
   ProductBean getProductBeanById(Long id);
   
-  List<ProductBean> getProductBeansByProducts(List<Product> jpas);
+  List<ProductBean> getProductBeansByProducts(List<ProductDao> jpas);
   
   List<ProductBean> getAllProducts();
   

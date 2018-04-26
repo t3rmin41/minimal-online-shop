@@ -1,6 +1,6 @@
 package com.minimal.eshop.service;
 
-import com.minimal.eshop.bean.CartBean;
+import com.minimal.eshop.domain.CartBean;
 
 public interface CartService {
 

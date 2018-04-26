@@ -2,31 +2,31 @@ package com.minimal.eshop.repository;
 
 import java.util.List;
 import java.util.Set;
-import com.minimal.eshop.jpa.Role;
-import com.minimal.eshop.jpa.User;
+import com.minimal.eshop.jpa.RoleDao;
+import com.minimal.eshop.jpa.UserDao;
 
 public interface UserRepository {
 
-  User getUserByEmail(String email);
+  UserDao getUserByEmail(String email);
   
-  User getUserByEmailAndPassword(String username, String password);
+  UserDao getUserByEmailAndPassword(String username, String password);
   
-  User getUserById(Long id);
+  UserDao getUserById(Long id);
   
-  User saveUser(User jpa);
+  UserDao saveUser(UserDao jpa);
   
-  void assignRoles(Set<Role> roles);
+  void assignRoles(Set<RoleDao> roles);
   
-  void removeRoles(Set<Role> roles);
+  void removeRoles(Set<RoleDao> roles);
   
-  List<User> getAllUsers();
+  List<UserDao> getAllUsers();
   
-  boolean deleteUser(User jpa);
+  boolean deleteUser(UserDao jpa);
   
-  User updateUser(User jpa, boolean isPasswordChanged);
+  UserDao updateUser(UserDao jpa, boolean isPasswordChanged);
   
-  Set<Role> getUserRolesByNames(User jpa, Set<String> rolesNames);
+  Set<RoleDao> getUserRolesByNames(UserDao jpa, Set<String> rolesNames);
   
-  Set<Role> getUserRolesByEmail(String email);
+  Set<RoleDao> getUserRolesByEmail(String email);
   
 }

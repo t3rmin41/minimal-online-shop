@@ -3,7 +3,7 @@ package com.minimal.eshop.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.minimal.eshop.bean.OrderBean;
+import com.minimal.eshop.domain.OrderBean;
 import com.minimal.eshop.enums.OrderStatus;
 import com.minimal.eshop.mapper.OrderMapper;
 

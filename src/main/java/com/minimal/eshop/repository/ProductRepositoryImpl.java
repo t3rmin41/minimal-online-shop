@@ -8,7 +8,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 import com.minimal.eshop.enums.OrderStatus;
-import com.minimal.eshop.jpa.Product;
+import com.minimal.eshop.jpa.ProductDao;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
@@ -18,30 +18,30 @@ public class ProductRepositoryImpl implements ProductRepository {
   
   @Override
   @Transactional
-  public List<Product> getAllProducts() {
+  public List<ProductDao> getAllProducts() {
     String q = "SELECT p FROM Product p WHERE p.deleted = false";
-    TypedQuery<Product> query = em.createQuery(q, Product.class);
+    TypedQuery<ProductDao> query = em.createQuery(q, ProductDao.class);
     return query.getResultList();
   }
 
   @Override
   @Transactional
-  public Product getProductById(Long id) {
+  public ProductDao getProductById(Long id) {
     String q = "SELECT p FROM Product p WHERE p.id = :pid AND p.deleted = false";
-    TypedQuery<Product> query = em.createQuery(q, Product.class);
+    TypedQuery<ProductDao> query = em.createQuery(q, ProductDao.class);
     query.setParameter("pid", id);
     return query.getSingleResult();
   }
 
   @Override
   @Transactional
-  public Product saveProduct(Product jpa) {
+  public ProductDao saveProduct(ProductDao jpa) {
     return em.merge(jpa);
   }
 
   @Override
   @Transactional
-  public Product updateProduct(Product jpa) {
+  public ProductDao updateProduct(ProductDao jpa) {
     return em.merge(jpa);
   }
 
@@ -63,9 +63,9 @@ public class ProductRepositoryImpl implements ProductRepository {
   }
   
   @Transactional
-  private Product getAnyProductById(Long id) {
+  private ProductDao getAnyProductById(Long id) {
     String q = "SELECT p FROM Product p WHERE p.id = :pid";
-    TypedQuery<Product> query = em.createQuery(q, Product.class);
+    TypedQuery<ProductDao> query = em.createQuery(q, ProductDao.class);
     query.setParameter("pid", id);
     return query.getSingleResult();
   }
