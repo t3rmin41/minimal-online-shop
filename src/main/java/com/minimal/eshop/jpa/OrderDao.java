@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ORDERS")
-public class Order {
+public class OrderDao {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +21,7 @@ public class Order {
   private Long id;
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "PRODUCT_ID", nullable = false)
-  private Product product;
+  private ProductDao product;
   @Column(name = "TITLE")
   private String title;
   @Column(name = "SHORT_DESCRIPTION")
@@ -30,7 +30,7 @@ public class Order {
   private Double price;
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "ORDERED_BY", nullable = false)
-  private User orderedBy;
+  private UserDao orderedBy;
   @Column(name = "STATUS")
   private String status;
   @Column(name = "CREATED")
@@ -44,10 +44,10 @@ public class Order {
   public void setId(Long id) {
     this.id = id;
   }
-  public Product getProduct() {
+  public ProductDao getProduct() {
     return product;
   }
-  public void setProduct(Product product) {
+  public void setProduct(ProductDao product) {
     this.product = product;
   }
   public String getTitle() {
@@ -68,10 +68,10 @@ public class Order {
   public void setPrice(Double price) {
     this.price = price;
   }
-  public User getOrderedBy() {
+  public UserDao getOrderedBy() {
     return orderedBy;
   }
-  public void setOrderedBy(User orderedBy) {
+  public void setOrderedBy(UserDao orderedBy) {
     this.orderedBy = orderedBy;
   }
   public String getStatus() {

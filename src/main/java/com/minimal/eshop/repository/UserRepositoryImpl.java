@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
-import com.minimal.eshop.jpa.Role;
-import com.minimal.eshop.jpa.User;
+import com.minimal.eshop.jpa.RoleDao;
+import com.minimal.eshop.jpa.UserDao;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -30,21 +30,21 @@ public class UserRepositoryImpl implements UserRepository {
   
   @Override
   @Transactional
-  public User getUserByEmail(String email) {
-    String q = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email = :pemail";
-    TypedQuery<User> query = em.createQuery(q, User.class);
+  public UserDao getUserByEmail(String email) {
+    String q = "SELECT u FROM UserDao u LEFT JOIN FETCH u.roles WHERE u.email = :pemail";
+    TypedQuery<UserDao> query = em.createQuery(q, UserDao.class);
     query.setParameter("pemail", email);
     return query.getSingleResult();
   }
 
   @Override
   @Transactional
-  public User getUserByEmailAndPassword(String email, String password) {
-    String q = "SELECT u FROM User u WHERE u.email = :pemail AND u.password = :ppassword";
-    TypedQuery<User> query = em.createQuery(q, User.class);
+  public UserDao getUserByEmailAndPassword(String email, String password) {
+    String q = "SELECT u FROM UserDao u WHERE u.email = :pemail AND u.password = :ppassword";
+    TypedQuery<UserDao> query = em.createQuery(q, UserDao.class);
     query.setParameter("pemail", email);
     query.setParameter("ppassword", password);
-    List<User> users = query.getResultList();
+    List<UserDao> users = query.getResultList();
     if (1 == users.size()) {
         return users.get(0);
     } else {
@@ -54,33 +54,33 @@ public class UserRepositoryImpl implements UserRepository {
 
   @Override
   @Transactional
-  public User getUserById(Long id) {
-    String q = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.id = :pid";
-    TypedQuery<User> query = em.createQuery(q, User.class);
+  public UserDao getUserById(Long id) {
+    String q = "SELECT u FROM UserDao u LEFT JOIN FETCH u.roles WHERE u.id = :pid";
+    TypedQuery<UserDao> query = em.createQuery(q, UserDao.class);
     query.setParameter("pid", id);
     return query.getSingleResult();
   }
 
   @Override
   @Transactional
-  public User saveUser(User jpa) {
+  public UserDao saveUser(UserDao jpa) {
     jpa.setPassword(passwordEncoder.encode(jpa.getPassword()));
     return em.merge(jpa);
   }
 
   @Override
   @Transactional
-  public void assignRoles(Set<Role> roles) {
-    for (Role role : roles) {
+  public void assignRoles(Set<RoleDao> roles) {
+    for (RoleDao role : roles) {
       em.merge(role);
     }
   }
 
   @Override
   @Transactional
-  public void removeRoles(Set<Role> roles) {
-    for (Role role : roles) {
-      String q = "DELETE FROM Role r WHERE r.role = :role AND r.user = :user AND r.active = 1";
+  public void removeRoles(Set<RoleDao> roles) {
+    for (RoleDao role : roles) {
+      String q = "DELETE FROM RoleDao r WHERE r.role = :role AND r.user = :user AND r.active = 1";
       Query query = em.createQuery(q);
       query.setParameter("role", role.getRole());
       query.setParameter("user", role.getUser());
@@ -90,15 +90,15 @@ public class UserRepositoryImpl implements UserRepository {
 
   @Override
   @Transactional
-  public List<User> getAllUsers() {
-    String q = "SELECT u FROM User u WHERE u.enabled = true";
-    TypedQuery<User> query = em.createQuery(q, User.class);
+  public List<UserDao> getAllUsers() {
+    String q = "SELECT u FROM UserDao u WHERE u.enabled = true";
+    TypedQuery<UserDao> query = em.createQuery(q, UserDao.class);
     return query.getResultList();
   }
 
   @Override
   @Transactional
-  public boolean deleteUser(User jpa) {
+  public boolean deleteUser(UserDao jpa) {
     boolean result = false;
     try {
       em.remove(jpa);
@@ -113,37 +113,37 @@ public class UserRepositoryImpl implements UserRepository {
 
   @Override
   @Transactional
-  public User updateUser(User jpa, boolean isPasswordChanged) {
+  public UserDao updateUser(UserDao jpa, boolean isPasswordChanged) {
     if (isPasswordChanged) {
       jpa.setPassword(passwordEncoder.encode(jpa.getPassword()));
     } else {
       jpa.setPassword(jpa.getPassword());
     }
-    User updated = em.merge(jpa);
+    UserDao updated = em.merge(jpa);
     return getUserById(updated.getId());
   }
 
   @Override
   @Transactional
-  public Set<Role> getUserRolesByNames(User jpa, Set<String> rolesNames) {
-    String q = "SELECT r FROM Role r WHERE r.role IN :roles AND r.user = :user AND r.active = 1";
-    TypedQuery<Role> query = em.createQuery(q, Role.class);
+  public Set<RoleDao> getUserRolesByNames(UserDao jpa, Set<String> rolesNames) {
+    String q = "SELECT r FROM RoleDao r WHERE r.role IN :roles AND r.user = :user AND r.active = 1";
+    TypedQuery<RoleDao> query = em.createQuery(q, RoleDao.class);
     query.setParameter("roles", rolesNames);
     query.setParameter("user", jpa);
-    List<Role> resultList = query.getResultList();
-    Set<Role> roles = new HashSet<Role>();
+    List<RoleDao> resultList = query.getResultList();
+    Set<RoleDao> roles = new HashSet<RoleDao>();
     roles.addAll(resultList);
     return roles;
   }
 
   @Override
   @Transactional
-  public Set<Role> getUserRolesByEmail(String email) {
-    String q = "SELECT r FROM Role r WHERE r.user.email = :pemail AND r.active = 1";
-    TypedQuery<Role> query = em.createQuery(q, Role.class);
+  public Set<RoleDao> getUserRolesByEmail(String email) {
+    String q = "SELECT r FROM RoleDao r WHERE r.user.email = :pemail AND r.active = 1";
+    TypedQuery<RoleDao> query = em.createQuery(q, RoleDao.class);
     query.setParameter("pemail", email);
-    List<Role> resultList = query.getResultList();
-    Set<Role> roles = new HashSet<Role>();
+    List<RoleDao> resultList = query.getResultList();
+    Set<RoleDao> roles = new HashSet<RoleDao>();
     roles.addAll(resultList);
     return roles;
   }

@@ -2,9 +2,9 @@ package com.minimal.eshop.mapper;
 
 import java.util.List;
 import java.util.Set;
-import com.minimal.eshop.bean.RoleBean;
-import com.minimal.eshop.bean.UserBean;
-import com.minimal.eshop.jpa.Role;
+import com.minimal.eshop.domain.RoleBean;
+import com.minimal.eshop.domain.UserBean;
+import com.minimal.eshop.jpa.RoleDao;
 
 public interface UserMapper {
 
@@ -22,7 +22,7 @@ public interface UserMapper {
   
   UserBean updateUser(UserBean bean);
 
-  List<RoleBean> convertUserRolesToRoleBeans(Set<Role> roles);
+  List<RoleBean> convertUserRolesToRoleBeans(Set<RoleDao> roles);
 
   void addRoles(Long userId, Set<String> roles);
 

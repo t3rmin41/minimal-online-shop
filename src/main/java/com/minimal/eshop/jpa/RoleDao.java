@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ROLES")
-public class Role {
+public class RoleDao {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +20,7 @@ public class Role {
   private Long id;
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "USER_ID", nullable = false)
-  private User user;
+  private UserDao user;
   @Column(name = "ROLE")
   private String role;
   @Column(name = "ACTIVE")
@@ -32,10 +32,10 @@ public class Role {
   public void setId(Long id) {
     this.id = id;
   }
-  public User getUser() {
+  public UserDao getUser() {
     return user;
   }
-  public void setUser(User user) {
+  public void setUser(UserDao user) {
     this.user = user;
   }
   public String getRole() {

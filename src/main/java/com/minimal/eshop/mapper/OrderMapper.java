@@ -1,9 +1,9 @@
 package com.minimal.eshop.mapper;
 
 import java.util.List;
-import com.minimal.eshop.bean.OrderBean;
-import com.minimal.eshop.bean.OrderStatusBean;
-import com.minimal.eshop.jpa.Order;
+import com.minimal.eshop.domain.OrderBean;
+import com.minimal.eshop.domain.OrderStatusBean;
+import com.minimal.eshop.jpa.OrderDao;
 
 public interface OrderMapper {
 
@@ -21,7 +21,7 @@ public interface OrderMapper {
   
   OrderStatusBean getTypeBeanByName(String name);
   
-  List<OrderBean> convertJpaListToBeans(List<Order> jpas);
+  List<OrderBean> convertJpaListToBeans(List<OrderDao> jpas);
   
   List<OrderBean> getUserOrdersByUsername(String email);
   

@@ -2,7 +2,7 @@ package com.minimal.eshop.service;
 
 import java.util.List;
 import java.util.Set;
-import com.minimal.eshop.bean.UserBean;
+import com.minimal.eshop.domain.UserBean;
 
 public interface UserService {
 

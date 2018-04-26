@@ -27,7 +27,7 @@
     $scope.cart = {};
     
     $scope.$on('CartReload', function (event, message){
-        console.log(message);
+        //console.log(message);
         ctrl.getUserCart();
     })
 
@@ -66,7 +66,8 @@
     }
     
     $scope.sumbitCart = function(cart) {
-      CartService.submitCart(cart, function(){ 
+      CartService.submitCart(cart, function(){
+        $rootScope.$broadcast('CartSubmit', "Cart submitted");
         ctrl.getUserCart();
       }, function(){});
     };

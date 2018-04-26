@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "USERS")
-public class User {
+public class UserDao {
 
 
   @Id
@@ -31,7 +31,7 @@ public class User {
   private String password;
   //@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="user") // for using custom userDetails implementation - need to fetch roles eagerly 
   @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="user")
-  private Set<Role> roles = new HashSet<Role>();
+  private Set<RoleDao> roles = new HashSet<RoleDao>();
   @Column(name = "ENABLED")
   private boolean enabled;
 
@@ -65,10 +65,10 @@ public class User {
   public void setPassword(String password) {
       this.password = password;
   }
-  public Set<Role> getRoles() {
+  public Set<RoleDao> getRoles() {
       return roles;
   }
-  public void setRoles(Set<Role> roles) {
+  public void setRoles(Set<RoleDao> roles) {
       this.roles = roles;
   }
   public boolean getEnabled() {
