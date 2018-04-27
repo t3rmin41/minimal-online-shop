@@ -21,4 +21,3 @@ Different ports are configured for different branches:
 
 - dev -    8802
 - test -   8801
-- master - 8800
