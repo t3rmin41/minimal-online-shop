@@ -33,7 +33,13 @@
                   <i class="glyphicon glyphicon-shopping-cart pull-left" style="padding-right: 10px; padding-top: 2px"></i>
                 </a>
                 <ul id="cart" class="dropdown-menu list-group" style="padding-top: 0;">
-                    <li ng-repeat="order in cart.items" class="list-group-item"><span>{{order.shortDescription}} <a href="javascript:void(0)"><i class="glyphicon glyphicon-remove pull-right" ng-click="$ctrl.removeFromCart(order)"></i></a></span></li>
+                    <li ng-repeat="order in cart.items" class="list-group-item">
+                      <span>{{order.shortDescription}}
+                        <a href="javascript:void(0)">
+                          <i class="glyphicon glyphicon-remove pull-right" style="padding-top: 2px" ng-click="$ctrl.removeFromCart(order)"></i>
+                        </a>
+                      </span>
+                    </li>
                     <li ng-if="cart.items.length > 0" role="separator" class="divider"></li>
                     <li ng-if="cart.items.length > 0">
                       <a href="javascript:void(0)" ng-click="sumbitCart(cart)">
@@ -41,6 +47,7 @@
                         <i class="glyphicon glyphicon-credit-card pull-right" style="padding-top: 2px"></i>
                       </a>
                     </li>
+                    <li ng-if="cart.items.length == 0" class="list-group-item" style="margin-bottom: -5px"><span>Cart is empty</span></li>
                 </ul>
             </li>
           </ul>
@@ -48,9 +55,9 @@
       </div>
     </div>
     <div ng-controller="TabsController" class="row">
-      <div class="col-lg-10">
+      <div class="col-md-11">
         <nav>
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" style="border-bottom: none">
             <li ng-repeat="tab in tabs" ng-class='{active : tab.selected}'>
               <a href="#/" ng-click="setCurrentTab(tab.id)">{{ tab.title }} <i ng-show='!tab.selected && tab.newOrdersAdded' class="glyphicon glyphicon-exclamation-sign pull-left newOrders"></i>
               </a>
