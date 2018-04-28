@@ -29,10 +29,12 @@
         <div class="col-md-6">
           <ul class="nav navbar-nav" style="width: 160px">
             <li class="dropdown">
-                <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Cart <span class="caret"></span>
+                <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" ng-click="acknowledgeCart(true)"> 
+                  Cart <span class="caret"></span>
                   <i class="glyphicon glyphicon-shopping-cart pull-left" style="padding-right: 10px; padding-top: 2px"></i>
+                  <i ng-show='!cartAcknowledged' class="glyphicon glyphicon-exclamation-sign pull-right newCartItems" style="padding-top: 2px; padding-left: 10px"></i>
                 </a>
-                <ul id="cart" class="dropdown-menu list-group" style="padding-top: 0;">
+                <ul id="cart" class="dropdown-menu list-group" style="padding-top: 0;" >
                     <li ng-repeat="order in cart.items" class="list-group-item">
                       <span>{{order.shortDescription}}
                         <a href="javascript:void(0)">
