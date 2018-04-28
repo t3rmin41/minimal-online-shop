@@ -94,7 +94,7 @@
       });
 
       modal.result.then(function(){
-        ctrl.getAllProducts();
+        ctrl.getProducts();
       }, function() {});
     }
   }

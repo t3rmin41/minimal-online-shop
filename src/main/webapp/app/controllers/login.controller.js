@@ -9,7 +9,10 @@
 
     function LoginController($rootScope, $scope, $cookies, $location, LoginService) {
       
+      $scope.error = null;
+      
       $scope.login = function() {
+        $scope.error = null;
         LoginService.login($scope.credentials, loginSuccessCallback, loginErrorCallback);
       };
       
