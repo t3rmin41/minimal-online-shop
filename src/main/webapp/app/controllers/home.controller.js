@@ -13,6 +13,8 @@
 
     $scope.route = $route;
 
+    $scope.cartAcknowledged = true;
+    
     $scope.authenticated = ('true' == $cookies.get('authenticated'));
 
     if ($scope.authenticated) {
@@ -27,7 +29,12 @@
     $scope.cart = {};
     
     $scope.$on('CartReload', function (event, message){
+        ctrl.getUserCart();
+    })
+    
+    $scope.$on('ProductAddedToCart', function (event, message){
         //console.log(message);
+    	angular.element($('#cart')).scope().cartAcknowledged = false;
         ctrl.getUserCart();
     })
 
@@ -72,6 +79,10 @@
       }, function(){});
     };
 
+    $scope.acknowledgeCart = function(isAcknowledged) {
+      $scope.cartAcknowledged = isAcknowledged;
+    }
+    
     $scope.logout = function() {
       LoginService.logout(logoutCallback);
     };
