@@ -76,7 +76,12 @@
         size : modalSize
       });
       modal.result.then(function(){
-        ctrl.getAllOrders();
+        if ($rootScope.hasManager || $rootScope.hasAdmin) {
+          ctrl.getAllOrders();
+        } else {
+          //ctrl.getUserOrdersByName($rootScope.user);
+          ctrl.getUserOrdersById($rootScope.user);
+        }
       }, ErrorController.httpGetErroCb);
     }
     
@@ -105,7 +110,12 @@
         }
       });
       modal.result.then(function(){
-        ctrl.getAllOrders();
+        if ($rootScope.hasManager || $rootScope.hasAdmin) {
+          ctrl.getAllOrders();
+        } else {
+           //ctrl.getUserOrdersByName($rootScope.user);
+           ctrl.getUserOrdersById($rootScope.user);
+        }
       }, function() {});
     }
   }
