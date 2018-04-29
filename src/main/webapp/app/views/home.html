@@ -16,7 +16,7 @@
             <li class="dropdown">
                 <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ $root.user.firstName }} {{ $root.user.lastName }}
                   <span class="caret"></span>
-                  <i class="glyphicon glyphicon-user pull-left" style="padding-right: 10px"></i>
+                  <i class="glyphicon glyphicon-user pull-left" style="padding-right: 0.5em"></i>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a ng-click="logout()">Logout</a></li>
@@ -31,14 +31,14 @@
             <li class="dropdown">
                 <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" ng-click="acknowledgeCart(true)"> 
                   Cart <span class="caret"></span>
-                  <i class="glyphicon glyphicon-shopping-cart pull-left" style="padding-right: 10px; padding-top: 2px"></i>
-                  <i ng-show='!cartAcknowledged' class="glyphicon glyphicon-exclamation-sign pull-right newCartItems" style="padding-top: 2px; padding-left: 10px"></i>
+                  <i class="glyphicon glyphicon-shopping-cart pull-left" style="padding-right: 0.5em; padding-top: 0.1em"></i>
+                  <i ng-show='!cartAcknowledged' class="glyphicon glyphicon-exclamation-sign newCartItems" style="padding-bottom: 0.3em; padding-left: 0.5em"></i>
                 </a>
                 <ul id="cart" class="dropdown-menu list-group" style="padding-top: 0;" >
                     <li ng-repeat="order in cart.items" class="list-group-item">
                       <span>{{order.shortDescription}}
                         <a href="javascript:void(0)">
-                          <i class="glyphicon glyphicon-remove pull-right" style="padding-top: 2px" ng-click="$ctrl.removeFromCart(order)"></i>
+                          <i class="glyphicon glyphicon-remove pull-right" style="padding-top: 0.15em" ng-click="$ctrl.removeFromCart(order)"></i>
                         </a>
                       </span>
                     </li>
@@ -46,10 +46,10 @@
                     <li ng-if="cart.items.length > 0">
                       <a href="javascript:void(0)" ng-click="sumbitCart(cart)">
                         <span>Submit cart</span>
-                        <i class="glyphicon glyphicon-credit-card pull-right" style="padding-top: 2px"></i>
+                        <i class="glyphicon glyphicon-credit-card pull-right" style="padding-top: 0.15em"></i>
                       </a>
                     </li>
-                    <li ng-if="cart.items.length == 0" class="list-group-item" style="margin-bottom: -5px"><span>Cart is empty</span></li>
+                    <li ng-if="cart.items.length == 0" class="list-group-item" style="margin-bottom: -0.35em"><span>Cart is empty</span></li>
                 </ul>
             </li>
           </ul>
