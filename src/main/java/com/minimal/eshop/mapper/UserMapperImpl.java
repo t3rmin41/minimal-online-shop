@@ -93,8 +93,12 @@ public class UserMapperImpl implements UserMapper, BeanValidator {
     if (checkValidRoles(bean.getRolesAsStrings())) {
       Set<String> oldRoles = new HashSet<String>(oldBean.getRolesAsStrings());
       Set<String> newRoles = new HashSet<String>(bean.getRolesAsStrings());
-      removeRoles(new Long(bean.getId()), getOldRolesDifference(oldRoles, newRoles));
-      addRoles(new Long(bean.getId()), getNewRolesDifference(oldRoles, newRoles));
+      if (!getOldRolesDifference(oldRoles, newRoles).isEmpty()) {
+        removeRoles(new Long(bean.getId()), getOldRolesDifference(oldRoles, newRoles));
+      }
+      if (!getNewRolesDifference(oldRoles, newRoles).isEmpty()) {
+        addRoles(new Long(bean.getId()), getNewRolesDifference(oldRoles, newRoles));
+      }
     }
     return convertJpaToBean(userRepo.updateUser(jpa, checkIfPasswordChanged(bean)));
   }
