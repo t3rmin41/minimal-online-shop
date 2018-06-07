@@ -1,10 +1,9 @@
 package com.minimal.eshop.mapper;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import com.minimal.eshop.domain.ProductBean;
 import com.minimal.eshop.errorhandling.ErrorField;
@@ -15,7 +14,7 @@ import com.minimal.eshop.repository.ProductRepository;
 @Service
 public class ProductMapperImpl implements ProductMapper, BeanValidator {
 
-  @Autowired
+  @Inject
   private ProductRepository productRepo;
   
   @Override

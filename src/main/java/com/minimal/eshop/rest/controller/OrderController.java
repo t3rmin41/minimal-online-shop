@@ -2,11 +2,9 @@ package com.minimal.eshop.rest.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,10 +24,10 @@ public class OrderController {
 
   private List<String> allowedRoles = new LinkedList<String>(Arrays.asList(new String[]{"ROLE_ADMIN", "ROLE_MANAGER"}));
   
-  @Autowired
+  @Inject
   private OrderService orderService;
 
-  @Autowired
+  @Inject
   private RequestValidator requestValidator;
   
   @RequestMapping(value = "/all", method = RequestMethod.GET)
