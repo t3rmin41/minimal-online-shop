@@ -1,7 +1,7 @@
 package com.minimal.eshop.service;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import com.minimal.eshop.domain.ProductBean;
 import com.minimal.eshop.mapper.ProductMapper;
@@ -9,7 +9,7 @@ import com.minimal.eshop.mapper.ProductMapper;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-  @Autowired
+  @Inject
   private ProductMapper productMapper;
   
   @Override

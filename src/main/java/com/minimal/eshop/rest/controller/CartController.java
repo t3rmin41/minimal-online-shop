@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import javax.inject.Inject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -30,19 +29,19 @@ public class CartController {
 
   private List<String> allowedRoles = new LinkedList<String>(Arrays.asList(new String[]{"ROLE_ADMIN", "ROLE_MANAGER", "ROLE_CUSTOMER"}));
   
-  @Autowired
+  @Inject
   private CartService cartService;
   
-  @Autowired
+  @Inject
   private ProductService productService;
   
-  @Autowired
+  @Inject
   private UserService userService;
   
   @Inject
   private CartBean cartBean;
   
-  @Autowired
+  @Inject
   private RequestValidator requestValidator;
   
   @RequestMapping(method = RequestMethod.GET)
