@@ -4,7 +4,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,10 +22,10 @@ public class ProductController {
 
   private List<String> allowedRoles = new LinkedList<String>(Arrays.asList(new String[]{"ROLE_ADMIN", "ROLE_MANAGER"}));
   
-  @Autowired
+  @Inject
   private ProductService productService;
 
-  @Autowired
+  @Inject
   private RequestValidator requestValidator;
   
   @RequestMapping(value = "/all", method = RequestMethod.GET, produces = "application/json")

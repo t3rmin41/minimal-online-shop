@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import com.minimal.eshop.domain.OrderBean;
 import com.minimal.eshop.domain.OrderStatusBean;
@@ -21,13 +21,13 @@ import com.minimal.eshop.repository.UserRepository;
 @Service
 public class OrderMapperImpl implements OrderMapper, BeanValidator {
 
-  @Autowired
+  @Inject
   private OrderRepository orderRepo;
   
-  @Autowired
+  @Inject
   private ProductRepository productRepo;
   
-  @Autowired
+  @Inject
   private UserRepository userRepo;
   
   @Override
