@@ -9,11 +9,15 @@
 
     function LoginController($rootScope, $scope, $cookies, $location, LoginService) {
       
+      var ctrl = this;
+      
       $scope.error = null;
       
-      $scope.login = function() {
+      ctrl.credentials = {};
+      
+      ctrl.login = function() {
         $scope.error = null;
-        LoginService.login($scope.credentials, loginSuccessCallback, loginErrorCallback);
+        LoginService.login(ctrl.credentials, loginSuccessCallback, loginErrorCallback);
       };
       
       var loginSuccessCallback = function(data, status, headers) {
