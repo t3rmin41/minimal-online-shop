@@ -131,6 +131,14 @@ dependencies {
     compile("javax.servlet:jstl")
     compile("org.apache.tomcat.embed:tomcat-embed-jasper")
 
+    //Spring AOP
+    compile("org.springframework:spring-aop:${springCoreVersion}")
+
+    //Aspect J
+    compile("org.aspectj:aspectjrt:1.9.1")
+    compile("org.aspectj:aspectjweaver:1.9.1")
+    
+
     // testing
     testCompile("junit:junit")
     testCompile('org.springframework.boot:spring-boot-starter-test')
