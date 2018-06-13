@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,61 +24,41 @@ import com.minimal.eshop.service.RequestValidator;
 @RequestMapping(value = "/orders", produces = APPLICATION_JSON_UTF8_VALUE)
 public class OrderController {
 
-  private List<String> allowedRoles = new LinkedList<String>(Arrays.asList(new String[]{"ROLE_ADMIN", "ROLE_MANAGER"}));
-  
   @Inject
   private OrderService orderService;
 
-  @Inject
-  private RequestValidator requestValidator;
-  
   @RequestMapping(value = "/all", method = RequestMethod.GET)
   public @ResponseBody List<OrderBean> getAllOrders(UsernamePasswordAuthenticationToken token) {
-    requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "GET /orders/all");
     return orderService.getAllOrders();
   }
   
   @RequestMapping(value = "/user/{username}", method = RequestMethod.GET)
-  public @ResponseBody List<OrderBean> getUserOrdersByName(@PathVariable("username") String username, UsernamePasswordAuthenticationToken token) {
-    List<String> allowed = new LinkedList<String>();
-    allowed.addAll(allowedRoles); allowed.add("ROLE_CUSTOMER");
-    requestValidator.validateRequestAgainstUserRoles(token, allowed, "GET /orders/user/username");
+  public @ResponseBody List<OrderBean> getUserOrdersByName(UsernamePasswordAuthenticationToken token, @PathVariable("username") String username) {
     return orderService.getUserOrdersByUsername(username);
   }
   
   @RequestMapping(value = "/user/id/{userId}", method = RequestMethod.GET)
-  public @ResponseBody List<OrderBean> getUserOrdersById(@PathVariable("userId") Long id, UsernamePasswordAuthenticationToken token) {
-    List<String> allowed = new LinkedList<String>();
-    allowed.addAll(allowedRoles); allowed.add("ROLE_CUSTOMER");
-    requestValidator.validateRequestAgainstUserRoles(token, allowed, "GET /orders/user/id");
+  public @ResponseBody List<OrderBean> getUserOrdersById(UsernamePasswordAuthenticationToken token, @PathVariable("userId") Long id) {
     return orderService.getUserOrdersById(id);
   }
   
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-  public @ResponseBody OrderBean getOrderById(@PathVariable("id") Long id, UsernamePasswordAuthenticationToken token) {
-    List<String> allowed = new LinkedList<String>();
-    allowed.addAll(allowedRoles); allowed.add("ROLE_CUSTOMER");
-    requestValidator.validateRequestAgainstUserRoles(token, allowed, "GET /orders/id");
+  public @ResponseBody OrderBean getOrderById(UsernamePasswordAuthenticationToken token, @PathVariable("id") Long id) {
     return orderService.getOrderById(id);
   }
   
   @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody OrderBean saveOrder(@RequestBody OrderBean bean, UsernamePasswordAuthenticationToken token) {
-    requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "POST /orders/save");
+  public @ResponseBody OrderBean saveOrder(UsernamePasswordAuthenticationToken token, @RequestBody OrderBean bean) {
     return orderService.saveOrder(bean);
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody OrderBean updateOrder(@RequestBody OrderBean bean, UsernamePasswordAuthenticationToken token) {
-    requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "PUT /orders/update");
+  public @ResponseBody OrderBean updateOrder(UsernamePasswordAuthenticationToken token, @RequestBody OrderBean bean) {
     return orderService.updateOrder(bean);
   }
 
   @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-  public @ResponseBody boolean deleteOrder(@PathVariable("id") Long id, UsernamePasswordAuthenticationToken token) {
-    List<String> allowed = new LinkedList<String>();
-    allowed.addAll(allowedRoles); allowed.add("ROLE_CUSTOMER");
-    requestValidator.validateRequestAgainstUserRoles(token, allowed, "DELETE /orders/id");
+  public @ResponseBody boolean deleteOrder(UsernamePasswordAuthenticationToken token, @PathVariable("id") Long id) {
     return orderService.deleteOrderById(id);
   }
   

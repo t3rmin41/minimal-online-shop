@@ -6,7 +6,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +29,6 @@ import com.minimal.eshop.service.UserService;
 @Scope(value = "session")
 public class CartController {
 
-  private List<String> allowedRoles = new LinkedList<String>(Arrays.asList(new String[]{"ROLE_ADMIN", "ROLE_MANAGER", "ROLE_CUSTOMER"}));
-  
   @Inject
   private CartService cartService;
   
@@ -41,18 +41,13 @@ public class CartController {
   @Inject
   private CartBean cartBean;
   
-  @Inject
-  private RequestValidator requestValidator;
-  
   @RequestMapping(method = RequestMethod.GET)
   public @ResponseBody CartBean getCart(UsernamePasswordAuthenticationToken token) {
-    requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "GET /cart");
     return cartBean;
   }
   
   @RequestMapping(value = "/product/add", method = RequestMethod.POST, consumes=APPLICATION_JSON_UTF8_VALUE)
   public @ResponseBody CartBean addProductToCart(UsernamePasswordAuthenticationToken token, @RequestBody ProductBean productBean, Principal principal) {
-    requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "POST /cart/product/add");
     ProductBean product = productService.getProductBeanById(productBean.getId());
     OrderBean orderBean = new OrderBean().setProductId(product.getId()).setOrderedBy(principal.getName());
     orderBean.setProductName(product.getTitle());
@@ -64,14 +59,12 @@ public class CartController {
   
   @RequestMapping(value = "/product/remove", method = RequestMethod.DELETE, consumes=APPLICATION_JSON_UTF8_VALUE)
   public @ResponseBody CartBean removeProductFromCart(UsernamePasswordAuthenticationToken token, @RequestBody OrderBean orderBean, Principal principal) {
-    requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "DELETE /cart/product/remove");
     cartBean.getItems().remove(orderBean);
     return cartBean;
   }
   
   @RequestMapping(value = "/submit", method = RequestMethod.POST, consumes=APPLICATION_JSON_UTF8_VALUE)
   public @ResponseBody CartBean submitCart(UsernamePasswordAuthenticationToken token, Principal principal) {
-    requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "POST /cart/submit");
     //UserBean userBean = userService.getUserByEmail(principal.getName());
     //cartBean.setUserId(userBean.getId());
     cartService.submitCart(cartBean);

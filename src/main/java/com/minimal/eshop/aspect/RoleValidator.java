@@ -3,24 +3,42 @@ package com.minimal.eshop.aspect;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import com.minimal.eshop.security.UserNotAllowedException;
+import com.minimal.eshop.service.RequestValidator;
 
 @Aspect
 @Component
-public class RoleValidator {
+public class RoleValidator implements RequestValidator {
 
   private static final Logger logger = LoggerFactory.getLogger(RoleValidator.class);
   
   private List<String> allowedProductPurchaseRoles = new LinkedList<String>(Arrays.asList(new String[]{"ROLE_ADMIN", "ROLE_MANAGER", "ROLE_CUSTOMER"}));
   private List<String> allowedManageRoles = new LinkedList<String>(Arrays.asList(new String[]{"ROLE_ADMIN", "ROLE_MANAGER"}));
-  private List<String> allowedUserChangeRoles = new LinkedList<String>(Arrays.asList(new String[]{"ROLE_ADMIN"}));
+  private List<String> allowedModifyUserRoles = new LinkedList<String>(Arrays.asList(new String[]{"ROLE_ADMIN"}));
+
+  @Override
+  public boolean validateRequestAgainstUserRoles(UsernamePasswordAuthenticationToken token, List<String> allowedRoles, String path)
+  throws UserNotAllowedException {
+    for (String role : allowedRoles) {
+      if (token.getAuthorities().contains(new SimpleGrantedAuthority(role))) {
+        return true;
+      }
+    }
+    throw new UserNotAllowedException("Action is not allowed").setPath(path);
+  }
   
   @Pointcut("execution(* com.minimal.eshop.rest.controller.CartController..*(..))")
   public void allCartControllerMethods() {}
@@ -28,7 +46,8 @@ public class RoleValidator {
   @Before("allCartControllerMethods()")
   public void checkUserRolesBeforeCart(JoinPoint joinPoint) {
     UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) joinPoint.getArgs()[0];
-    logger.info("{}", joinPoint);
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    validateRequestAgainstUserRoles(token, allowedProductPurchaseRoles, request.getRequestURI());
   }
   
   @Pointcut("execution(* com.minimal.eshop.rest.controller.OrderController..*(..))")
@@ -38,68 +57,60 @@ public class RoleValidator {
             "execution(* com.minimal.eshop.rest.controller.OrderController.getUserOrdersById(..)) || "+
             "execution(* com.minimal.eshop.rest.controller.OrderController.getOrderById(..))"
            )
-  public void allowedOrderControllerMethods() {}
+  public void customerAllowedOrderControllerMethods() {}
   
-  @Before("allOrderControllerMethods() && !allowedOrderControllerMethods()")
+  @Before("allOrderControllerMethods() && !customerAllowedOrderControllerMethods()")
   public void checkUserRolesBeforeOrder(JoinPoint joinPoint) {
     UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) joinPoint.getArgs()[0];
-    logger.info("{}", joinPoint);
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    validateRequestAgainstUserRoles(token, allowedManageRoles, request.getRequestURI());
   }
   
-//  @Before("execution (* com.minimal.eshop.rest.controller.OrderController.getOrders(..))")
-//  public void checkUserRolesBeforeGetOrders(JoinPoint joinPoint) {
-//    UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) joinPoint.getArgs()[0];
-//    logger.info("{}", joinPoint);
-//  }
-//  
-//  @Before("execution (* com.minimal.eshop.rest.controller.OrderController.getUserOrdersByName(..))")
-//  public void checkUserRolesBeforeGetUserOrdersByName(JoinPoint joinPoint) {
-//    logger.info("{}", joinPoint);
-//  }
-//  
-//  @Before("execution (* com.minimal.eshop.rest.controller.OrderController.getUserOrdersById(..))")
-//  public void checkUserRolesBeforeGetUserOrdersById(JoinPoint joinPoint) {
-//    logger.info("{}", joinPoint);
-//  }
-//  
-//  @Before("execution (* com.minimal.eshop.rest.controller.OrderController.getOrderById(..))")
-//  public void checkUserRolesBeforeGetOrderById(JoinPoint joinPoint) {
-//    logger.info("{}", joinPoint);
-//  }
-//  
-//  @Before("execution (* com.minimal.eshop.rest.controller.OrderController.saveOrder(..))")
-//  public void checkUserRolesBeforeSaveOrder(JoinPoint joinPoint) {
-//    logger.info("{}", joinPoint);
-//  }
-//  
-//  @Before("execution (* com.minimal.eshop.rest.controller.OrderController.updateOrder(..))")
-//  public void checkUserRolesBeforeUpdateOrder(JoinPoint joinPoint) {
-//    logger.info("{}", joinPoint);
-//  }
-//  
-//  @Before("execution (* com.minimal.eshop.rest.controller.OrderController.deleteOrder(..))")
-//  public void checkUserRolesBeforeDeleteOrder(JoinPoint joinPoint) {
-//    logger.info("{}", joinPoint);
-//  }
+  @Before("customerAllowedOrderControllerMethods()")
+  public void checkUserRolesBeforeCustomerOrder(JoinPoint joinPoint) {
+    UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) joinPoint.getArgs()[0];
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    validateRequestAgainstUserRoles(token, allowedProductPurchaseRoles, request.getRequestURI());
+  }
+
+  @Pointcut("execution(* com.minimal.eshop.rest.controller.ProductController..*(..))")
+  public void allProductControllerMethods() {}
   
-  @Before("execution(* com.minimal.eshop.rest.controller.ProductController..*(..))")
+  @Pointcut("execution(* com.minimal.eshop.rest.controller.ProductController.getAllProducts(..)) || "+
+            "execution(* com.minimal.eshop.rest.controller.ProductController.getProductById(..))"
+     )
+  public void customerAllowedProductControllerMethods() {}
+  
+  @Before("allProductControllerMethods() && !customerAllowedProductControllerMethods()")
   public void checkUserRolesBeforeProduct(JoinPoint joinPoint) {
-    logger.info("{}", joinPoint);
+    UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) joinPoint.getArgs()[0];
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    validateRequestAgainstUserRoles(token, allowedManageRoles, request.getRequestURI());
+  }
+
+  @Before("customerAllowedProductControllerMethods()")
+  public void checkUserRolesBeforeGetProduct(JoinPoint joinPoint) {
+    UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) joinPoint.getArgs()[0];
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    validateRequestAgainstUserRoles(token, allowedProductPurchaseRoles, request.getRequestURI());
   }
   
-  @Before("execution(* com.minimal.eshop.rest.controller.ProductController.getAllProducts(..))")
-  public void checkUserRolesBeforeGetAllProducts(JoinPoint joinPoint) {
-    logger.info("{}", joinPoint);
-  }
+  @Pointcut("execution(* com.minimal.eshop.rest.controller.UserController..*(..))")
+  public void allUserControllerMethods() {}
   
-  @Before("execution(* com.minimal.eshop.rest.controller.ProductController.getProductById(..))")
-  public void checkUserRolesBeforeGetProductById(JoinPoint joinPoint) {
-    logger.info("{}", joinPoint);
-  }
+  @Pointcut("execution(* com.minimal.eshop.rest.controller.UserController.loginSuccessfull(..)) || "+
+            "execution(* com.minimal.eshop.rest.controller.UserController.logout(..)) || "+
+            "execution(* com.minimal.eshop.rest.controller.UserController.getUserRoleMap(..))"
+     )
+  public void allowedUserControllerMethods() {}
   
-  @Before("execution(* com.minimal.eshop.rest.controller.UserController..*(..))")
+  @Before("allUserControllerMethods() && !allowedUserControllerMethods()")
   public void checkUserRolesBeforeUser(JoinPoint joinPoint) {
+    UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) joinPoint.getArgs()[0];
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    validateRequestAgainstUserRoles(token, allowedModifyUserRoles, request.getRequestURI());
     logger.info("{}", joinPoint);
   }
+
   
 }

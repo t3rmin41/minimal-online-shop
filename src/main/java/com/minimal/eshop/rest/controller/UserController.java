@@ -6,7 +6,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,14 +26,9 @@ import com.minimal.eshop.service.UserService;
 @RequestMapping(value = "/users", produces = APPLICATION_JSON_UTF8_VALUE)
 public class UserController {
 
-  private List<String> allowedRoles = new LinkedList<String>(Arrays.asList(new String[]{"ROLE_ADMIN"}));
-  
   @Inject
   private UserService users;
 
-  @Inject
-  private RequestValidator requestValidator;
-  
   @RequestMapping(value = "/login/success", method = RequestMethod.POST)
   public @ResponseBody UserBean loginSuccessfull(HttpSession session, Principal principal) {
       UserBean bean = users.getUserByEmail(principal.getName());
@@ -55,33 +52,26 @@ public class UserController {
 
   @RequestMapping(value = "/all", method = RequestMethod.GET)
   public @ResponseBody List<UserBean> getUsers(UsernamePasswordAuthenticationToken token, Principal principal) {
-    requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "GET /users/all");
     return users.getAllUsers();
   }
 
   @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = APPLICATION_JSON_UTF8_VALUE)
   public @ResponseBody UserBean saveUser(UsernamePasswordAuthenticationToken token, @RequestBody UserBean bean) {
-    requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "POST /users/save");
     return users.saveUser(bean);
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
   public @ResponseBody UserBean getUserById(UsernamePasswordAuthenticationToken token, @PathVariable("id") Long id) {
-    List<String> allowed = new LinkedList<String>();
-    allowed.addAll(allowedRoles); allowed.add("ROLE_CUSTOMER"); allowed.add("ROLE_MANAGER");
-    requestValidator.validateRequestAgainstUserRoles(token, allowed, "GET /users/id");
     return users.getUserById(id);
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = APPLICATION_JSON_UTF8_VALUE)
   public @ResponseBody UserBean updateUser(UsernamePasswordAuthenticationToken token, @RequestBody UserBean bean) {
-    requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "PUT /users/update");
     return users.updateUser(bean);
   }
 
   @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
   public @ResponseBody boolean deleteUser(UsernamePasswordAuthenticationToken token, @PathVariable("id") Long id) {
-    requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "DELETE /users/delete");
     return users.deleteUserById(id);
   }
 
