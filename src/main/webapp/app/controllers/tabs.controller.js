@@ -23,9 +23,9 @@
                         { id: '2', title: 'Users', path: 'app/views/user.html', ctrl : 'UserController', selected: false, newOrdersAdded: false, reloadEvent: 'UserReload' }
                       ];
 
-      if (hasAdmin) {
+      //if (hasAdmin) {
         $scope.tabs = $scope.tabs.concat(adminTabs);
-      }
+      //}
       
       $scope.$on('CartSubmit', function(event, message){
         //console.log(message);
