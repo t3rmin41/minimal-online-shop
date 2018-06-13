@@ -31,7 +31,7 @@ public class OrderController {
   private RequestValidator requestValidator;
   
   @RequestMapping(value = "/all", method = RequestMethod.GET)
-  public @ResponseBody List<OrderBean> getOrders(UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody List<OrderBean> getAllOrders(UsernamePasswordAuthenticationToken token) {
     requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "GET /orders/all");
     return orderService.getAllOrders();
   }
@@ -61,7 +61,7 @@ public class OrderController {
   }
   
   @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody OrderBean createOrder(@RequestBody OrderBean bean, UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody OrderBean saveOrder(@RequestBody OrderBean bean, UsernamePasswordAuthenticationToken token) {
     requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "POST /orders/save");
     return orderService.saveOrder(bean);
   }

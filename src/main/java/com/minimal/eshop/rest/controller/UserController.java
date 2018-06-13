@@ -54,19 +54,19 @@ public class UserController {
   }
 
   @RequestMapping(value = "/all", method = RequestMethod.GET)
-  public @ResponseBody List<UserBean> getUsers(Principal principal, UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody List<UserBean> getUsers(UsernamePasswordAuthenticationToken token, Principal principal) {
     requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "GET /users/all");
     return users.getAllUsers();
   }
 
   @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody UserBean saveUser(@RequestBody UserBean bean, UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody UserBean saveUser(UsernamePasswordAuthenticationToken token, @RequestBody UserBean bean) {
     requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "POST /users/save");
     return users.saveUser(bean);
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-  public @ResponseBody UserBean getUserById(@PathVariable("id") Long id, UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody UserBean getUserById(UsernamePasswordAuthenticationToken token, @PathVariable("id") Long id) {
     List<String> allowed = new LinkedList<String>();
     allowed.addAll(allowedRoles); allowed.add("ROLE_CUSTOMER"); allowed.add("ROLE_MANAGER");
     requestValidator.validateRequestAgainstUserRoles(token, allowed, "GET /users/id");
@@ -74,16 +74,15 @@ public class UserController {
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody UserBean updateUser(@RequestBody UserBean bean, UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody UserBean updateUser(UsernamePasswordAuthenticationToken token, @RequestBody UserBean bean) {
     requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "PUT /users/update");
     return users.updateUser(bean);
   }
 
   @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-  public @ResponseBody boolean deleteUser(@PathVariable("id") Long id, UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody boolean deleteUser(UsernamePasswordAuthenticationToken token, @PathVariable("id") Long id) {
     requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "DELETE /users/delete");
     return users.deleteUserById(id);
   }
-  
-  
+
 }

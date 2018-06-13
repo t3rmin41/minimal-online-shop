@@ -51,7 +51,7 @@ public class CartController {
   }
   
   @RequestMapping(value = "/product/add", method = RequestMethod.POST, consumes=APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody CartBean addProductToCart(@RequestBody ProductBean productBean, Principal principal, UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody CartBean addProductToCart(UsernamePasswordAuthenticationToken token, @RequestBody ProductBean productBean, Principal principal) {
     requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "POST /cart/product/add");
     ProductBean product = productService.getProductBeanById(productBean.getId());
     OrderBean orderBean = new OrderBean().setProductId(product.getId()).setOrderedBy(principal.getName());
@@ -63,14 +63,14 @@ public class CartController {
   }
   
   @RequestMapping(value = "/product/remove", method = RequestMethod.DELETE, consumes=APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody CartBean removeProductFromCart(@RequestBody OrderBean orderBean, Principal principal, UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody CartBean removeProductFromCart(UsernamePasswordAuthenticationToken token, @RequestBody OrderBean orderBean, Principal principal) {
     requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "DELETE /cart/product/remove");
     cartBean.getItems().remove(orderBean);
     return cartBean;
   }
   
   @RequestMapping(value = "/submit", method = RequestMethod.POST, consumes=APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody CartBean submitCart(Principal principal, UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody CartBean submitCart(UsernamePasswordAuthenticationToken token, Principal principal) {
     requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "POST /cart/submit");
     //UserBean userBean = userService.getUserByEmail(principal.getName());
     //cartBean.setUserId(userBean.getId());

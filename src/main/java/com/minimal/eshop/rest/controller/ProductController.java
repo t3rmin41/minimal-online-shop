@@ -29,7 +29,7 @@ public class ProductController {
   private RequestValidator requestValidator;
   
   @RequestMapping(value = "/all", method = RequestMethod.GET, produces = "application/json")
-  public @ResponseBody List<ProductBean> getProductsAll(UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody List<ProductBean> getAllProducts(UsernamePasswordAuthenticationToken token) {
     List<String> allowed = new LinkedList<String>();
     allowed.addAll(allowedRoles); allowed.add("ROLE_CUSTOMER");
     requestValidator.validateRequestAgainstUserRoles(token, allowed, "GET /products/all");
@@ -37,13 +37,13 @@ public class ProductController {
   }
   
   @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody ProductBean saveProduct(@RequestBody ProductBean bean, UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody ProductBean saveProduct(UsernamePasswordAuthenticationToken token, @RequestBody ProductBean bean) {
     requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "POST /products/save");
     return productService.saveProduct(bean);
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-  public @ResponseBody ProductBean getProductById(@PathVariable("id") Long id, UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody ProductBean getProductById(UsernamePasswordAuthenticationToken token, @PathVariable("id") Long id) {
     List<String> allowed = new LinkedList<String>();
     allowed.addAll(allowedRoles); allowed.add("ROLE_CUSTOMER");
     requestValidator.validateRequestAgainstUserRoles(token, allowed, "GET /products/id");
@@ -51,13 +51,13 @@ public class ProductController {
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody ProductBean updateProduct(@RequestBody ProductBean bean, UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody ProductBean updateProduct(UsernamePasswordAuthenticationToken token, @RequestBody ProductBean bean) {
     requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "PUT /products/update");
     return productService.updateProduct(bean);
   }
 
   @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-  public @ResponseBody boolean deleteProduct(@PathVariable("id") Long id, UsernamePasswordAuthenticationToken token) {
+  public @ResponseBody boolean deleteProduct(UsernamePasswordAuthenticationToken token, @PathVariable("id") Long id) {
     requestValidator.validateRequestAgainstUserRoles(token, allowedRoles, "DELETE /products/delete");
     return productService.deleteProductById(id);
   }
