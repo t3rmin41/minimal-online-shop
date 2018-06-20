@@ -24,7 +24,6 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  @Cacheable(cacheNames = {"cachedProducts"}, sync = true, key = "'productsCacheKey'")
   public ProductBean getProductBeanById(Long id) {
     return productMapper.getProductBeanById(id);
   }
