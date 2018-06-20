@@ -20,7 +20,6 @@ public class UserServiceImpl implements UserService {
   @Override
   @Cacheable(cacheNames = {"cachedUsers"}, key = "'usersCacheKey'", sync = true)
   public List<UserBean> getAllUsers() {
-    simulateSlowService();
     return userMapper.getAllUsers();
   }
 
@@ -69,15 +68,6 @@ public class UserServiceImpl implements UserService {
   @Override
   public Set<String> getRolesByEmail(String email) {
     return userMapper.getRolesByEmail(email);
-  }
-
-  private void simulateSlowService() {
-    try {
-        long time = 5000L;
-        Thread.sleep(time);
-    } catch (InterruptedException e) {
-        throw new IllegalStateException(e);
-    }
   }
 
 }
