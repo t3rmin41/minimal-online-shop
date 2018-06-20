@@ -3,9 +3,9 @@ package com.minimal.eshop.domain;
 import java.io.Serializable;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.minimal.eshop.enums.OrderStatus;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@SuppressWarnings("serial")
 public class OrderBean implements Serializable {
 
   private Long id;

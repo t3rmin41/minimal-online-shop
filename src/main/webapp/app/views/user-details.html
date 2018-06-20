@@ -28,6 +28,7 @@
         <input type="password" id="txtConfirmPassword" class="form-control" ng-model="confirmPassword" />
         <p class="help-block" ng-show="errors['confirmPassword']"> {{ errors['confirmPassword'] }} </p>
     </div>
+
     <div class="form-group" ng-class="{ 'has-error' : errors['roles'] }">
         <label for="checkboxRoles">Roles:</label>
         <label class="checkbox-inline" ng-repeat="role in roles">
@@ -35,6 +36,13 @@
         </label>
         <p class="help-block" ng-show="errors['roles']"> {{ errors['roles'] }} </p>
     </div>
+    
+    <div class="form-group" ng-class="{ 'has-error' : errors['enabled'] }">
+        <label for="checkboxEnabled">Enabled:</label>
+        <input type="checkbox" class="checkbox-inline" style="margin-bottom: 0.4em" ng-model="currentUser.enabled" />
+        <p class="help-block" ng-show="errors['enabled']"> {{ errors['enabled'] }} </p>
+    </div>
+    
 </div>
 <div class="modal-footer">
     <div class="form-group">
