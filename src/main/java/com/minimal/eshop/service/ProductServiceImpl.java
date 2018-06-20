@@ -13,6 +13,7 @@ import com.minimal.eshop.mapper.ProductMapper;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+
   @Inject
   private ProductMapper productMapper;
 
