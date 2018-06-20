@@ -56,7 +56,8 @@ public class RoleValidator implements RequestValidator {
   
   @Pointcut("execution(* com.minimal.eshop.rest.controller.OrderController.getUserOrdersByName(..)) || "+
             "execution(* com.minimal.eshop.rest.controller.OrderController.getUserOrdersById(..)) || "+
-            "execution(* com.minimal.eshop.rest.controller.OrderController.getOrderById(..))"
+            "execution(* com.minimal.eshop.rest.controller.OrderController.getOrderById(..)) || "+
+            "execution(* com.minimal.eshop.rest.controller.OrderController.deleteOrder(..))"
            )
   public void customerAllowedOrderControllerMethods() {}
   
