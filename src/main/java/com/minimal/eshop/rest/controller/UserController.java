@@ -2,13 +2,10 @@ package com.minimal.eshop.rest.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import java.security.Principal;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.minimal.eshop.domain.RoleBean;
 import com.minimal.eshop.domain.UserBean;
 import com.minimal.eshop.enums.RoleType;
-import com.minimal.eshop.service.RequestValidator;
 import com.minimal.eshop.service.UserService;
 
 @Controller

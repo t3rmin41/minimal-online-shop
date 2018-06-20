@@ -2,13 +2,8 @@ package com.minimal.eshop.rest.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,15 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.minimal.eshop.domain.CartBean;
 import com.minimal.eshop.domain.OrderBean;
 import com.minimal.eshop.domain.ProductBean;
-import com.minimal.eshop.domain.UserBean;
 import com.minimal.eshop.service.CartService;
 import com.minimal.eshop.service.ProductService;
-import com.minimal.eshop.service.RequestValidator;
 import com.minimal.eshop.service.UserService;
 
 @Controller
 @RequestMapping(value = "/cart", produces = APPLICATION_JSON_UTF8_VALUE)
 @Scope(value = "session")
+@SuppressWarnings("unused")
 public class CartController {
 
   @Inject

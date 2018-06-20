@@ -20,6 +20,7 @@ import com.minimal.eshop.jpa.UserDao;
 import com.minimal.eshop.repository.UserRepository;
 
 @Service
+@SuppressWarnings("unused")
 public class UserMapperImpl implements UserMapper, BeanValidator {
 
   @Inject
@@ -206,6 +207,7 @@ public class UserMapperImpl implements UserMapper, BeanValidator {
     }
     jpa.setFirstName(bean.getFirstName());
     jpa.setLastName(bean.getLastName());
+    jpa.setEnabled(bean.isEnabled());
     return jpa;
   }
 

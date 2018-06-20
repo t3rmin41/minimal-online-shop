@@ -31,7 +31,7 @@ public class UserRepositoryImpl implements UserRepository {
   @Override
   @Transactional
   public UserDao getUserByEmail(String email) {
-    String q = "SELECT u FROM UserDao u LEFT JOIN FETCH u.roles WHERE u.email = :pemail";
+    String q = "SELECT u FROM UserDao u LEFT JOIN FETCH u.roles WHERE u.email = :pemail ORDER BY u.id ASC";
     TypedQuery<UserDao> query = em.createQuery(q, UserDao.class);
     query.setParameter("pemail", email);
     return query.getSingleResult();
@@ -40,7 +40,7 @@ public class UserRepositoryImpl implements UserRepository {
   @Override
   @Transactional
   public UserDao getUserByEmailAndPassword(String email, String password) {
-    String q = "SELECT u FROM UserDao u WHERE u.email = :pemail AND u.password = :ppassword";
+    String q = "SELECT u FROM UserDao u WHERE u.email = :pemail AND u.password = :ppassword ORDER BY u.id ASC";
     TypedQuery<UserDao> query = em.createQuery(q, UserDao.class);
     query.setParameter("pemail", email);
     query.setParameter("ppassword", password);
@@ -55,7 +55,7 @@ public class UserRepositoryImpl implements UserRepository {
   @Override
   @Transactional
   public UserDao getUserById(Long id) {
-    String q = "SELECT u FROM UserDao u LEFT JOIN FETCH u.roles WHERE u.id = :pid";
+    String q = "SELECT u FROM UserDao u LEFT JOIN FETCH u.roles WHERE u.id = :pid ORDER BY u.id ASC";
     TypedQuery<UserDao> query = em.createQuery(q, UserDao.class);
     query.setParameter("pid", id);
     return query.getSingleResult();
@@ -91,7 +91,7 @@ public class UserRepositoryImpl implements UserRepository {
   @Override
   @Transactional
   public List<UserDao> getAllUsers() {
-    String q = "SELECT u FROM UserDao u WHERE u.enabled = true";
+    String q = "SELECT u FROM UserDao u WHERE u.id IS NOT NULL ORDER BY u.id ASC";
     TypedQuery<UserDao> query = em.createQuery(q, UserDao.class);
     return query.getResultList();
   }
@@ -126,7 +126,7 @@ public class UserRepositoryImpl implements UserRepository {
   @Override
   @Transactional
   public Set<RoleDao> getUserRolesByNames(UserDao jpa, Set<String> rolesNames) {
-    String q = "SELECT r FROM RoleDao r WHERE r.role IN :roles AND r.user = :user AND r.active = 1";
+    String q = "SELECT r FROM RoleDao r WHERE r.role IN :roles AND r.user = :user AND r.active = 1 ORDER BY r.id ASC";
     TypedQuery<RoleDao> query = em.createQuery(q, RoleDao.class);
     query.setParameter("roles", rolesNames);
     query.setParameter("user", jpa);
@@ -139,7 +139,7 @@ public class UserRepositoryImpl implements UserRepository {
   @Override
   @Transactional
   public Set<RoleDao> getUserRolesByEmail(String email) {
-    String q = "SELECT r FROM RoleDao r WHERE r.user.email = :pemail AND r.active = 1";
+    String q = "SELECT r FROM RoleDao r WHERE r.user.email = :pemail AND r.active = 1 ORDER BY r.id ASC";
     TypedQuery<RoleDao> query = em.createQuery(q, RoleDao.class);
     query.setParameter("pemail", email);
     List<RoleDao> resultList = query.getResultList();

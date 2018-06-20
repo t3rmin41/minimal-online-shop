@@ -19,7 +19,7 @@ public class ProductRepositoryImpl implements ProductRepository {
   @Override
   @Transactional
   public List<ProductDao> getAllProducts() {
-    String q = "SELECT p FROM ProductDao p WHERE p.deleted = false";
+    String q = "SELECT p FROM ProductDao p WHERE p.deleted = false ORDER BY p.id ASC";
     TypedQuery<ProductDao> query = em.createQuery(q, ProductDao.class);
     return query.getResultList();
   }
@@ -27,7 +27,7 @@ public class ProductRepositoryImpl implements ProductRepository {
   @Override
   @Transactional
   public ProductDao getProductById(Long id) {
-    String q = "SELECT p FROM ProductDao p WHERE p.id = :pid AND p.deleted = false";
+    String q = "SELECT p FROM ProductDao p WHERE p.id = :pid AND p.deleted = false ORDER BY p.id ASC";
     TypedQuery<ProductDao> query = em.createQuery(q, ProductDao.class);
     query.setParameter("pid", id);
     return query.getSingleResult();
@@ -64,7 +64,7 @@ public class ProductRepositoryImpl implements ProductRepository {
   
   @Transactional
   private ProductDao getAnyProductById(Long id) {
-    String q = "SELECT p FROM ProductDao p WHERE p.id = :pid";
+    String q = "SELECT p FROM ProductDao p WHERE p.id = :pid ORDER BY p.id ASC";
     TypedQuery<ProductDao> query = em.createQuery(q, ProductDao.class);
     query.setParameter("pid", id);
     return query.getSingleResult();

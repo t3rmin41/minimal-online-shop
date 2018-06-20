@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Component
 @Scope(value = "session")
 @JsonIgnoreProperties(ignoreUnknown=true)
+@SuppressWarnings("serial")
 public class CartBean implements Serializable {
 
   //private Long userId;
