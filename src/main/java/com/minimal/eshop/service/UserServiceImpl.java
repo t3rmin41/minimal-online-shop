@@ -14,6 +14,7 @@ import com.minimal.eshop.mapper.UserMapper;
 @Service
 public class UserServiceImpl implements UserService {
 
+
   @Inject
   private UserMapper userMapper;
 
