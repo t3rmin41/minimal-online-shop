@@ -19,6 +19,7 @@ public class ProductServiceImpl implements ProductService {
   @Override
   @Cacheable(cacheNames = {"cachedProducts"}, sync = true, key = "'productsCacheKey'")
   public List<ProductBean> getAllProducts() {
+    simulateSlowService();
     return productMapper.getAllProducts();
   }
 
@@ -53,4 +54,13 @@ public class ProductServiceImpl implements ProductService {
     return productMapper.deleteProductById(id);
   }
 
+  private void simulateSlowService() {
+    try {
+        long time = 5000L;
+        Thread.sleep(time);
+    } catch (InterruptedException e) {
+        throw new IllegalStateException(e);
+    }
+  }
+  
 }
