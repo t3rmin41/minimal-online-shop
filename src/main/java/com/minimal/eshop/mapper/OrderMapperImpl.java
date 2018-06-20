@@ -19,6 +19,7 @@ import com.minimal.eshop.repository.ProductRepository;
 import com.minimal.eshop.repository.UserRepository;
 
 @Service
+@SuppressWarnings("unused")
 public class OrderMapperImpl implements OrderMapper, BeanValidator {
 
   @Inject

@@ -1,12 +1,9 @@
 package com.minimal.eshop.rest.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +15,6 @@ import com.minimal.eshop.domain.OrderBean;
 import com.minimal.eshop.domain.OrderStatusBean;
 import com.minimal.eshop.enums.OrderStatus;
 import com.minimal.eshop.service.OrderService;
-import com.minimal.eshop.service.RequestValidator;
 
 @Controller
 @RequestMapping(value = "/orders", produces = APPLICATION_JSON_UTF8_VALUE)

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@SuppressWarnings("serial")
 public class OrderStatusBean implements Serializable {
 
   private String code;

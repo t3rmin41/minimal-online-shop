@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan(basePackages = {"com.minimal.eshop.service", "com.minimal.eshop.mapper", "com.minimal.eshop.repository"})
 @EnableTransactionManagement
+@SuppressWarnings("unused")
 public class ServiceTestConfig {
 
   @Bean

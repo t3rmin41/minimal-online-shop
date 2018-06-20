@@ -21,6 +21,7 @@ import com.minimal.eshop.service.RequestValidator;
 
 @Aspect
 @Component
+@SuppressWarnings("unused")
 public class RoleValidator implements RequestValidator {
 
   private static final Logger logger = LoggerFactory.getLogger(RoleValidator.class);
@@ -59,7 +60,10 @@ public class RoleValidator implements RequestValidator {
            )
   public void customerAllowedOrderControllerMethods() {}
   
-  @Before("allOrderControllerMethods() && !customerAllowedOrderControllerMethods()")
+  @Pointcut("execution(* com.minimal.eshop.rest.controller.OrderController.getOrderStatusList(..))")
+  public void allowedOrderControllerMethods() {}
+  
+  @Before("allOrderControllerMethods() && !(customerAllowedOrderControllerMethods() || allowedOrderControllerMethods())")
   public void checkUserRolesBeforeOrder(JoinPoint joinPoint) {
     UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) joinPoint.getArgs()[0];
     HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -80,6 +84,11 @@ public class RoleValidator implements RequestValidator {
             "execution(* com.minimal.eshop.rest.controller.ProductController.getProductById(..))"
      )
   public void customerAllowedProductControllerMethods() {}
+  
+  @Pointcut("execution(* com.minimal.eshop.rest.controller.ProductController.getAllProducts(..)) || "+
+      "execution(* com.minimal.eshop.rest.controller.ProductController.getProductById(..))"
+  )
+  public void allowedProductControllerMethods() {}
   
   @Before("allProductControllerMethods() && !customerAllowedProductControllerMethods()")
   public void checkUserRolesBeforeProduct(JoinPoint joinPoint) {
@@ -109,7 +118,6 @@ public class RoleValidator implements RequestValidator {
     UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) joinPoint.getArgs()[0];
     HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     validateRequestAgainstUserRoles(token, allowedModifyUserRoles, request.getRequestURI());
-    logger.info("{}", joinPoint);
   }
 
   

@@ -10,6 +10,7 @@
         <th>Last name</th>
         <th>Email</th>
         <th>Roles</th>
+        <th>Enabled</th>
         <th>Actions</th>
       </tr>
       <tr ng-repeat="user in users | filter:usersearch">
@@ -17,6 +18,7 @@
         <td>{{user.lastName}}</td>
         <td>{{user.email}}</td>
         <td>{{user.viewRoles.join(', ')}}</td>
+        <td>{{user.enabled}}</td>
         <td>
             <button class="btn btn-small" ng-click="editUser(user)">Edit</button>
             <button class="btn btn-small" ng-click="deleteUser(user)">Delete</button>
