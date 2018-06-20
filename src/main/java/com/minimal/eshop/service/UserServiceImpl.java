@@ -25,7 +25,6 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  @Cacheable(cacheNames = {"cachedUsers"}, sync = true, key = "'usersCacheKey'")
   public UserBean getUserByEmailAndPassword(String email, String password) {
     return userMapper.getUserBeanByEmailAndPassword(email, password);
   }
@@ -36,7 +35,6 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  @Cacheable(cacheNames = {"cachedUsers"}, sync = true, key = "'usersCacheKey'")
   public UserBean getUserById(Long id) {
     return userMapper.convertUserToBeanByUserId(id);
   }
