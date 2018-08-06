@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SuppressWarnings("unused")
 public class ServiceTestConfig {
 
-  private String activeProfile = "test";
+  private String activeProfile = "prod";
   
   @Bean
   public PasswordEncoder passwordEncoder() {
