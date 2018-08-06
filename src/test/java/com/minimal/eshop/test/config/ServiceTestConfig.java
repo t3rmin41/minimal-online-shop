@@ -3,6 +3,7 @@ package com.minimal.eshop.test.config;
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SuppressWarnings("unused")
 public class ServiceTestConfig {
 
+
+  @Value("${spring.profiles.active}")
+  private String activeProfile;
+  
   @Bean
   public PasswordEncoder passwordEncoder() {
       return new BCryptPasswordEncoder();
@@ -33,11 +38,29 @@ public class ServiceTestConfig {
   
   @Bean(name = "dataSource")
   public DriverManagerDataSource dataSource() {
-      DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+    if ("prod".equals(activeProfile)) {
+      //driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
+      //driverManagerDataSource.setUrl("jdbc:postgresql://ec2-54-217-217-131.eu-west-1.compute.amazonaws.com:5432/d6tvf2m5k6d7ok");
+      //driverManagerDataSource.setUsername("cmxewoxmnxboqn"); // using account credentials
+      //driverManagerDataSource.setPassword("c136205c6e9650e4adadfe1d9a674875a536eab8f36bd647c71b3e8c6fa34b7c");
+      
       driverManagerDataSource.setDriverClassName("org.h2.Driver");
+      driverManagerDataSource.setUrl("jdbc:h2:./db/prod/bin;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE");
       driverManagerDataSource.setUsername("sa");
-      driverManagerDataSource.setUrl("jdbc:h2:./src/test/resources/db/dev/bin");
-      return driverManagerDataSource;
+      driverManagerDataSource.setPassword("pr0ds3cr3t");
+    } else if ("test".equals(activeProfile)) {
+      driverManagerDataSource.setDriverClassName("org.h2.Driver");
+      driverManagerDataSource.setUrl("jdbc:h2:./db/test/bin;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE");
+      driverManagerDataSource.setUsername("sa");
+      driverManagerDataSource.setPassword("t3sts3cr3t");
+    } else if ("dev".equals(activeProfile)) {
+      driverManagerDataSource.setDriverClassName("org.h2.Driver");
+      driverManagerDataSource.setUrl("jdbc:h2:./db/dev/bin;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE");
+      driverManagerDataSource.setUsername("sa");
+      //driverManagerDataSource.setPassword("d3vs3cr3t");
+    }
+    return driverManagerDataSource;
   }
   
   @Bean
@@ -57,7 +80,7 @@ public class ServiceTestConfig {
   public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
     LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
     em.setDataSource(dataSource());
-    em.setPackagesToScan(new String[] { "com.domain.servicedesk.wallscreen.repository", "com.domain.servicedesk.wallscreen.jpa" });
+    em.setPackagesToScan(new String[] { "com.minimal.eshop.repository", "com.minimal.eshop.jpa" });
 
     JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
     em.setJpaVendorAdapter(vendorAdapter);
@@ -66,11 +89,27 @@ public class ServiceTestConfig {
     return em;
   }
   
-  Properties additionalProperties() {
+  private Properties additionalProperties() {
     Properties properties = new Properties();
     properties.setProperty("hibernate.hbm2ddl.auto", "update");
-    properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+    if ("prod".equals(activeProfile)) {
+      //properties.setProperty("hibernate.show_sql", "false");
+      //properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL92Dialect");
+      
+      properties.setProperty("hibernate.show_sql", "false");
+      properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+      properties.setProperty("h2.console.settings.web-allow-others", "true");
+      
+    } else if ("test".equals(activeProfile)) {
+      properties.setProperty("hibernate.show_sql", "true");
+      properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+      properties.setProperty("h2.console.settings.web-allow-others", "true");
+    } else if ("dev".equals(activeProfile)) {
+      properties.setProperty("hibernate.show_sql", "true");
+      properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+      properties.setProperty("h2.console.settings.web-allow-others", "true");
+    }
     return properties;
-  }
+ }
   
 }
