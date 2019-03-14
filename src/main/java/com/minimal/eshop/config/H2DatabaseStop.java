@@ -13,7 +13,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextClosedEvent;
 
-@Configuration
+//@Configuration
 @SuppressWarnings("rawtypes")
 public class H2DatabaseStop implements ApplicationListener<ContextClosedEvent> {
 
@@ -66,7 +66,7 @@ public class H2DatabaseStop implements ApplicationListener<ContextClosedEvent> {
   }
 
   private void closeDataSource() {
-    DataSource ds = (DataSource) appContext.getdto("dataSource");
+    DataSource ds = (DataSource) appContext.getBean("dataSource");
     if (ds != null) {
       ds.close(true);
       ds = null;

@@ -16,19 +16,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.filter.GenericFilterdto;
+import org.springframework.web.filter.GenericFilterBean;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.minimal.eshop.app.ApplicationContextProvider;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 
-public class JWTAuthFilter extends GenericFilterdto {
+public class JWTAuthFilter extends GenericFilterBean {
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
   throws IOException, ServletException {
-    TokenAuthenticationService tokenService = ApplicationContextProvider.getApplicationContext().getdto(TokenAuthenticationService.class);
+    TokenAuthenticationService tokenService = ApplicationContextProvider.getApplicationContext().getBean(TokenAuthenticationService.class);
     try {
       String username = tokenService.getAuthenticatedUsername((HttpServletRequest)request);
       List<GrantedAuthority> authorities = tokenService.getAuthenticatedUserRoles((HttpServletRequest)request);
