@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import com.minimal.eshop.jpa.OrderDao;
+import com.minimal.eshop.domain.OrderDao;
 
 @Repository
 public class OrderRepositoryImpl implements OrderRepository {

@@ -1,8 +1,8 @@
 package com.minimal.eshop.mapper;
 
 import java.util.List;
-import com.minimal.eshop.domain.ProductBean;
-import com.minimal.eshop.jpa.ProductDao;
+import com.minimal.eshop.dto.ProductBean;
+import com.minimal.eshop.domain.ProductDao;
 
 public interface ProductMapper {
 

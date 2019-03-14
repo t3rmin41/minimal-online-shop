@@ -2,6 +2,9 @@
 .classpath
 .project
 .settings/
+#Ignore IntelliJ files
+.idea/
+*.iml
 #Ignore MacOS files
 .DS_Store
 #Ignore Maven /target directory
@@ -23,4 +26,5 @@ hs_err_pid*
 .springBeans
 #Common
 *log/
+*out/
 

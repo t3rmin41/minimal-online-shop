@@ -8,7 +8,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 import com.minimal.eshop.enums.OrderStatus;
-import com.minimal.eshop.jpa.ProductDao;
+import com.minimal.eshop.domain.ProductDao;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {

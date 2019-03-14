@@ -1,7 +1,7 @@
 package com.minimal.eshop.service;
 
 import java.util.List;
-import com.minimal.eshop.domain.ProductBean;
+import com.minimal.eshop.dto.ProductBean;
 
 public interface ProductService {
 

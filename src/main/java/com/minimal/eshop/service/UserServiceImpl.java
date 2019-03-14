@@ -8,7 +8,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
-import com.minimal.eshop.domain.UserBean;
+import com.minimal.eshop.dto.UserBean;
 import com.minimal.eshop.mapper.UserMapper;
 
 @Service

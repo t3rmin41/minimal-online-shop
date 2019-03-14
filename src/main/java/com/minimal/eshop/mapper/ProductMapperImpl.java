@@ -5,10 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
-import com.minimal.eshop.domain.ProductBean;
+import com.minimal.eshop.dto.ProductBean;
 import com.minimal.eshop.errorhandling.ErrorField;
 import com.minimal.eshop.errorhandling.WrongBeanFormatException;
-import com.minimal.eshop.jpa.ProductDao;
+import com.minimal.eshop.domain.ProductDao;
 import com.minimal.eshop.repository.ProductRepository;
 
 @Service

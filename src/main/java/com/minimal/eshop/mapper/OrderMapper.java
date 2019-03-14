@@ -1,9 +1,9 @@
 package com.minimal.eshop.mapper;
 
 import java.util.List;
-import com.minimal.eshop.domain.OrderBean;
-import com.minimal.eshop.domain.OrderStatusBean;
-import com.minimal.eshop.jpa.OrderDao;
+import com.minimal.eshop.dto.OrderBean;
+import com.minimal.eshop.dto.OrderStatusBean;
+import com.minimal.eshop.domain.OrderDao;
 
 public interface OrderMapper {
 

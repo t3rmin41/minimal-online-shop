@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.minimal.eshop.domain.ProductBean;
+import com.minimal.eshop.dto.ProductBean;
 import com.minimal.eshop.service.ProductService;
 
 @Controller

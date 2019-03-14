@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-import com.minimal.eshop.domain.ProductBean;
+import com.minimal.eshop.dto.ProductBean;
 import com.minimal.eshop.mapper.ProductMapper;
 
 @Service

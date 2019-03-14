@@ -2,9 +2,9 @@ package com.minimal.eshop.mapper;
 
 import java.util.List;
 import java.util.Set;
-import com.minimal.eshop.domain.RoleBean;
-import com.minimal.eshop.domain.UserBean;
-import com.minimal.eshop.jpa.RoleDao;
+import com.minimal.eshop.dto.RoleBean;
+import com.minimal.eshop.dto.UserBean;
+import com.minimal.eshop.domain.RoleDao;
 
 public interface UserMapper {
 

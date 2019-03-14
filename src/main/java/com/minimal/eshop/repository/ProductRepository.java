@@ -1,7 +1,7 @@
 package com.minimal.eshop.repository;
 
 import java.util.List;
-import com.minimal.eshop.jpa.ProductDao;
+import com.minimal.eshop.domain.ProductDao;
 
 public interface ProductRepository {
 

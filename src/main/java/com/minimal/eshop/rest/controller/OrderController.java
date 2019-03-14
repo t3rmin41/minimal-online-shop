@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.minimal.eshop.domain.OrderBean;
-import com.minimal.eshop.domain.OrderStatusBean;
+import com.minimal.eshop.dto.OrderBean;
+import com.minimal.eshop.dto.OrderStatusBean;
 import com.minimal.eshop.enums.OrderStatus;
 import com.minimal.eshop.service.OrderService;
 

@@ -2,8 +2,8 @@ package com.minimal.eshop.repository;
 
 import java.util.List;
 import java.util.Set;
-import com.minimal.eshop.jpa.RoleDao;
-import com.minimal.eshop.jpa.UserDao;
+import com.minimal.eshop.domain.RoleDao;
+import com.minimal.eshop.domain.UserDao;
 
 public interface UserRepository {
 

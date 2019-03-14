@@ -2,9 +2,9 @@ package com.minimal.eshop.service;
 
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
-import com.minimal.eshop.domain.CartBean;
-import com.minimal.eshop.domain.OrderBean;
-import com.minimal.eshop.domain.OrderStatusBean;
+import com.minimal.eshop.dto.CartBean;
+import com.minimal.eshop.dto.OrderBean;
+import com.minimal.eshop.dto.OrderStatusBean;
 import com.minimal.eshop.enums.OrderStatus;
 
 @Service

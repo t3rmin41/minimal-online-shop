@@ -10,13 +10,13 @@ import java.util.Set;
 import javax.inject.Inject;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.minimal.eshop.domain.RoleBean;
-import com.minimal.eshop.domain.UserBean;
+import com.minimal.eshop.dto.RoleBean;
+import com.minimal.eshop.dto.UserBean;
 import com.minimal.eshop.enums.RoleType;
 import com.minimal.eshop.errorhandling.ErrorField;
 import com.minimal.eshop.errorhandling.WrongBeanFormatException;
-import com.minimal.eshop.jpa.RoleDao;
-import com.minimal.eshop.jpa.UserDao;
+import com.minimal.eshop.domain.RoleDao;
+import com.minimal.eshop.domain.UserDao;
 import com.minimal.eshop.repository.UserRepository;
 
 @Service

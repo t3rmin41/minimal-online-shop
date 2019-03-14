@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.minimal.eshop.domain.RoleBean;
-import com.minimal.eshop.domain.UserBean;
+import com.minimal.eshop.dto.RoleBean;
+import com.minimal.eshop.dto.UserBean;
 import com.minimal.eshop.enums.RoleType;
 import com.minimal.eshop.service.UserService;
 
