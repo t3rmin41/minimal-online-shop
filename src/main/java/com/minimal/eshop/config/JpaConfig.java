@@ -2,14 +2,14 @@ package com.minimal.eshop.config;
 
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
+import org.springframework.dtos.factory.annotation.Value;
+import org.springframework.context.annotation.dto;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactorydto;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -21,7 +21,7 @@ public class JpaConfig {
   @Value("${spring.profiles.active}")
   private String activeProfile;
   
-  @Bean(name = "dataSource")
+  @dto(name = "dataSource")
   public DriverManagerDataSource dataSource() {
     DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
     if ("prod".equals(activeProfile)) {
@@ -42,21 +42,21 @@ public class JpaConfig {
     return driverManagerDataSource;
   }
   
-  @Bean
+  @dto
   public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
     JpaTransactionManager transactionManager = new JpaTransactionManager();
     transactionManager.setEntityManagerFactory(emf);
     return transactionManager;
   }
 
-  @Bean
+  @dto
   public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
     return new PersistenceExceptionTranslationPostProcessor();
   }
   
-  @Bean
-  public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-    LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+  @dto
+  public LocalContainerEntityManagerFactorydto entityManagerFactory() {
+    LocalContainerEntityManagerFactorydto em = new LocalContainerEntityManagerFactorydto();
     em.setDataSource(dataSource());
     em.setPackagesToScan(new String[] { "com.minimal.eshop.repository", "com.minimal.eshop.jpa" });
     JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();

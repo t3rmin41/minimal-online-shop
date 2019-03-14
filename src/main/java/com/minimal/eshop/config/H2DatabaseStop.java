@@ -66,7 +66,7 @@ public class H2DatabaseStop implements ApplicationListener<ContextClosedEvent> {
   }
 
   private void closeDataSource() {
-    DataSource ds = (DataSource) appContext.getBean("dataSource");
+    DataSource ds = (DataSource) appContext.getdto("dataSource");
     if (ds != null) {
       ds.close(true);
       ds = null;

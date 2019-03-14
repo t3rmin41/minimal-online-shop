@@ -1,8 +1,8 @@
 package com.minimal.eshop.config;
 
 import org.h2.server.web.WebServlet;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.web.servlet.ServletRegistrationdto;
+import org.springframework.context.annotation.dto;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import com.minimal.eshop.app.ApplicationContextProvider;
@@ -15,16 +15,16 @@ import com.minimal.eshop.app.ApplicationContextProvider;
 })
 public class ApplicationConfig {
 
-  @Bean
+  @dto
   public ApplicationContextProvider applicationContextProvider() {
     return new ApplicationContextProvider();
   }
   
-  @Bean
-  public ServletRegistrationBean h2servletRegistration(){
-      ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
-      registrationBean.addUrlMappings("/h2-console/*");
-      return registrationBean;
+  @dto
+  public ServletRegistrationdto h2servletRegistration(){
+      ServletRegistrationdto registrationdto = new ServletRegistrationdto(new WebServlet());
+      registrationdto.addUrlMappings("/h2-console/*");
+      return registrationdto;
   }
   
 }

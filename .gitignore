@@ -23,7 +23,7 @@ hs_err_pid*
 .gradle/
 /bin/
 #Ignore SpringBeans
-.springBeans
+.springbeans
 #Common
 *log/
 *out/

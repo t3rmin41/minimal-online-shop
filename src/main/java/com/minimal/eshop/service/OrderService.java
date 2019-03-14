@@ -1,21 +1,21 @@
 package com.minimal.eshop.service;
 
 import java.util.List;
-import com.minimal.eshop.dto.OrderBean;
+import com.minimal.eshop.dto.OrderDto;
 
 public interface OrderService {
 
-  List<OrderBean> getAllOrders();
+  List<OrderDto> getAllOrders();
 
-  OrderBean getOrderById(Long id);
+  OrderDto getOrderById(Long id);
 
-  OrderBean saveOrder(OrderBean bean);
+  OrderDto saveOrder(OrderDto dto);
 
-  OrderBean updateOrder(OrderBean bean);
+  OrderDto updateOrder(OrderDto dto);
 
   boolean deleteOrderById(Long id);
 
-  List<OrderBean> getUserOrdersByUsername(String username);
+  List<OrderDto> getUserOrdersByUsername(String username);
   
-  List<OrderBean> getUserOrdersById(Long id);
+  List<OrderDto> getUserOrdersById(Long id);
 }

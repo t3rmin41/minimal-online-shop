@@ -8,7 +8,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
-import com.minimal.eshop.dto.UserBean;
+import com.minimal.eshop.dto.UserDto;
 import com.minimal.eshop.mapper.UserMapper;
 
 @Service
@@ -20,31 +20,31 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Cacheable(cacheNames = {"cachedUsers"}, key = "'usersCacheKey'", sync = true)
-  public List<UserBean> getAllUsers() {
+  public List<UserDto> getAllUsers() {
     return userMapper.getAllUsers();
   }
 
   @Override
-  public UserBean getUserByEmailAndPassword(String email, String password) {
-    return userMapper.getUserBeanByEmailAndPassword(email, password);
+  public UserDto getUserByEmailAndPassword(String email, String password) {
+    return userMapper.getUserDtoByEmailAndPassword(email, password);
   }
 
   @Override
-  public UserBean getUserByEmail(String email) {
-    return userMapper.getUserBeanByEmail(email);
+  public UserDto getUserByEmail(String email) {
+    return userMapper.getUserDtoByEmail(email);
   }
 
   @Override
-  public UserBean getUserById(Long id) {
-    return userMapper.convertUserToBeanByUserId(id);
+  public UserDto getUserById(Long id) {
+    return userMapper.convertUserTodtoByUserId(id);
   }
 
   @Override
   @Caching(
       evict = {@CacheEvict(cacheNames = {"cachedUsers"}, key = "'usersCacheKey'", allEntries = true)}
   )
-  public UserBean saveUser(UserBean bean) {
-    return userMapper.saveUser(bean);
+  public UserDto saveUser(UserDto dto) {
+    return userMapper.saveUser(dto);
   }
 
   @Override
@@ -52,8 +52,8 @@ public class UserServiceImpl implements UserService {
       put = {@CachePut(cacheNames = {"cachedUsers"}, key = "'usersCacheKey'")},
       evict = {@CacheEvict(cacheNames = {"cachedUsers"}, key = "'usersCacheKey'")}
   )
-  public UserBean updateUser(UserBean bean) {
-    return userMapper.updateUser(bean);
+  public UserDto updateUser(UserDto dto) {
+    return userMapper.updateUser(dto);
   }
   
   @Override

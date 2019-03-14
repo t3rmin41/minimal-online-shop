@@ -8,7 +8,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 import com.minimal.eshop.enums.OrderStatus;
-import com.minimal.eshop.domain.ProductDao;
+import com.minimal.eshop.domain.ProductJpa;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
@@ -18,42 +18,42 @@ public class ProductRepositoryImpl implements ProductRepository {
   
   @Override
   @Transactional
-  public List<ProductDao> getAllProducts() {
-    String q = "SELECT p FROM ProductDao p WHERE p.deleted = false ORDER BY p.id ASC";
-    TypedQuery<ProductDao> query = em.createQuery(q, ProductDao.class);
+  public List<ProductJpa> getAllProducts() {
+    String q = "SELECT p FROM ProductJpa p WHERE p.deleted = false ORDER BY p.id ASC";
+    TypedQuery<ProductJpa> query = em.createQuery(q, ProductJpa.class);
     return query.getResultList();
   }
 
   @Override
   @Transactional
-  public ProductDao getProductById(Long id) {
-    String q = "SELECT p FROM ProductDao p WHERE p.id = :pid AND p.deleted = false ORDER BY p.id ASC";
-    TypedQuery<ProductDao> query = em.createQuery(q, ProductDao.class);
+  public ProductJpa getProductById(Long id) {
+    String q = "SELECT p FROM ProductJpa p WHERE p.id = :pid AND p.deleted = false ORDER BY p.id ASC";
+    TypedQuery<ProductJpa> query = em.createQuery(q, ProductJpa.class);
     query.setParameter("pid", id);
     return query.getSingleResult();
   }
 
   @Override
   @Transactional
-  public ProductDao saveProduct(ProductDao jpa) {
+  public ProductJpa saveProduct(ProductJpa jpa) {
     return em.merge(jpa);
   }
 
   @Override
   @Transactional
-  public ProductDao updateProduct(ProductDao jpa) {
+  public ProductJpa updateProduct(ProductJpa jpa) {
     return em.merge(jpa);
   }
 
   @Override
   @Transactional
   public boolean deleteProductById(Long id) {
-    String q = "UPDATE ProductDao p SET p.deleted = true WHERE p.id = :pid";
+    String q = "UPDATE ProductJpa p SET p.deleted = true WHERE p.id = :pid";
     Query query = em.createQuery(q);
     query.setParameter("pid", id);
     int productQueryStatus = query.executeUpdate();
     
-    String orderQuery = "UPDATE OrderDao o SET o.status = :pstatus WHERE o.product = :pproduct";
+    String orderQuery = "UPDATE OrderJpa o SET o.status = :pstatus WHERE o.product = :pproduct";
     Query queryOrder = em.createQuery(orderQuery);
     queryOrder.setParameter("pproduct", getAnyProductById(id));
     queryOrder.setParameter("pstatus", OrderStatus.PRODUCT_DELETED.toString());
@@ -63,9 +63,9 @@ public class ProductRepositoryImpl implements ProductRepository {
   }
   
   @Transactional
-  private ProductDao getAnyProductById(Long id) {
-    String q = "SELECT p FROM ProductDao p WHERE p.id = :pid ORDER BY p.id ASC";
-    TypedQuery<ProductDao> query = em.createQuery(q, ProductDao.class);
+  private ProductJpa getAnyProductById(Long id) {
+    String q = "SELECT p FROM ProductJpa p WHERE p.id = :pid ORDER BY p.id ASC";
+    TypedQuery<ProductJpa> query = em.createQuery(q, ProductJpa.class);
     query.setParameter("pid", id);
     return query.getSingleResult();
   }

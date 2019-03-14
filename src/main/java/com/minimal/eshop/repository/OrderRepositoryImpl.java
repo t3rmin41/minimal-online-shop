@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import com.minimal.eshop.domain.OrderDao;
+import com.minimal.eshop.domain.OrderJpa;
 
 @Repository
 public class OrderRepositoryImpl implements OrderRepository {
@@ -22,7 +22,7 @@ public class OrderRepositoryImpl implements OrderRepository {
   
   @Override
   @Transactional
-  public OrderDao saveOrder(OrderDao order) {
+  public OrderJpa saveOrder(OrderJpa order) {
     Calendar cal = Calendar.getInstance();
     //cal.set(Calendar.HOUR_OF_DAY, 0);
     //cal.set(Calendar.MINUTE, 0);
@@ -33,42 +33,42 @@ public class OrderRepositoryImpl implements OrderRepository {
 
   @Override
   @Transactional
-  public List<OrderDao> getOrders() {
-    String q = "SELECT o FROM OrderDao o ORDER BY o.id ASC";
-    TypedQuery<OrderDao> query = em.createQuery(q, OrderDao.class);
+  public List<OrderJpa> getOrders() {
+    String q = "SELECT o FROM OrderJpa o ORDER BY o.id ASC";
+    TypedQuery<OrderJpa> query = em.createQuery(q, OrderJpa.class);
     return query.getResultList();
   }
 
   @Override
   @Transactional
-  public List<OrderDao> getUserOrdersByEmail(String email) {
-    String q = "SELECT o FROM OrderDao o WHERE o.orderedBy = (SELECT u FROM UserDao u WHERE u.email = :pemail) ORDER BY o.id ASC";
-    TypedQuery<OrderDao> query = em.createQuery(q, OrderDao.class);
+  public List<OrderJpa> getUserOrdersByEmail(String email) {
+    String q = "SELECT o FROM OrderJpa o WHERE o.orderedBy = (SELECT u FROM UserJpa u WHERE u.email = :pemail) ORDER BY o.id ASC";
+    TypedQuery<OrderJpa> query = em.createQuery(q, OrderJpa.class);
     query.setParameter("pemail", email);
     return query.getResultList();
   }
 
   @Override
   @Transactional
-  public List<OrderDao> getUserOrdersById(Long userId) {
-    String q = "SELECT o FROM OrderDao o WHERE o.orderedBy = (SELECT u FROM UserDao u WHERE u.id = :pid) ORDER BY o.id ASC";
-    TypedQuery<OrderDao> query = em.createQuery(q, OrderDao.class);
+  public List<OrderJpa> getUserOrdersById(Long userId) {
+    String q = "SELECT o FROM OrderJpa o WHERE o.orderedBy = (SELECT u FROM UserJpa u WHERE u.id = :pid) ORDER BY o.id ASC";
+    TypedQuery<OrderJpa> query = em.createQuery(q, OrderJpa.class);
     query.setParameter("pid", userId);
     return query.getResultList();
   }
   
   @Override
   @Transactional
-  public OrderDao getOrderById(Long id) {
-    String q = "SELECT o FROM OrderDao o WHERE o.id = :pid ORDER BY o.id ASC";
-    TypedQuery<OrderDao> query = em.createQuery(q, OrderDao.class);
+  public OrderJpa getOrderById(Long id) {
+    String q = "SELECT o FROM OrderJpa o WHERE o.id = :pid ORDER BY o.id ASC";
+    TypedQuery<OrderJpa> query = em.createQuery(q, OrderJpa.class);
     query.setParameter("pid", id);
     return query.getSingleResult();
   }
 
   @Override
   @Transactional
-  public OrderDao updateOrder(OrderDao order) {
+  public OrderJpa updateOrder(OrderJpa order) {
     Calendar cal = Calendar.getInstance();
     //cal.set(Calendar.HOUR, 0);
     //cal.set(Calendar.MINUTE, 0);
@@ -80,7 +80,7 @@ public class OrderRepositoryImpl implements OrderRepository {
   @Override
   @Transactional
   public boolean deleteOrderById(Long id) {
-    OrderDao jpa = this.getOrderById(id);
+    OrderJpa jpa = this.getOrderById(id);
     boolean result = false;
     try {
         em.remove(jpa);

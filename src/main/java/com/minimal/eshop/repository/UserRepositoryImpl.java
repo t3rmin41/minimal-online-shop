@@ -11,11 +11,11 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dtos.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
-import com.minimal.eshop.domain.RoleDao;
-import com.minimal.eshop.domain.UserDao;
+import com.minimal.eshop.domain.RoleJpa;
+import com.minimal.eshop.domain.UserJpa;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -30,21 +30,21 @@ public class UserRepositoryImpl implements UserRepository {
   
   @Override
   @Transactional
-  public UserDao getUserByEmail(String email) {
-    String q = "SELECT u FROM UserDao u LEFT JOIN FETCH u.roles WHERE u.email = :pemail ORDER BY u.id ASC";
-    TypedQuery<UserDao> query = em.createQuery(q, UserDao.class);
+  public UserJpa getUserByEmail(String email) {
+    String q = "SELECT u FROM UserJpa u LEFT JOIN FETCH u.roles WHERE u.email = :pemail ORDER BY u.id ASC";
+    TypedQuery<UserJpa> query = em.createQuery(q, UserJpa.class);
     query.setParameter("pemail", email);
     return query.getSingleResult();
   }
 
   @Override
   @Transactional
-  public UserDao getUserByEmailAndPassword(String email, String password) {
-    String q = "SELECT u FROM UserDao u WHERE u.email = :pemail AND u.password = :ppassword ORDER BY u.id ASC";
-    TypedQuery<UserDao> query = em.createQuery(q, UserDao.class);
+  public UserJpa getUserByEmailAndPassword(String email, String password) {
+    String q = "SELECT u FROM UserJpa u WHERE u.email = :pemail AND u.password = :ppassword ORDER BY u.id ASC";
+    TypedQuery<UserJpa> query = em.createQuery(q, UserJpa.class);
     query.setParameter("pemail", email);
     query.setParameter("ppassword", password);
-    List<UserDao> users = query.getResultList();
+    List<UserJpa> users = query.getResultList();
     if (1 == users.size()) {
         return users.get(0);
     } else {
@@ -54,33 +54,33 @@ public class UserRepositoryImpl implements UserRepository {
 
   @Override
   @Transactional
-  public UserDao getUserById(Long id) {
-    String q = "SELECT u FROM UserDao u LEFT JOIN FETCH u.roles WHERE u.id = :pid ORDER BY u.id ASC";
-    TypedQuery<UserDao> query = em.createQuery(q, UserDao.class);
+  public UserJpa getUserById(Long id) {
+    String q = "SELECT u FROM UserJpa u LEFT JOIN FETCH u.roles WHERE u.id = :pid ORDER BY u.id ASC";
+    TypedQuery<UserJpa> query = em.createQuery(q, UserJpa.class);
     query.setParameter("pid", id);
     return query.getSingleResult();
   }
 
   @Override
   @Transactional
-  public UserDao saveUser(UserDao jpa) {
+  public UserJpa saveUser(UserJpa jpa) {
     jpa.setPassword(passwordEncoder.encode(jpa.getPassword()));
     return em.merge(jpa);
   }
 
   @Override
   @Transactional
-  public void assignRoles(Set<RoleDao> roles) {
-    for (RoleDao role : roles) {
+  public void assignRoles(Set<RoleJpa> roles) {
+    for (RoleJpa role : roles) {
       em.merge(role);
     }
   }
 
   @Override
   @Transactional
-  public void removeRoles(Set<RoleDao> roles) {
-    for (RoleDao role : roles) {
-      String q = "DELETE FROM RoleDao r WHERE r.role = :role AND r.user = :user AND r.active = 1";
+  public void removeRoles(Set<RoleJpa> roles) {
+    for (RoleJpa role : roles) {
+      String q = "DELETE FROM RoleJpa r WHERE r.role = :role AND r.user = :user AND r.active = 1";
       Query query = em.createQuery(q);
       query.setParameter("role", role.getRole());
       query.setParameter("user", role.getUser());
@@ -90,15 +90,15 @@ public class UserRepositoryImpl implements UserRepository {
 
   @Override
   @Transactional
-  public List<UserDao> getAllUsers() {
-    String q = "SELECT u FROM UserDao u WHERE u.id IS NOT NULL ORDER BY u.id ASC";
-    TypedQuery<UserDao> query = em.createQuery(q, UserDao.class);
+  public List<UserJpa> getAllUsers() {
+    String q = "SELECT u FROM UserJpa u WHERE u.id IS NOT NULL ORDER BY u.id ASC";
+    TypedQuery<UserJpa> query = em.createQuery(q, UserJpa.class);
     return query.getResultList();
   }
 
   @Override
   @Transactional
-  public boolean deleteUser(UserDao jpa) {
+  public boolean deleteUser(UserJpa jpa) {
     boolean result = false;
     try {
       em.remove(jpa);
@@ -113,37 +113,37 @@ public class UserRepositoryImpl implements UserRepository {
 
   @Override
   @Transactional
-  public UserDao updateUser(UserDao jpa, boolean isPasswordChanged) {
+  public UserJpa updateUser(UserJpa jpa, boolean isPasswordChanged) {
     if (isPasswordChanged) {
       jpa.setPassword(passwordEncoder.encode(jpa.getPassword()));
     } else {
       jpa.setPassword(jpa.getPassword());
     }
-    UserDao updated = em.merge(jpa);
+    UserJpa updated = em.merge(jpa);
     return getUserById(updated.getId());
   }
 
   @Override
   @Transactional
-  public Set<RoleDao> getUserRolesByNames(UserDao jpa, Set<String> rolesNames) {
-    String q = "SELECT r FROM RoleDao r WHERE r.role IN :roles AND r.user = :user AND r.active = 1 ORDER BY r.id ASC";
-    TypedQuery<RoleDao> query = em.createQuery(q, RoleDao.class);
+  public Set<RoleJpa> getUserRolesByNames(UserJpa jpa, Set<String> rolesNames) {
+    String q = "SELECT r FROM RoleJpa r WHERE r.role IN :roles AND r.user = :user AND r.active = 1 ORDER BY r.id ASC";
+    TypedQuery<RoleJpa> query = em.createQuery(q, RoleJpa.class);
     query.setParameter("roles", rolesNames);
     query.setParameter("user", jpa);
-    List<RoleDao> resultList = query.getResultList();
-    Set<RoleDao> roles = new HashSet<RoleDao>();
+    List<RoleJpa> resultList = query.getResultList();
+    Set<RoleJpa> roles = new HashSet<RoleJpa>();
     roles.addAll(resultList);
     return roles;
   }
 
   @Override
   @Transactional
-  public Set<RoleDao> getUserRolesByEmail(String email) {
-    String q = "SELECT r FROM RoleDao r WHERE r.user.email = :pemail AND r.active = 1 ORDER BY r.id ASC";
-    TypedQuery<RoleDao> query = em.createQuery(q, RoleDao.class);
+  public Set<RoleJpa> getUserRolesByEmail(String email) {
+    String q = "SELECT r FROM RoleJpa r WHERE r.user.email = :pemail AND r.active = 1 ORDER BY r.id ASC";
+    TypedQuery<RoleJpa> query = em.createQuery(q, RoleJpa.class);
     query.setParameter("pemail", email);
-    List<RoleDao> resultList = query.getResultList();
-    Set<RoleDao> roles = new HashSet<RoleDao>();
+    List<RoleJpa> resultList = query.getResultList();
+    Set<RoleJpa> roles = new HashSet<RoleJpa>();
     roles.addAll(resultList);
     return roles;
   }

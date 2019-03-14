@@ -4,8 +4,8 @@ import java.util.Arrays;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
-import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
-import org.springframework.context.annotation.Bean;
+import org.springframework.cache.ehcache.EhCacheManagerFactorydto;
+import org.springframework.context.annotation.dto;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
@@ -14,7 +14,7 @@ import org.springframework.core.io.ClassPathResource;
 public class CachingConfig {
 
 //  //Suitable for basic use cases, no persistence capabilities or eviction contracts.
-//  @Bean
+//  @dto
 //  public CacheManager cacheManager() {
 //    SimpleCacheManager cacheManager = new  SimpleCacheManager();
 //
@@ -25,14 +25,14 @@ public class CachingConfig {
 //    return cacheManager;
 //  }
   
-  @Bean
+  @dto
   public CacheManager cacheManager() {
       return new EhCacheCacheManager(ehCacheCacheManager().getObject());
   }
 
-  @Bean
-  public EhCacheManagerFactoryBean ehCacheCacheManager() {
-      EhCacheManagerFactoryBean factory = new EhCacheManagerFactoryBean();
+  @dto
+  public EhCacheManagerFactorydto ehCacheCacheManager() {
+      EhCacheManagerFactorydto factory = new EhCacheManagerFactorydto();
       factory.setConfigLocation(new ClassPathResource("ehcache.xml"));
       factory.setShared(true);
       return factory;
