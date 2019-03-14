@@ -3,7 +3,7 @@ package com.minimal.eshop.service;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
-import com.minimal.eshop.domain.OrderBean;
+import com.minimal.eshop.dto.OrderDto;
 import com.minimal.eshop.enums.OrderStatus;
 import com.minimal.eshop.mapper.OrderMapper;
 
@@ -14,25 +14,25 @@ public class OrderServiceImpl implements OrderService {
   private OrderMapper orderMapper;
   
   @Override
-  public List<OrderBean> getAllOrders() {
+  public List<OrderDto> getAllOrders() {
     return orderMapper.getAllOrders();
   }
 
   @Override
-  public OrderBean getOrderById(Long id) {
+  public OrderDto getOrderById(Long id) {
     return orderMapper.getOrderById(id);
   }
 
   @Override
-  public OrderBean saveOrder(OrderBean bean) {
-    return orderMapper.saveOrder(bean);
+  public OrderDto saveOrder(OrderDto dto) {
+    return orderMapper.saveOrder(dto);
   }
 
   @Override
-  public OrderBean updateOrder(OrderBean bean) {
+  public OrderDto updateOrder(OrderDto dto) {
     for (OrderStatus status : OrderStatus.values()) {
-      if (status.name().equals(bean.getStatus().getCode())) {
-        return orderMapper.updateOrder(bean);
+      if (status.name().equals(dto.getStatus().getCode())) {
+        return orderMapper.updateOrder(dto);
       }
     }
     return null;
@@ -44,12 +44,12 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public List<OrderBean> getUserOrdersByUsername(String username) {
+  public List<OrderDto> getUserOrdersByUsername(String username) {
     return orderMapper.getUserOrdersByUsername(username);
   }
 
   @Override
-  public List<OrderBean> getUserOrdersById(Long id) {
+  public List<OrderDto> getUserOrdersById(Long id) {
     return orderMapper.getUserOrdersById(id);
   }
 

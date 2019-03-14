@@ -2,27 +2,27 @@ package com.minimal.eshop.mapper;
 
 import java.util.List;
 import java.util.Set;
-import com.minimal.eshop.domain.RoleBean;
-import com.minimal.eshop.domain.UserBean;
-import com.minimal.eshop.jpa.RoleDao;
+import com.minimal.eshop.dto.RoleDto;
+import com.minimal.eshop.dto.UserDto;
+import com.minimal.eshop.domain.RoleJpa;
 
 public interface UserMapper {
 
-  UserBean getUserBeanByEmail(String email);
+  UserDto getUserDtoByEmail(String email);
   
-  UserBean getUserBeanByEmailAndPassword(String email, String password);
+  UserDto getUserDtoByEmailAndPassword(String email, String password);
 
-  UserBean convertUserToBeanByUserId(Long id);
+  UserDto convertUserTodtoByUserId(Long id);
   
-  UserBean saveUser(UserBean bean);
+  UserDto saveUser(UserDto dto);
   
-  List<UserBean> getAllUsers();
+  List<UserDto> getAllUsers();
   
   boolean deleteUserById(Long id);
   
-  UserBean updateUser(UserBean bean);
+  UserDto updateUser(UserDto dto);
 
-  List<RoleBean> convertUserRolesToRoleBeans(Set<RoleDao> roles);
+  List<RoleDto> convertUserRolesToRoleDtos(Set<RoleJpa> roles);
 
   void addRoles(Long userId, Set<String> roles);
 

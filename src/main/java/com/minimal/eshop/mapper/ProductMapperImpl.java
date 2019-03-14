@@ -5,59 +5,59 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
-import com.minimal.eshop.domain.ProductBean;
+import com.minimal.eshop.dto.ProductDto;
 import com.minimal.eshop.errorhandling.ErrorField;
-import com.minimal.eshop.errorhandling.WrongBeanFormatException;
-import com.minimal.eshop.jpa.ProductDao;
+import com.minimal.eshop.errorhandling.WrongDtoFormatException;
+import com.minimal.eshop.domain.ProductJpa;
 import com.minimal.eshop.repository.ProductRepository;
 
 @Service
-public class ProductMapperImpl implements ProductMapper, BeanValidator {
+public class ProductMapperImpl implements ProductMapper, DtoValidator {
 
   @Inject
   private ProductRepository productRepo;
   
   @Override
-  public ProductBean getProductBeanByProduct(ProductDao jpa) {
-    return convertJpaToBean(jpa);
+  public ProductDto getProductDtoByProduct(ProductJpa jpa) {
+    return convertJpaTodto(jpa);
   }
 
   @Override
-  public ProductBean getProductBeanById(Long id) {
-    return convertJpaToBean(productRepo.getProductById(id));
+  public ProductDto getProductDtoById(Long id) {
+    return convertJpaTodto(productRepo.getProductById(id));
   }
 
   @Override
-  public List<ProductBean> getProductBeansByProducts(List<ProductDao> jpas) {
-    List<ProductBean> beans = new LinkedList<ProductBean>();
+  public List<ProductDto> getProductDtosByProducts(List<ProductJpa> jpas) {
+    List<ProductDto> dtos = new LinkedList<ProductDto>();
     jpas.stream().forEach(p -> {
-      beans.add(convertJpaToBean(p));
+      dtos.add(convertJpaTodto(p));
     });
-    return beans;
+    return dtos;
   }
 
   @Override
-  public List<ProductBean> getAllProducts() {
-    return getProductBeansByProducts(productRepo.getAllProducts());
+  public List<ProductDto> getAllProducts() {
+    return getProductDtosByProducts(productRepo.getAllProducts());
   }
 
   @Override
-  public ProductBean saveProduct(ProductBean bean) {
-    validateBean(bean);
-    ProductDao jpa = new ProductDao();
-    jpa.setPrice(bean.getPrice());
-    jpa.setTitle(bean.getTitle());
-    jpa.setShortDescription(bean.getShortDescription());
+  public ProductDto saveProduct(ProductDto dto) {
+    validatedto(dto);
+    ProductJpa jpa = new ProductJpa();
+    jpa.setPrice(dto.getPrice());
+    jpa.setTitle(dto.getTitle());
+    jpa.setShortDescription(dto.getShortDescription());
     jpa = productRepo.saveProduct(jpa);
-    return convertJpaToBean(jpa);
+    return convertJpaTodto(jpa);
   }
 
   @Override
-  public ProductBean updateProduct(ProductBean bean) {
-    validateBean(bean);
-    ProductDao jpa = productRepo.getProductById(bean.getId());
-    jpa.setPrice(bean.getPrice());
-    return convertJpaToBean(productRepo.updateProduct(jpa));
+  public ProductDto updateProduct(ProductDto dto) {
+    validatedto(dto);
+    ProductJpa jpa = productRepo.getProductById(dto.getId());
+    jpa.setPrice(dto.getPrice());
+    return convertJpaTodto(productRepo.updateProduct(jpa));
   }
 
   @Override
@@ -66,23 +66,23 @@ public class ProductMapperImpl implements ProductMapper, BeanValidator {
   }
 
   @Override
-  public List<ErrorField> validateBean(Serializable bean) throws WrongBeanFormatException {
+  public List<ErrorField> validatedto(Serializable dto) throws WrongDtoFormatException {
     List<ErrorField> errors = new LinkedList<ErrorField>();
-    ProductBean productBean = (ProductBean) bean;
-    if (productBean.getShortDescription().length() > 15) {
+    ProductDto ProductDto = (ProductDto) dto;
+    if (ProductDto.getShortDescription().length() > 15) {
       errors.add(new ErrorField("shortDescription", "Short description maximum length is 15 chars"));
     }
-    if (productBean.getPrice() < 0) {
+    if (ProductDto.getPrice() < 0) {
       errors.add(new ErrorField("price", "Price cannot be negative"));
     }
     if (errors.size() > 0) {
-      throw new WrongBeanFormatException("Wrong data entered", errors);
+      throw new WrongDtoFormatException("Wrong data entered", errors);
     }
     return errors;
   }
 
-  private ProductBean convertJpaToBean(ProductDao jpa) {
-    return new ProductBean().setId(jpa.getId()).setTitle(jpa.getTitle())
+  private ProductDto convertJpaTodto(ProductJpa jpa) {
+    return new ProductDto().setId(jpa.getId()).setTitle(jpa.getTitle())
                             .setShortDescription(jpa.getShortDescription())
                             .setPrice(jpa.getPrice()).setDeleted(jpa.isDeleted());
   }

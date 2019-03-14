@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-import com.minimal.eshop.domain.ProductBean;
+import com.minimal.eshop.dto.ProductDto;
 import com.minimal.eshop.mapper.ProductMapper;
 
 @Service
@@ -19,21 +19,21 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   @Cacheable(cacheNames = {"cachedProducts"}, sync = true, key = "'productsCacheKey'")
-  public List<ProductBean> getAllProducts() {
+  public List<ProductDto> getAllProducts() {
     return productMapper.getAllProducts();
   }
 
   @Override
-  public ProductBean getProductBeanById(Long id) {
-    return productMapper.getProductBeanById(id);
+  public ProductDto getProductDtoById(Long id) {
+    return productMapper.getProductDtoById(id);
   }
 
   @Override
   @Caching(
       evict = {@CacheEvict(cacheNames = {"cachedProducts"}, key = "'productsCacheKey'", allEntries = true)}
   )
-  public ProductBean saveProduct(ProductBean bean) {
-    return productMapper.saveProduct(bean);
+  public ProductDto saveProduct(ProductDto dto) {
+    return productMapper.saveProduct(dto);
   }
 
   @Override
@@ -41,8 +41,8 @@ public class ProductServiceImpl implements ProductService {
       put = {@CachePut(cacheNames = {"cachedProducts"}, key = "'productsCacheKey'")},
       evict = {@CacheEvict(cacheNames = {"cachedProducts"}, key = "'productsCacheKey'")}
   )
-  public ProductBean updateProduct(ProductBean bean) {
-    return productMapper.updateProduct(bean);
+  public ProductDto updateProduct(ProductDto dto) {
+    return productMapper.updateProduct(dto);
   }
 
   @Override

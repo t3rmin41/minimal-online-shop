@@ -13,7 +13,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextClosedEvent;
 
-@Configuration
+//@Configuration
 @SuppressWarnings("rawtypes")
 public class H2DatabaseStop implements ApplicationListener<ContextClosedEvent> {
 

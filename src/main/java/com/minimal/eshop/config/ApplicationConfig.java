@@ -11,6 +11,7 @@ import com.minimal.eshop.app.ApplicationContextProvider;
 @ComponentScan(basePackages = {"com.minimal.eshop.view.controller", "com.minimal.eshop.rest.controller", "com.minimal.eshop.domain",
                                "com.minimal.eshop.service", "com.minimal.eshop.mapper", "com.minimal.eshop.repository",
                                "com.minimal.eshop.aspect",
+                               "com.minimal.eshop.dto",
                                "com.minimal.eshop.errorhandling", "com.minimal.eshop.security"
 })
 public class ApplicationConfig {
@@ -22,9 +23,9 @@ public class ApplicationConfig {
   
   @Bean
   public ServletRegistrationBean h2servletRegistration(){
-      ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
-      registrationBean.addUrlMappings("/h2-console/*");
-      return registrationBean;
+      ServletRegistrationBean registrationdto = new ServletRegistrationBean(new WebServlet());
+      registrationdto.addUrlMappings("/h2-console/*");
+      return registrationdto;
   }
   
 }
