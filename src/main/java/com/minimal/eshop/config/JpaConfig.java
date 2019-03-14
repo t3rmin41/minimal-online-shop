@@ -58,7 +58,7 @@ public class JpaConfig {
   public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
     LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
     em.setDataSource(dataSource());
-    em.setPackagesToScan(new String[] { "com.minimal.eshop.repository", "com.minimal.eshop.jpa" });
+    em.setPackagesToScan(new String[] { "com.minimal.eshop.repository", "com.minimal.eshop.domain" });
     JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
     em.setJpaVendorAdapter(vendorAdapter);
     em.setJpaProperties(additionalProperties());
