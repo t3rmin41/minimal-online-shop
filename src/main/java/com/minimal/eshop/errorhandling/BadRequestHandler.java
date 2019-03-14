@@ -12,13 +12,13 @@ import com.minimal.eshop.security.UserNotAllowedException;
 @ControllerAdvice
 public class BadRequestHandler extends ResponseEntityExceptionHandler {
 
-  @ExceptionHandler(value = {WrongBeanFormatException.class})
-  protected ResponseEntity<ErrorResponse> handleWrongBeanFormat(RuntimeException ex, WebRequest request) {
-      WrongBeanFormatException exception = null;
+  @ExceptionHandler(value = {WrongDtoFormatException.class})
+  protected ResponseEntity<ErrorResponse> handleWrongdtoFormat(RuntimeException ex, WebRequest request) {
+      WrongDtoFormatException exception = null;
       HttpHeaders headers = new HttpHeaders();
       headers.add("Content-Type", "application/json;UTF-8");
       try {
-        exception = (WrongBeanFormatException) ex;
+        exception = (WrongDtoFormatException) ex;
       } catch (ClassCastException e) {
         throw new RuntimeException(e);
       }

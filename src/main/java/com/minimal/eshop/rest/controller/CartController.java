@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.minimal.eshop.domain.CartBean;
-import com.minimal.eshop.domain.OrderBean;
-import com.minimal.eshop.domain.ProductBean;
+import com.minimal.eshop.dto.CartDto;
+import com.minimal.eshop.dto.OrderDto;
+import com.minimal.eshop.dto.ProductDto;
 import com.minimal.eshop.service.CartService;
 import com.minimal.eshop.service.ProductService;
 import com.minimal.eshop.service.UserService;
@@ -33,37 +33,37 @@ public class CartController {
   private UserService userService;
   
   @Inject
-  private CartBean cartBean;
+  private CartDto CartDto;
   
   @RequestMapping(method = RequestMethod.GET)
-  public @ResponseBody CartBean getCart(UsernamePasswordAuthenticationToken token) {
-    return cartBean;
+  public @ResponseBody CartDto getCart(UsernamePasswordAuthenticationToken token) {
+    return CartDto;
   }
   
   @RequestMapping(value = "/product/add", method = RequestMethod.POST, consumes=APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody CartBean addProductToCart(UsernamePasswordAuthenticationToken token, @RequestBody ProductBean productBean, Principal principal) {
-    ProductBean product = productService.getProductBeanById(productBean.getId());
-    OrderBean orderBean = new OrderBean().setProductId(product.getId()).setOrderedBy(principal.getName());
-    orderBean.setProductName(product.getTitle());
-    orderBean.setShortDescription(productBean.getShortDescription());
-    orderBean.setPrice(product.getPrice());
-    cartBean.getItems().add(orderBean);
-    return cartBean;
+  public @ResponseBody CartDto addProductToCart(UsernamePasswordAuthenticationToken token, @RequestBody ProductDto ProductDto, Principal principal) {
+    ProductDto product = productService.getProductDtoById(ProductDto.getId());
+    OrderDto OrderDto = new OrderDto().setProductId(product.getId()).setOrderedBy(principal.getName());
+    OrderDto.setProductName(product.getTitle());
+    OrderDto.setShortDescription(ProductDto.getShortDescription());
+    OrderDto.setPrice(product.getPrice());
+    CartDto.getItems().add(OrderDto);
+    return CartDto;
   }
   
   @RequestMapping(value = "/product/remove", method = RequestMethod.DELETE, consumes=APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody CartBean removeProductFromCart(UsernamePasswordAuthenticationToken token, @RequestBody OrderBean orderBean, Principal principal) {
-    cartBean.getItems().remove(orderBean);
-    return cartBean;
+  public @ResponseBody CartDto removeProductFromCart(UsernamePasswordAuthenticationToken token, @RequestBody OrderDto OrderDto, Principal principal) {
+    CartDto.getItems().remove(OrderDto);
+    return CartDto;
   }
   
   @RequestMapping(value = "/submit", method = RequestMethod.POST, consumes=APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody CartBean submitCart(UsernamePasswordAuthenticationToken token, Principal principal) {
-    //UserBean userBean = userService.getUserByEmail(principal.getName());
-    //cartBean.setUserId(userBean.getId());
-    cartService.submitCart(cartBean);
-    cartBean.clear();
-    return cartBean;
+  public @ResponseBody CartDto submitCart(UsernamePasswordAuthenticationToken token, Principal principal) {
+    //UserDto UserDto = userService.getUserByEmail(principal.getName());
+    //CartDto.setUserId(UserDto.getId());
+    cartService.submitCart(CartDto);
+    CartDto.clear();
+    return CartDto;
   }
   
 }

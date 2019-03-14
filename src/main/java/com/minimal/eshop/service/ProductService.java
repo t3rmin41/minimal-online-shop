@@ -1,17 +1,17 @@
 package com.minimal.eshop.service;
 
 import java.util.List;
-import com.minimal.eshop.domain.ProductBean;
+import com.minimal.eshop.dto.ProductDto;
 
 public interface ProductService {
 
-  List<ProductBean> getAllProducts();
+  List<ProductDto> getAllProducts();
   
-  ProductBean getProductBeanById(Long id);
+  ProductDto getProductDtoById(Long id);
   
-  ProductBean saveProduct(ProductBean bean);
+  ProductDto saveProduct(ProductDto dto);
   
-  ProductBean updateProduct(ProductBean bean);
+  ProductDto updateProduct(ProductDto dto);
   
   boolean deleteProductById(Long id);
   

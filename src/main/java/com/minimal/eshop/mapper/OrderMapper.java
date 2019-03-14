@@ -1,29 +1,29 @@
 package com.minimal.eshop.mapper;
 
 import java.util.List;
-import com.minimal.eshop.domain.OrderBean;
-import com.minimal.eshop.domain.OrderStatusBean;
-import com.minimal.eshop.jpa.OrderDao;
+import com.minimal.eshop.dto.OrderDto;
+import com.minimal.eshop.dto.OrderStatusDto;
+import com.minimal.eshop.domain.OrderJpa;
 
 public interface OrderMapper {
 
-  List<OrderBean> getAllOrders();
+  List<OrderDto> getAllOrders();
   
-  OrderBean getOrderById(Long id);
+  OrderDto getOrderById(Long id);
   
-  OrderBean saveOrder(OrderBean bean);
+  OrderDto saveOrder(OrderDto dto);
   
-  OrderBean updateOrder(OrderBean bean);
+  OrderDto updateOrder(OrderDto dto);
   
   boolean deleteOrderById(Long id);
   
-  OrderBean convertOrderToBeanById(Long id);
+  OrderDto convertOrderTodtoById(Long id);
   
-  OrderStatusBean getTypeBeanByName(String name);
+  OrderStatusDto getTypedtoByName(String name);
   
-  List<OrderBean> convertJpaListToBeans(List<OrderDao> jpas);
+  List<OrderDto> convertJpaListTodtos(List<OrderJpa> jpas);
   
-  List<OrderBean> getUserOrdersByUsername(String email);
+  List<OrderDto> getUserOrdersByUsername(String email);
   
-  List<OrderBean> getUserOrdersById(Long id);
+  List<OrderDto> getUserOrdersById(Long id);
 }

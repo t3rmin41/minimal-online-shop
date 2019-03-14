@@ -11,6 +11,7 @@ import com.minimal.eshop.app.ApplicationContextProvider;
 @ComponentScan(basePackages = {"com.minimal.eshop.view.controller", "com.minimal.eshop.rest.controller", "com.minimal.eshop.domain",
                                "com.minimal.eshop.service", "com.minimal.eshop.mapper", "com.minimal.eshop.repository",
                                "com.minimal.eshop.aspect",
+                               "com.minimal.eshop.dto",
                                "com.minimal.eshop.errorhandling", "com.minimal.eshop.security"
 })
 public class ApplicationConfig {
