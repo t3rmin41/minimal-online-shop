@@ -2,7 +2,6 @@ package com.minimal.eshop.mapper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
@@ -97,8 +96,8 @@ public class OrderMapperImpl implements OrderMapper, DtoValidator {
   
   @Override
   public List<ErrorField> validatedto(Serializable dto) throws WrongDtoFormatException {
-    List<ErrorField> errors = new LinkedList<ErrorField>();
-    OrderDto OrderDto = (OrderDto) dto;
+    List<ErrorField> errors = new ArrayList<ErrorField>();
+    OrderDto orderDto = (OrderDto) dto;
     return errors;
   }
 

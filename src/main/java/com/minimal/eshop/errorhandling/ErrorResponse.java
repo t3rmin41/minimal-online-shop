@@ -1,12 +1,12 @@
 package com.minimal.eshop.errorhandling;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ErrorResponse {
 
   private String errorMessage;
-  private final List<ErrorField> errors = new LinkedList<ErrorField>();
+  private final List<ErrorField> errors = new ArrayList<ErrorField>();
   
   public ErrorResponse(String message, List<ErrorField> errors) {
     this.errorMessage = message;

@@ -25,7 +25,7 @@ public class H2DatabaseStop implements ApplicationListener<ContextClosedEvent> {
     if (h2ShutDownHook != null) {
       closeDataSource();
       deregisterAllDrivers();
-      h2ShutDownHook.run();
+      h2ShutDownHook.start();
     }
   }
 

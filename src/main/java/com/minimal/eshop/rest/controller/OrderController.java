@@ -1,7 +1,8 @@
 package com.minimal.eshop.rest.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
-import java.util.LinkedList;
+
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -60,7 +61,7 @@ public class OrderController {
   
   @RequestMapping(value = "/statuslist", method = RequestMethod.GET)
   public @ResponseBody List<OrderStatusDto> getOrderStatusList() {
-    List<OrderStatusDto> statusList = new LinkedList<OrderStatusDto>();
+    List<OrderStatusDto> statusList = new ArrayList<OrderStatusDto>();
     for (OrderStatus status : OrderStatus.values()) {
       statusList.add(new OrderStatusDto().setCode(status.name()).setTitle(status.getStatusTitle()));
     }

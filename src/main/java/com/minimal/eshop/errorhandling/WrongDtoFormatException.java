@@ -1,12 +1,12 @@
 package com.minimal.eshop.errorhandling;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("serial")
 public class WrongDtoFormatException extends RuntimeException {
 
-  private final List<ErrorField> errors = new LinkedList<ErrorField>();
+  private final List<ErrorField> errors = new ArrayList<ErrorField>();
 
   public WrongDtoFormatException(String message, List<ErrorField> errors) {
     super(message);

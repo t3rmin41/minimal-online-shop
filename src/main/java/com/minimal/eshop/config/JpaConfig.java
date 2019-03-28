@@ -18,6 +18,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class JpaConfig {
 
+  private static final String SHOW_SQL_PROPERTY = "hibernate.show_sql";
+  private static final String DIALECT_PROPERTY = "hibernate.dialect";
+  private static final String H2_CONSOLE_WEB_ALLOW_PROPERTY = "h2.console.settings.web-allow-others";
+
   @Value("${spring.profiles.active}")
   private String activeProfile;
   
@@ -69,16 +73,16 @@ public class JpaConfig {
     Properties properties = new Properties();
     properties.setProperty("hibernate.hbm2ddl.auto", "update");
     if ("prod".equals(activeProfile)) {
-      properties.setProperty("hibernate.show_sql", "false");
-      properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL92Dialect");
+      properties.setProperty(SHOW_SQL_PROPERTY, "false");
+      properties.setProperty(DIALECT_PROPERTY, "org.hibernate.dialect.PostgreSQL92Dialect");
     } else if ("test".equals(activeProfile)) {
-      properties.setProperty("hibernate.show_sql", "true");
-      properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-      properties.setProperty("h2.console.settings.web-allow-others", "true");
+      properties.setProperty(SHOW_SQL_PROPERTY, "true");
+      properties.setProperty(DIALECT_PROPERTY, "org.hibernate.dialect.H2Dialect");
+      properties.setProperty(H2_CONSOLE_WEB_ALLOW_PROPERTY, "true");
     } else if ("dev".equals(activeProfile)) {
-      properties.setProperty("hibernate.show_sql", "true");
-      properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-      properties.setProperty("h2.console.settings.web-allow-others", "true");
+      properties.setProperty(SHOW_SQL_PROPERTY, "true");
+      properties.setProperty(DIALECT_PROPERTY, "org.hibernate.dialect.H2Dialect");
+      properties.setProperty(H2_CONSOLE_WEB_ALLOW_PROPERTY, "true");
     }
     return properties;
  }
