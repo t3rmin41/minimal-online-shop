@@ -1,7 +1,7 @@
 package com.minimal.eshop.aspect;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
@@ -25,10 +25,15 @@ import com.minimal.eshop.service.RequestValidator;
 public class RoleValidator implements RequestValidator {
 
   private static final Logger logger = LoggerFactory.getLogger(RoleValidator.class);
+
+  private static final String ACTION_NOT_ALLOWED = "Action is not allowed";
+  private static final String ADMIN = "ROLE_ADMIN";
+  private static final String MANAGER = "ROLE_MANAGER";
+  private static final String CUSTOMER = "ROLE_CUSTOMER";
   
-  private List<String> allowedProductPurchaseRoles = new LinkedList<String>(Arrays.asList(new String[]{"ROLE_ADMIN", "ROLE_MANAGER", "ROLE_CUSTOMER"}));
-  private List<String> allowedManageRoles = new LinkedList<String>(Arrays.asList(new String[]{"ROLE_ADMIN", "ROLE_MANAGER"}));
-  private List<String> allowedModifyUserRoles = new LinkedList<String>(Arrays.asList(new String[]{"ROLE_ADMIN"}));
+  private List<String> allowedProductPurchaseRoles = new ArrayList<String>(Arrays.asList(new String[]{ADMIN, MANAGER, CUSTOMER}));
+  private List<String> allowedManageRoles = new ArrayList<String>(Arrays.asList(new String[]{ADMIN, MANAGER}));
+  private List<String> allowedModifyUserRoles = new ArrayList<String>(Arrays.asList(new String[]{ADMIN}));
 
   @Override
   public boolean validateRequestAgainstUserRoles(UsernamePasswordAuthenticationToken token, List<String> allowedRoles, String path)
@@ -38,11 +43,14 @@ public class RoleValidator implements RequestValidator {
         return true;
       }
     }
-    throw new UserNotAllowedException("Action is not allowed").setPath(path);
+    logger.error(ACTION_NOT_ALLOWED);
+    throw new UserNotAllowedException(ACTION_NOT_ALLOWED).setPath(path);
   }
   
   @Pointcut("execution(* com.minimal.eshop.rest.controller.CartController..*(..))")
-  public void allCartControllerMethods() {}
+  public void allCartControllerMethods() {
+    //For checkUserRolesBeforeCart
+  }
 
   @Before("allCartControllerMethods()")
   public void checkUserRolesBeforeCart(JoinPoint joinPoint) {
@@ -52,17 +60,23 @@ public class RoleValidator implements RequestValidator {
   }
   
   @Pointcut("execution(* com.minimal.eshop.rest.controller.OrderController..*(..))")
-  public void allOrderControllerMethods() {}
+  public void allOrderControllerMethods() {
+    //For checkUserRolesBeforeOrder
+  }
   
   @Pointcut("execution(* com.minimal.eshop.rest.controller.OrderController.getUserOrdersByName(..)) || "+
             "execution(* com.minimal.eshop.rest.controller.OrderController.getUserOrdersById(..)) || "+
             "execution(* com.minimal.eshop.rest.controller.OrderController.getOrderById(..)) || "+
             "execution(* com.minimal.eshop.rest.controller.OrderController.deleteOrder(..))"
            )
-  public void customerAllowedOrderControllerMethods() {}
+  public void customerAllowedOrderControllerMethods() {
+    //For checkUserRolesBeforeOrder
+  }
   
   @Pointcut("execution(* com.minimal.eshop.rest.controller.OrderController.getOrderStatusList(..))")
-  public void allowedOrderControllerMethods() {}
+  public void allowedOrderControllerMethods() {
+    //For checkUserRolesBeforeOrder
+  }
   
   @Before("allOrderControllerMethods() && !(customerAllowedOrderControllerMethods() || allowedOrderControllerMethods())")
   public void checkUserRolesBeforeOrder(JoinPoint joinPoint) {
@@ -79,17 +93,23 @@ public class RoleValidator implements RequestValidator {
   }
 
   @Pointcut("execution(* com.minimal.eshop.rest.controller.ProductController..*(..))")
-  public void allProductControllerMethods() {}
+  public void allProductControllerMethods() {
+    //For checkUserRolesBeforeProduct
+  }
   
   @Pointcut("execution(* com.minimal.eshop.rest.controller.ProductController.getAllProducts(..)) || "+
             "execution(* com.minimal.eshop.rest.controller.ProductController.getProductById(..))"
      )
-  public void customerAllowedProductControllerMethods() {}
+  public void customerAllowedProductControllerMethods() {
+    //For checkUserRolesBeforeProduct
+  }
   
   @Pointcut("execution(* com.minimal.eshop.rest.controller.ProductController.getAllProducts(..)) || "+
       "execution(* com.minimal.eshop.rest.controller.ProductController.getProductById(..))"
   )
-  public void allowedProductControllerMethods() {}
+  public void allowedProductControllerMethods() {
+    //For checkUserRolesBeforeGetProduct
+  }
   
   @Before("allProductControllerMethods() && !customerAllowedProductControllerMethods()")
   public void checkUserRolesBeforeProduct(JoinPoint joinPoint) {
@@ -106,13 +126,17 @@ public class RoleValidator implements RequestValidator {
   }
   
   @Pointcut("execution(* com.minimal.eshop.rest.controller.UserController..*(..))")
-  public void allUserControllerMethods() {}
+  public void allUserControllerMethods() {
+    //For checkUserRolesBeforeUser
+  }
   
   @Pointcut("execution(* com.minimal.eshop.rest.controller.UserController.loginSuccessfull(..)) || "+
             "execution(* com.minimal.eshop.rest.controller.UserController.logout(..)) || "+
             "execution(* com.minimal.eshop.rest.controller.UserController.getUserRoleMap(..))"
      )
-  public void allowedUserControllerMethods() {}
+  public void allowedUserControllerMethods() {
+    //For checkUserRolesBeforeUser
+  }
   
   @Before("allUserControllerMethods() && !allowedUserControllerMethods()")
   public void checkUserRolesBeforeUser(JoinPoint joinPoint) {

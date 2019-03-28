@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
@@ -106,7 +105,7 @@ public class UserMapperImpl implements UserMapper, DtoValidator {
 
   @Override
   public List<RoleDto> convertUserRolesToRoleDtos(Set<RoleJpa> roles) {
-    List<RoleDto> RoleDtos = new LinkedList<RoleDto>();
+    List<RoleDto> RoleDtos = new ArrayList<RoleDto>();
     for (RoleJpa role : roles) {
       RoleDtos.add(new RoleDto().setCode(role.getRole()).setTitle(RoleType.getRoleTitleByCode(role.getRole())));
     }
@@ -158,7 +157,7 @@ public class UserMapperImpl implements UserMapper, DtoValidator {
 
   @Override
   public List<ErrorField> validatedto(Serializable dto) throws WrongDtoFormatException {
-    List<ErrorField> errors = new LinkedList<ErrorField>();
+    List<ErrorField> errors = new ArrayList<ErrorField>();
     UserDto UserDto = (UserDto) dto;
     if (UserDto.getRoles().size() < 1) {
       errors.add(new ErrorField("roles", "User must have at least 1 valid role"));
@@ -190,14 +189,6 @@ public class UserMapperImpl implements UserMapper, DtoValidator {
             .setEmail(jpa.getEmail())
             .setId(null != jpa.getId() ? jpa.getId() : null)
             .setRoles(convertUserRolesToRoleDtos(jpa.getRoles())).setEnabled(jpa.getEnabled());
-  }
-
-  private Set<String> convertExistingUserRolesToStrings(Set<RoleJpa> roles) {
-    Set<String> roleNames = new HashSet<String>();
-    for (RoleJpa role : roles) {
-      roleNames.add(role.getRole());
-    }
-    return roleNames;
   }
 
   private UserJpa setSimpleFieldsFromdto(UserJpa jpa, UserDto dto) {

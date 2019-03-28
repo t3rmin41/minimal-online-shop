@@ -103,9 +103,7 @@ public class UserRepositoryImpl implements UserRepository {
     try {
       em.remove(jpa);
       result = true;
-    } catch (IllegalArgumentException e) {
-      log.error(e.getMessage());
-    } catch (TransactionRequiredException e) {
+    } catch (IllegalArgumentException | TransactionRequiredException e) {
       log.error(e.getMessage());
     }
     return result;

@@ -13,11 +13,13 @@ public class UserNotAllowedException extends RuntimeException {
   
   public UserNotAllowedException(String path, String message) {
     super(message);
+    this.path = path;
     this.error = message;
   }
   
   public UserNotAllowedException(String path, String message, Throwable cause) {
     super(message, cause);
+    this.path = path;
     this.error = message;
   }
   
@@ -28,6 +30,7 @@ public class UserNotAllowedException extends RuntimeException {
 
   public UserNotAllowedException(String path, String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
     super(message, cause, enableSuppression, writableStackTrace);
+    this.path = path;
     this.error = message;
   }
 
