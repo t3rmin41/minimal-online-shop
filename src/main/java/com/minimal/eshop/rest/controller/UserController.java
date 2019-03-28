@@ -2,7 +2,7 @@ package com.minimal.eshop.rest.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import java.security.Principal;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -39,7 +39,7 @@ public class UserController {
 
   @RequestMapping(value = "/roles", method = RequestMethod.GET)
   public @ResponseBody List<RoleDto> getUserRoleMap() {
-      List<RoleDto> roleList = new LinkedList<RoleDto>();
+      List<RoleDto> roleList = new ArrayList<RoleDto>();
       for (RoleType role : RoleType.values()) {
         roleList.add(new RoleDto().setCode(role.toString()).setTitle(role.getTitle()));
       }

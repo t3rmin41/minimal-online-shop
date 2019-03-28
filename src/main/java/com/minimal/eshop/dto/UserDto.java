@@ -1,7 +1,7 @@
 package com.minimal.eshop.dto;
 
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -67,10 +67,8 @@ public class UserDto implements Serializable {
       return this;
   }
   public List<String> getRolesAsStrings() {
-    List<String> roleStrings = new LinkedList<String>();
-    roles.stream().forEach(r -> {
-      roleStrings.add(r.getCode());
-    });
+    List<String> roleStrings = new ArrayList<String>();
+    roles.stream().forEach(r -> roleStrings.add(r.getCode()));
     return roleStrings;
   }
   
