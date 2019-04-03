@@ -16,7 +16,6 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 //apply plugin: 'war' // applying this plugin puts .war in build/libs directory. Without it .jar is created
 
